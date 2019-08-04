@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+.parent{
+    height: 150px;
+    border: 1px solid #ddd;
+}
+.lb-box{
+    background: lightblue;
+    width:40px;
+    height:40px;
+}
+
+    </style>
+</head>
+<body>
+    单行文本/行内元素/行内块级元素
+    <div style='
+        height:150px;
+        line-height: 150px;
+        background: lightblue;
+    '>
+        <span>test</span>
+    </div>
+
+    <br>
+    多行文本/行内元素/行内块级元素
+
+    <div style='
+        height:150px;
+        width: 40px;
+        line-height: 30px;
+        background: lightblue;
+        word-break: break-all;
+        overflow: hidden;
+        '>
+    dfasdfasdfjas;lkdfjasldfkjasdfl;kjasdflk;ajsdflaksdjfalks;dfjaslk;dfjaskldfjasdlfk
+        </div>
+    <br>
+    图片
+    /*默认是基线对齐，改为middle*/
+    <div style='
+    height: 150px;
+    line-height: 150px;
+    font-size: 0;
+    border:1px solid #ddd;
+        '>
+        <img src="./v2-643fff1278b05976fb0d489020f5b610_1200x500.jpg" 
+             style='
+             height:40px;width: 40px;
+             vertical-align: middle;
+             '
+
+
+        alt="">
+
+    </div>
+    <br>
+
+
+    单个块级元素
+
+    <div style='
+    display: table-cell;
+    vertical-align: middle;
+        '
+         class="parent"
+    >
+        <div style='width:40px;height:30px;background: lightblue;'></div>
+
+        </div>
+    <br>
+
+
+    绝对定位
+    <div class="parent"
+         style='
+         position: relative;
+         '
+    >
+        <div class="lb-box"
+             style='
+             position: absolute;
+             top:50%;
+             transform: translateY(-50%);
+             /*margin-top: -25px*/
+             '
+            ></div>
+    </div>
+
+    flex
+    <div class="parent"
+         style="
+         display: flex;
+         align-items: center;
+         "
+        >
+        <div class="lb-box"></div>
+    </div>
+    <br>
+
+    视窗居中
+    <div class="parent">
+        <div class="lb-box"
+             style='
+             margin: 50vh auto 0;
+             transform: translateY(-50%)
+             '
+        ></div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</body>
+</html>
