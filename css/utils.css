@@ -1,0 +1,44 @@
+/*clearfix*/
+.clearfix:after {
+  display: table;
+  content: ".";
+  visibility: hidden;
+  clear: both;
+  height: 0;
+}
+.clearfix {
+  *zoom: 1; /*ie6 ie7*/
+}
+
+/*单行省略*/
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ellipsis-2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+p {
+  position: relative;
+  line-height: 1.4em;
+  /*设置容器高度为3倍行高就是显示3行*/
+  height: 4.2em;
+  overflow: hidden;
+}
+p::after {
+  content: "...";
+  font-weight: bold;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0 20px 1px 45px;
+  background: #fff;
+}
