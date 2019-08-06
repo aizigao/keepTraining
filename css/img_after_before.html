@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+img{
+    width:150px;
+    height:150px;
+    border:1px solid #ddd;
+    display: block;
+    position: relative;
+}
+img::after{
+    /* provide alt infomation */
+    content: attr(alt);
+    /*postion & layout*/
+    position: absolute;
+    bottom: 0;
+    left:0;
+    width: 100%;
+    background: rgba(0,0,0,.5);
+    transform: translateY(100%);
+    transition: transform .2s;
+}
+
+img:hover::after{
+    transform: translateY(0);
+}
+    </style>
+</head>
+<body>
+实现：图片没有 src ，因此，::before和::after 可以生效，我们可以通过 content 属性呈现 alt 属性值。
+    <img src="xx" alt="good alt">
+</body>
+</html>
