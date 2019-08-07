@@ -26,6 +26,7 @@ var selectSort = arr => {
   }
   return sortedArr;
 };
+
 let select2 = arrx => {
   let arr = arrx.slice();
   let len = arr.length;
