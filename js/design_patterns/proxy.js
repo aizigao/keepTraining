@@ -41,3 +41,56 @@ class ProxyObj {
 var proxy = new ProxyObj(new TeaAndMilkGirl("奶茶妹"));
 
 proxy.sendGift("ring!!");
+
+// -------------------------- 实例 --------------------
+// ---- 不使用代理预加载图片
+(() => {
+  // var myImage = (() => {
+  //   var imgNode = document.createElement("img");
+  //   document.body.appendChild(imgNode);
+  //   var img = new Image();
+  //   img.onload = function() {
+  //     imgNode.src = this.src;
+  //   };
+  //   return {
+  //     setSrc: src => {
+  //       imgNode.src = "http://xxxxx.jpg";
+  //       img.src = src;
+  //     }
+  //   };
+  // })();
+  // // 调用
+  // myImage.setSrc("http://xxxxxyyy.jpg");
+})();
+
+// 代理模式
+(() => {
+  var myImage = (function() {
+    var imgNode = document.createElement("img");
+    document.body.appendChild(imgNode);
+    return {
+      setSrc: function(src) {
+        imgNode.src = src;
+      }
+    };
+  })();
+
+  var ProxyImage = (function() {
+    var img = new Image();
+    img.onload = function() {
+      myImage.setSrc(this.src);
+    };
+    return {
+      setSrc(src) {
+        myImage.setSrc("http://dfsdfs.jpg");
+        img.src = src;
+      }
+    };
+  })();
+
+  ProxyObj.setSrc("http://dfsdfsd.jpg");
+})();
+/**************************************
+第一种方案一般的方法代码的耦合性太高，一个函数内负责做了几件事情，比如创建img元素，和实现给未加载图片完成之前设置loading加载状态等多项事情，未满足面向对象设计原则中单一职责原则；并且当某个时候不需要代理的时候，需要从myImage 函数内把代码删掉，这样代码耦合性太高。
+第二种方案使用代理模式，其中myImage 函数只负责做一件事，创建img元素加入到页面中，其中的加载loading图片交给代理函数ProxyImage 去做，当图片加载成功后，代理函数ProxyImage 会通知及执行myImage 函数的方法，同时当以后不需要代理对象的话，我们直接可以调用本体对象的方法即可；
+**************************************/
