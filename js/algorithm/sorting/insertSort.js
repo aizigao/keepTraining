@@ -18,19 +18,4 @@ function insertionSort(array) {
   return array;
 }
 
-function insertionSort2(array) {
-  for (var i = 1; i < array.length; i++) {
-    var val = array[i];
-    var j = i - 1;
-
-    while (j >= 0 && array[j] > val) {
-      array[j + 1] = array[j];
-      j--;
-    }
-    array[j + 1] = val;
-  }
-  return array;
-}
-
-// console.log(insertionSort(insertionSort(test)));
-console.log(insertionSort(insertionSort2(test)));
+console.log(insertionSort(insertionSort(test)));
