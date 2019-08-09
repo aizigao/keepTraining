@@ -33,7 +33,6 @@ function throttle(fn, threshold = 160) {
     }
   };
 }
-
 // 第六版
 function debounce2(func, wait, immediate) {
   var timeout, result;

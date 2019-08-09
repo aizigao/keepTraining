@@ -61,3 +61,17 @@ var a = () => {};
   console.log({ a, b });
   console.log(a === b);
 })();
+
+var a = () => {};
+
+(() => {
+  const singleton = function(fn) {
+    var result;
+    return function() {
+      return result || (result = fn.apply(this, arguments));
+    };
+  };
+  var createMask = singleton(function() {
+    return document.body.appendChild(document.createElement("div"));
+  });
+})();
