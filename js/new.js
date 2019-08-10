@@ -13,6 +13,7 @@ function objectFactory() {
   var ret = Constructor.apply(obj, arguments);
   return typeof ret === "object" ? ret : obj;
 }
+
 function A(name, age) {
   [this.name, this.age] = [name, age];
 }
