@@ -31,7 +31,6 @@
       return fn.apply(this, [...beforeArgs, ...afterArgs]);
     };
   }
-
   function curry(fn, restArgsLen) {
     restArgsLen = restArgsLen || fn.length;
 

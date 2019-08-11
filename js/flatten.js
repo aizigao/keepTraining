@@ -17,6 +17,7 @@ function flatten(arr) {
   return result;
 }
 
+
 console.log(flatten(a));
 
 // 都是数字， 用toString
@@ -28,8 +29,8 @@ a.toString()
 // 字符串及对象就用不了了
 
 function flatten2(arr) {
-  return arr.reduce(function(prev, next) {
-    return prev.concat(
+  return arr.reduce(function(accum, next) {
+    return accum.concat(
       //--
       Array.isArray(next) //--
         ? flatten2(next)
@@ -37,6 +38,7 @@ function flatten2(arr) {
     );
   }, []);
 }
+
 
 console.log(flatten2(a));
 
@@ -51,7 +53,7 @@ console.log([].concat(...a));
  * @param  {Array} output  这是为了方便递归而传递的参数
  * 源码地址：https://github.com/jashkenas/underscore/blob/master/underscore.js#L528
  */
-function flatten(input, shallow, strict, output) {
+function flatten3(input, shallow, strict, output) {
   // 递归使用的时候会用到output
   output = output || [];
   var idx = output.length;

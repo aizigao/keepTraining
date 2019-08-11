@@ -76,7 +76,6 @@ module.exports = {
     ]
   },
   plugins: [
-    // 通过new 使用插件
     // clean
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({

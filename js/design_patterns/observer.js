@@ -33,7 +33,6 @@
       }
     }
   }
-
   class Observer {
     constructor(observable) {
       observable.add(this);
@@ -66,6 +65,7 @@
       });
     }
 
+    // ----
     clickFn() {
       this.notify_observers(this);
     }
@@ -85,18 +85,18 @@
     }
   }
 
-  class ElementDeleteObserver extends Observer {
-    notifyFn(arg) {
-      arg.elem.remove();
-    }
-  }
-
-  let buttonSubject = new ObservableElement(document.querySelector("button")),
-    buttonObserver = new Observer(buttonSubject),
-    buttonElementObserver = new ElementAddObserver(
-      buttonSubject,
-      document.querySelector("#results")
-    );
-
-  buttonSubject.notify_observers("come on click me");
+  // class ElementDeleteObserver extends Observer {
+  //   notifyFn(arg) {
+  //     arg.elem.remove();
+  //   }
+  // }
+  //
+  // let buttonSubject = new ObservableElement(document.querySelector("button")),
+  //   buttonObserver = new Observer(buttonSubject),
+  //   buttonElementObserver = new ElementAddObserver(
+  //     buttonSubject,
+  //     document.querySelector("#results")
+  //   );
+  //
+  // buttonSubject.notify_observers("come on click me");
 })();

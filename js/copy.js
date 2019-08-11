@@ -42,3 +42,22 @@ var deepCopy = function(obj) {
   }
   return newObj;
 };
+
+
+// 上述方法不会复制 setter 和 getter
+
+
+var extend = function(to, from){
+    for(var property in from){
+        if(!from.hasOwnProperty(property)){
+            continue
+        }
+        Object.defineProperty(to, property, Object.getOwnPropertyDescriptor(from, property))
+    }
+}
+
+
+var test = {}
+extend(test, {b: 'dfsfd', get a(){ return 1}})
+
+console.log(test)

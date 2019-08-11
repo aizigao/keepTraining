@@ -32,31 +32,6 @@ const prefixLog = prefix => (...args) => {
 })();
 
 // ---------- 闭包 -------
-(() => {
-  /************************
-   * adventage
-   * - 无命名冲突
-   * - 外部无法访问 // 主要的效果
-   *
-   * disadventage
-   * - constructor 变得复杂
-   * - 方法用于实例，而非原型,子类不能super调用
-   * - 构建增加一点点开销
-   * ******************/
-  const log = prefixLog("闭包1");
-  class Example {
-    constructor() {
-      var _private = "";
-      _private = "private";
-      this.getName = function() {
-        return _private;
-      };
-    }
-  }
-  const ex = new Example();
-  log(ex.getName()); // private
-  log(ex._private); // undefined
-})();
 
 (() => {
   /**
