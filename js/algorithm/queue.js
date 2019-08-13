@@ -1,37 +1,36 @@
-class Queue{
-  constructor(){
-    this._items = []
+class Queue {
+  constructor() {
+    this._items = [];
   }
 
   //入队
-  enqueue(...items){
-    this._items.push(...items)
+  enqueue(...items) {
+    this._items.push(...items);
     return this._items;
   }
 
   // 出队
-  dequeue(count=1){
+  dequeue(count = 1) {
     //pull out the first item from the queue
-    this._items.splice(0,count);
+    this._items.splice(0, count);
     return this._items;
   }
 
-  peek(){
+  peek() {
     //peek at the first item from the queue
-    return this._items[0]
+    return this._items[0];
   }
 
-  size(){
+  size() {
     //get the length of queue
-    return this._items.length
+    return this._items.length;
   }
 
-  isEmpty(){
+  isEmpty() {
     //find whether the queue is empty or no
-    return this._items.length===0
+    return this._items.length === 0;
   }
 }
-
 
 // ------- 实例 -----
 // 基数排序

@@ -1,4 +1,4 @@
-const print = (...args) => console.log(...args)
+const print = (...args) => console.log(...args);
 /***************
 # linkedlist
 ### 1，单向链表
@@ -8,156 +8,175 @@ const print = (...args) => console.log(...args)
 变量p指向链表的头节点（首节点）的位置，从p出发能找到表中的任意节点。
 
  ********************/
-console.log('run');
-(()=>{
-    // 节点
-    class SingleNode{
-        constructor(elem){
-            this.elem = elem
-            this.next = null
-        }
+console.log("run");
+(() => {
+  // 节点
+  class SingleNode {
+    constructor(elem) {
+      this.elem = elem;
+      this.next = null;
+    }
+  }
+
+  // -- 单链表
+  class SingleLinkList {
+    constructor(node = null) {
+      this._head = node;
     }
 
-    // -- 单链表
-    class SingleLinkList{
-        constructor(node=null){
-            this._head = node
-        }
-
-        // 链表是否为空
-        isEmpty(){
-            return !this._head
-        }
-
-        length(){
-            let count = 0
-            let current = this._head
-            while(current){
-                count+=1
-                current = current.next
-            }
-            return count
-        }
-        // 遍历整个链表
-        travel(){
-            let current = this._head
-            console.log('[ \n')
-            while (current){
-                console.log(current.elem+'\n')
-                current = current.next
-            }
-            console.log(']')
-        }
-
-        // 头部添加元素（头插法）
-        add(item){
-            let node = new SingleNode(item)
-            node.next = this._head
-            // 设置新节点
-            this._head = node
-        }
-
-        // 尾部添加
-        append(item){
-           let node = new SingleNode(item)
-            if(this.isEmpty()){
-                this._head = node
-            }else{
-                let current = this._head
-                while (current.next){
-                    current = current.next
-                }
-                current.next = node
-            }
-
-        }
-        // 指定位置插入元素
-        insert(index, item){
-            if(index <= 0){
-                this.add(item)
-            }else if (index > this.length() -1){
-                this.append(item)
-            }else{
-                let node = new SingleNode(item)
-                let count = 0
-                let prev = this._head
-
-                while( count < index -1){
-                    count +=1
-                    prev = prev.next
-                }
-                node.next = prev.next
-                prev.next = node
-            }
-        }
-        // 删除节点
-        remove(item){
-            let current = this._head
-            let prev = null
-
-            while(current){
-                if(current.elem === item){
-                    if(!prev){
-                        // 没有上一个元素，比如删除头结点
-                        this._head = current.next
-                    }else{
-                        prev.next = current.next
-                    }
-                    return
-                }else{
-                    // 没有找到时,后移
-                    prev = current
-                    current = current.next
-                }
-            }
-        }
-        search(item){
-            let current = this._head
-            while(current){
-                if(current.elem ===item){
-                   return true
-                }else{
-                    current = current.next
-                }
-            }
-            return false
-        }
+    // 链表是否为空
+    isEmpty() {
+      return !this._head;
     }
-        print("test:")
-        let single_link_list = new SingleLinkList()
-        print('isEmpty',single_link_list.isEmpty()) // true
-        print('长度',single_link_list.length())
 
-        // 添加 2 3 5
-        single_link_list.append(2)
-        single_link_list.append(3)
-        single_link_list.append(5)
+    length() {
+      let count = 0;
+      let current = this._head;
+      while (current) {
+        count += 1;
+        current = current.next;
+      }
+      return count;
+    }
+    // 遍历整个链表
+    travel() {
+      let current = this._head;
+      console.log("[ \n");
+      while (current) {
+        console.log(current.elem + "\n");
+        current = current.next;
+      }
+      console.log("]");
+    }
 
-        print('-----------遍历------------')
-        single_link_list.travel()
+    // 头部添加元素（头插法）
+    add(item) {
+      let node = new SingleNode(item);
+      node.next = this._head;
+      // 设置新节点
+      this._head = node;
+    }
 
-        // 添加 1 0
-        single_link_list.add(1)
-        single_link_list.add(0)
-        single_link_list.insert(4, 4)
-        single_link_list.insert(-1, -1) // 头部添加元素（头插法）
+    // 尾部添加
+    append(item) {
+      let node = new SingleNode(item);
+      if (this.isEmpty()) {
+        this._head = node;
+      } else {
+        let current = this._head;
+        while (current.next) {
+          current = current.next;
+        }
+        current.next = node;
+      }
+    }
+    // 指定位置插入元素
+    insert(index, item) {
+      if (index <= 0) {
+        this.add(item);
+      } else if (index > this.length() - 1) {
+        this.append(item);
+      } else {
+        let node = new SingleNode(item);
+        let count = 0;
+        let prev = this._head;
 
-        print('-----------遍历------------')
-        single_link_list.travel()
+        while (count < index - 1) {
+          count += 1;
+          prev = prev.next;
+        }
+        node.next = prev.next;
+        prev.next = node;
+      }
+    }
 
-        print('-----------查找------------')
-        print(single_link_list.search(49))
-        print(single_link_list.search(4))
+    insert(index, item) {
+      if (index <= 0) {
+        this.add(item);
+      } else if (index > this.length() - 1) {
+        this.append(item);
+      } else {
+        let node = new Node();
+        let count = 0;
+        let prev = this._head;
 
-        print('-----------删除------------')
-        single_link_list.remove(-1)
+        while (count < index - 1) {
+          count += 1;
+          prev = prev.next;
+        }
+        node.next = prev.next;
+        prev.next = node;
+      }
+    }
 
-        print('-----------遍历------------')
-        single_link_list.travel()
+    // 删除节点
+    remove(item) {
+      let current = this._head;
+      let prev = null;
 
-        print('-----------长度------------')
-        print(single_link_list.length())
-})()
+      while (current) {
+        if (current.elem === item) {
+          if (!prev) {
+            // 没有上一个元素，比如删除头结点
+            this._head = current.next;
+          } else {
+            prev.next = current.next;
+          }
+          return;
+        } else {
+          // 没有找到时,后移
+          prev = current;
+          current = current.next;
+        }
+      }
+    }
+    search(item) {
+      let current = this._head;
+      while (current) {
+        if (current.elem === item) {
+          return true;
+        } else {
+          current = current.next;
+        }
+      }
+      return false;
+    }
+  }
+  print("test:");
+  let single_link_list = new SingleLinkList();
+  print("isEmpty", single_link_list.isEmpty()); // true
+  print("长度", single_link_list.length());
+
+  // 添加 2 3 5
+  single_link_list.append(2);
+  single_link_list.append(3);
+  single_link_list.append(5);
+
+  print("-----------遍历------------");
+  single_link_list.travel();
+
+  // 添加 1 0
+  single_link_list.add(1);
+  single_link_list.add(0);
+  single_link_list.insert(4, 4);
+  single_link_list.insert(-1, -1); // 头部添加元素（头插法）
+
+  print("-----------遍历------------");
+  single_link_list.travel();
+
+  print("-----------查找------------");
+  print(single_link_list.search(49));
+  print(single_link_list.search(4));
+
+  print("-----------删除------------");
+  single_link_list.remove(-1);
+
+  print("-----------遍历------------");
+  single_link_list.travel();
+
+  print("-----------长度------------");
+  print(single_link_list.length());
+})();
 /****************8
 
 
