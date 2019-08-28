@@ -1,14 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
     <!-- development version, includes helpful console warnings -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-</head>
-<body>
-    
-</body>
+  </head>
+  <body>
+    <div id="app">
+      <span> {{ message }} </span>
+
+      <span v-bind:title="message">
+        test v-bind:title
+      </span>
+
+      <div>
+        <span v-if="seen">now you see me</span>
+        <span v-if="!seen">now you not see me</span>
+      </div>
+
+      <div>
+        <ul>
+          <li v-for="todo in todos">
+            {{ todo.text }}
+          </li>
+        </ul>
+        <ul>
+          <todo-item
+            v-for="item in todos"
+            v-bind:todo="item"
+            v-bind:key="item.id"
+          ></todo-item>
+        </ul>
+      </div>
+      <div>
+        <button v-on:click="reverseMessage">Reverse Message</button>
+      </div>
+      <div>
+        <input type="text" v-model="message" />
+      </div>
+      <div>Using v-html directive: <div v-html="rawHtml"></div></div>
+      <div>{{ message.split('').reverse().join('') }}</div>
+      <div>{{reverseMessageStr}}</div>
+      <div>{{fullName}}</div>
+      <div><input v-model='firstName'></div>
+    </div>
+    <script>
+      /********Component*********/
+      Vue.component("todo-item", {
+        template: "<li>This is a todo {{todo.text}}</li>",
+        props: ["todo"]
+      });
+      var app = new Vue({
+        el: "#app",
+        data: {
+          message: "You loaded this page on " + new Date().toLocaleString(),
+          seen: true,
+          rawHtml:'<a href=\'#\'>test</a>',
+          todos: [
+            { text: "aaaa", id: 1 },
+            { text: "aaa1", id: 2 },
+            { text: "aaa2", id: 3 },
+            { text: "aaa3", id: 4 }
+          ],
+
+          //
+          fullName: 'Foo Bar',
+          firstName: "Foo",
+          lastName: 'Bar'
+        },
+        methods: {
+          reverseMessage() {
+            this.message = this.message
+              .split("")
+              .reverse()
+              .join("");
+          }
+        },
+        // lifecycle
+        created(){
+          console.log(this)
+        },
+
+        //----
+        computed: {
+          reverseMessageStr(){
+            return this.message.split('').reverse().join('')
+          }
+        },
+        watch:{
+          firstName(val){
+            this.fullName = val + ' ' + this.lastName
+          },
+        }
+      });
+    </script>
+  </body>
 </html>
