@@ -25,19 +25,15 @@
 // 时间复杂度：O(n)
 // 空间复杂度：O(n)
 
-const isNil = v => v == null;
+// const isNil = v => v == null;
 const twoSum = (nums, target) => {
   // 记录值与索引
-  const record = new Map();
+  const record = {}
 
   for (var i = 0; i < nums.length; i++) {
     // 与目标的差值
     let complement = target - nums[i];
-    if (!isNil(record[complement])) {
-      // return [
-      //   { index: i, value: nums[i] },
-      //   { index: record[complement], value: complement }
-      // ];
+    if (record.hasOwnProperty(complement)) {
       return [ record[complement], i ];
     }
     record[nums[i]] = i;
