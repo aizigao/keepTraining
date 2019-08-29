@@ -18,8 +18,6 @@
 （4）维护一个结果res，每次用出现过的窗口大小来更新结果 res，最后返回 res 获取结果。
  *****************************/
 
-
-
 // 滑动窗口
 // 时间复杂度: O(len(s))
 // 空间复杂度: O(len(charset))
@@ -27,27 +25,33 @@
 // 执行用时 : 128 ms , 在所有 JavaScript 提交中击败了 66.31% 的用户
 // 内存消耗 : 40.1 MB , 在所有 JavaScript 提交中击败了 53.46% 的用户
 
-const lengthOfLongestSubstring = (s) =>{
-  const freg = {}
-  let l = 0;
-  let r = -1;
-  let res = 0;
-  const sLen = s.length;
+{
+  // TODO: 可优化
+  const lengthOfLongestSubstring = s => {
+    const freg = {};
+    let l = 0;
+    let r = -1;
+    let res = 0;
+    const sLen = s.length;
 
-  while(l < sLen){
-    if( r + 1 < sLen && !freg[s[r+1]] ){
-      r++
-      freg[s[r]] = true
-    }else{
-      // r 已经到头
-      freg[s[l]] = false
-      l++
+    while (l < sLen) {
+      if (r + 1 < sLen && !(s[r + 1] in freg)) {
+        r++;
+        freg[s[r]] = true;
+      } else {
+        // r 已经到头
+        delete freg[s[l]];
+        l++;
+      }
+      res = Math.max(res, r - l + 1);
     }
-    res = Math.max(res, r-l+1)
-  }
-  return res
+    return res;
+  };
+
+  console.log("-----------------");
+  console.log(lengthOfLongestSubstring("abcabcbb"));
+  console.log(lengthOfLongestSubstring("dfasdberw"));
+  console.log(lengthOfLongestSubstring("axxbcdbefgx"));
 }
 
 
-
-console.log(lengthOfLongestSubstring("abcabcbb"))
