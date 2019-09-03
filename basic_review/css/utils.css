@@ -5,6 +5,7 @@
   visibility: hidden;
   clear: both;
   height: 0;
+  font-size: 0;
 }
 .clearfix {
   *zoom: 1; /*ie6 ie7*/
