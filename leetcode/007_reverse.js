@@ -38,9 +38,9 @@ var reverse = function(x) {
     remain = x % 10;
     x = Math[x > 0 ? "floor" : "ceil"](x / 10);
     result = result * 10 + remain;
-  }
-  if(result > Math.pow(2, 31) -1 || result < -Math.pow(2,31)){
-    result = 0
+    if(result > Math.pow(2, 31) -1 || result < -Math.pow(2,31)){
+      return 0
+    }
   }
   return result;
 };
