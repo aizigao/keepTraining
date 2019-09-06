@@ -52,19 +52,6 @@ print(nums[i]);
 当我们遇到 nums[j] !== nums[i] 时，
 跳过重复项的运行已经结束，
 因此我们必须把它（nums[j]）的值复制到 nums[i + 1]。然后递增 ii，接着我们将再次重复相同的过程，直到 j 到达数组的末尾为止。
-
-Java
-public int removeDuplicates(int[] nums) {
-    if (nums.length == 0) return 0;
-    int i = 0;
-    for (int j = 1; j < nums.length; j++) {
-        if (nums[j] != nums[i]) {
-            i++;
-            nums[i] = nums[j];
-        }
-    }
-    return i + 1;
-}
 复杂度分析
 
 时间复杂度：O(n)O(n)，假设数组的长度是 nn，那么 ii 和 jj 分别最多遍历 nn 步。
