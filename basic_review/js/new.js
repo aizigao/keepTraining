@@ -11,6 +11,7 @@ function objectFactory() {
   obj.__proto__ =
     typeof Constructor === "number" ? Object.prototype : Constructor.prototype;
   var ret = Constructor.apply(obj, arguments);
+  // 构造器返回值处理
   return typeof ret === "object" ? ret : obj;
 }
 
