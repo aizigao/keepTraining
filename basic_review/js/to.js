@@ -5,3 +5,5 @@ export default function to(promise) {
     })
     .catch(err => [err]);
 }
+
+
