@@ -9,9 +9,10 @@
 - single input
 '''
 
+
 class LogicGate:
 
-    def __init__(self,n):
+    def __init__(self, n):
         self.name = n
         self.output = None
 
@@ -25,7 +26,7 @@ class LogicGate:
 
 class BinaryGate(LogicGate):
 
-    def __init__(self,n):
+    def __init__(self, n):
         super(BinaryGate, self).__init__(n)
 
         self.pinA = None
@@ -43,7 +44,7 @@ class BinaryGate(LogicGate):
         else:
             return self.pinB.getFrom().getOutput()
 
-    def setNextPin(self,source):
+    def setNextPin(self, source):
         if self.pinA == None:
             self.pinA = source
         else:
@@ -55,36 +56,38 @@ class BinaryGate(LogicGate):
 
 class AndGate(BinaryGate):
 
-    def __init__(self,n):
-        BinaryGate.__init__(self,n)
+    def __init__(self, n):
+        BinaryGate.__init__(self, n)
 
     def performGateLogic(self):
 
         a = self.getPinA()
         b = self.getPinB()
-        if a==1 and b==1:
+        if a == 1 and b == 1:
             return 1
         else:
             return 0
+
 
 class OrGate(BinaryGate):
 
-    def __init__(self,n):
-        BinaryGate.__init__(self,n)
+    def __init__(self, n):
+        BinaryGate.__init__(self, n)
 
     def performGateLogic(self):
 
         a = self.getPinA()
         b = self.getPinB()
-        if a ==1 or b==1:
+        if a == 1 or b == 1:
             return 1
         else:
             return 0
 
+
 class UnaryGate(LogicGate):
 
-    def __init__(self,n):
-        LogicGate.__init__(self,n)
+    def __init__(self, n):
+        LogicGate.__init__(self, n)
 
         self.pin = None
 
@@ -94,7 +97,7 @@ class UnaryGate(LogicGate):
         else:
             return self.pin.getFrom().getOutput()
 
-    def setNextPin(self,source):
+    def setNextPin(self, source):
         if self.pin == None:
             self.pin = source
         else:
@@ -103,8 +106,8 @@ class UnaryGate(LogicGate):
 
 class NotGate(UnaryGate):
 
-    def __init__(self,n):
-        UnaryGate.__init__(self,n)
+    def __init__(self, n):
+        UnaryGate.__init__(self, n)
 
     def performGateLogic(self):
         if self.getPin():
@@ -129,13 +132,17 @@ class Connector:
 
 
 def main():
-   g1 = AndGate("G1")
-   g2 = AndGate("G2")
-   g3 = OrGate("G3")
-   g4 = NotGate("G4")
-   c1 = Connector(g1,g3)
-   c2 = Connector(g2,g3)
-   c3 = Connector(g3,g4)
-   print(g4.getOutput())
+    g1 = AndGate("G1")
+    g2 = AndGate("G2")
+    g3 = OrGate("G3")
+    g4 = NotGate("G4")
+    Connector(g1, g3)
+    Connector(g2, g3)
+    Connector(g3, g4)
+    print(g4.getOutput())
+
+
+
+
 
 main()
