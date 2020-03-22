@@ -23,3 +23,20 @@ for item in range(5):
 
 print('----for range end')
 
+
+# list comprehension.
+
+sqlist = []
+for x in range(1, 11):
+    sqlist.append(x*x)
+print(sqlist)
+
+sqlist2 = [x*x for x in range(1, 11)]
+print(
+    'list comprehension.',
+    sqlist2)
+
+sqlist3 = [x*x for x in range(1, 11) if x % 2 != 0]
+print(
+    'list comprehension with filter',
+    sqlist3)
