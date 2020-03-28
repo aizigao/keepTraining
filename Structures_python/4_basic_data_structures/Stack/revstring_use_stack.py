@@ -5,7 +5,7 @@ def revstring(orgStr):
     tempStack = Stack()
     resultStr = ''
     # push item to stack
-    for s in list(orgStr):
+    for s in orgStr:
         tempStack.push(s)
 
     while not tempStack.isEmpty():
