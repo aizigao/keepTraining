@@ -1,6 +1,15 @@
 from pythonds.basic import Stack
 
 
+def matches(open, close):
+    m_dict = {
+        '(': ')',
+        '[': ']',
+        '{': '}'
+    }
+    return m_dict.get(open) == close
+
+
 def parChecker(symbolString):
     s = Stack()
     balanced = True
@@ -8,14 +17,15 @@ def parChecker(symbolString):
 
     while index < len(symbolString) and balanced:
         symbol = symbolString[index]
-
-        if symbol == "(":
+        if symbol in '([{':
             s.push(symbol)
         else:
             if s.isEmpty():
                 balanced = False
             else:
-                s.pop()
+                top = s.pop()
+                if not matches(top, symbol):
+                    balanced = False
         index += 1
 
     if balanced and s.isEmpty():
@@ -24,5 +34,5 @@ def parChecker(symbolString):
         return False
 
 
-print(parChecker('()()((()))'))
-print(parChecker('(((()'))
+print(parChecker('{({([][])}())}'))
+print(parChecker('[{()]'))
