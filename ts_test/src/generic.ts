@@ -11,7 +11,7 @@ function logginIdentity<T>(arg: T[]): T[] {
   return arg;
 }
 
-let myIdentity: <T>(arg: T) => T = s => {
+let myIdentity: <T>(arg: T) => T = (s) => {
   return s;
 };
 
@@ -32,6 +32,13 @@ class GenericNumber<T> {
 
 let myGenericNumber = new GenericNumber<number>();
 myGenericNumber.zeroValue = 0;
-myGenericNumber.add = function(x, y) {
+myGenericNumber.add = function (x, y) {
   return x + y;
 };
+
+// 类类型
+
+// -- 工厂
+function create<T>(c: { new (): T }): T {
+  return new c();
+}
