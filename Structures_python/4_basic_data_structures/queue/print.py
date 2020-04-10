@@ -1,4 +1,5 @@
 '''
+[link](https://runestone.academy/runestone/books/published/pythonds/BasicDS/SimulationPrintingTasks.html)
 1. create a new print. Each task will be given a timeStamp upon its arrival. The queue is emtpy to start
 
 2. For each second(currenSecond)
