@@ -6,11 +6,11 @@ class Node:
     def getData(self):
         return self.data
 
-    def getNext(self):
-        return self.next
-
     def setData(self, newdata):
         self.data = newdata
+
+    def getNext(self):
+        return self.next
 
     def setNext(self, newnext):
         self.next = newnext
