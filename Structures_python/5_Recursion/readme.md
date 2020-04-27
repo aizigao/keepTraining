@@ -4,3 +4,7 @@
 - must change its state and move toward the b ase case 
 - call itself 
 
+
+
+## Visualizing Recursion
+
