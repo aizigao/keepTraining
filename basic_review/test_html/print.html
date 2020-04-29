@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="print">打印</button>
+
+    <script>
+      function ready(fn) {
+        if (document.readyState != "loading") {
+          fn();
+        } else {
+          document.addEventListener("DOMContentLoaded", fn);
+        }
+      }
+      function addStyle(dd, styleString) {
+        const style = dd.createElement("style");
+        style.textContent = styleString;
+        dd.head.append(style);
+      }
+
+      ready(() => {
+        const $btn = document.querySelector("#print");
+        const tableStr = `
+        <h1>测试</h1>
+        <table border-collapse>
+            <thead>
+                <tr>
+                    <th >The table header</th>
+                    <th >The table header</th>
+                    <th >The table header</th>
+                    <th >The table header</th>
+                    <th >The table header</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>The table body</td>
+                    <td>with two columns</td>
+                    <td>with two columns</td>
+                    <td>with two columns</td>
+                    <td>with two columns</td>
+                </tr>
+                <tr>
+                    <td>The table body</td>
+                    <td>with two columns</td>
+                    <td>with two columns</td>
+                    <td>with two columns</td>
+                    <td>with two columns</td>
+                </tr>
+            </tbody>
+        </table>
+
+        `;
+
+        const stylesheet = `
+        h1{
+            font-size:32px;
+            line-height: 40px;
+        }
+        table{
+            border:1px solid #000;
+            width:100%;
+            border-collapse: collapse;
+        }
+        th{
+            border:1px solid #000;
+            color:red;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: left;
+            line-height: 32px;
+        }
+        td{
+            border: 1px solid #000;
+            font-size: 14px;
+        }
+        `;
+        $btn.onclick = () => {
+          w = window.open();
+          w.document.body.innerHTML = tableStr;
+          addStyle(w.document, stylesheet);
+          w.print();
+          w.close();
+        };
+      });
+    </script>
+  </body>
+</html>
