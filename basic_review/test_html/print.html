@@ -80,7 +80,6 @@
         }
         `;
         $btn.onclick = () => {
-          // 用iframe好像更好，之后试试
           w = window.open();
           w.document.body.innerHTML = tableStr;
           addStyle(w.document, stylesheet);
