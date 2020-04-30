@@ -5,6 +5,7 @@
 - compose
 - pointfree 模式指的是，永远不必说出你的数据。Pointfree style means never having to say your data
 - categoryTheory
+- hindleymilner 
 
 
 
@@ -21,3 +22,8 @@
 
 ### 态射的组合
 - compose
+
+```js
+// map 的组合律
+var law = compose(map(f), map(g)) == map(compose(f, g));
+```
