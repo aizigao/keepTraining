@@ -5,14 +5,18 @@ var logger = (fn) => (...args) => {
 };
 
 {
+
+  var add1 =  (x,y) =>x+y
+
+
   var add = function (x) {
     return function (y) {
       return x + y;
     };
   };
 
-  var increment = logger(add(1));
-  var addTen = logger(add(10));
+  var increment = add(1);
+  var addTen = add(10)
 
   increment(2);
   // 3
