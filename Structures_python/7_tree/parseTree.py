@@ -25,7 +25,7 @@ def buildParseTree(fpexp):
             currentTree = currentTree.getRightChild()
         elif i == ')':
             currentTree = pStack.pop()
-        elif i not in ['+', '-', '*', '/']:
+        else:
             try:
                 currentTree.setRootVal((int(i)))
                 parent = pStack.pop()
