@@ -1,5 +1,6 @@
 from pythonds.basic import Stack
 from pythonds.trees import BinaryTree
+import operator
 
 
 def buildParseTree(fpexp):
@@ -37,3 +38,20 @@ def buildParseTree(fpexp):
 
 pt = buildParseTree("( ( 10 + 5 ) * 3 )")
 pt.postorder()  # defined and explained in the next section
+
+
+
+def evaluate(parseTree):
+    opers = {'+':operator.add, '-':operator.sub, '*':operator.mul, '/':operator.truediv}
+
+    leftC = parseTree.getLeftChild()
+    rightC = parseTree.getRightChild()
+
+    if leftC and rightC:
+        fn = opers[parseTree.getRootVal()]
+        return fn(evaluate(leftC),evaluate(rightC))
+    else:
+        return parseTree.getRootVal()
+
+
+print(evaluate(pt))
