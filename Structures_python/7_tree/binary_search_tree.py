@@ -214,3 +214,6 @@ mytree[2] = "at"
 
 print(mytree[6])
 print(mytree[2])
+
+del mytree[2]
+print(mytree[2])
