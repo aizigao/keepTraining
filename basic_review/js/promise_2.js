@@ -1,3 +1,4 @@
+// https://github.com/YvetteLau/Blog/issues/2
 /**
  * 1. new Promise时，需要传递一个 executor 执行器，执行器立刻执行
  * 2. executor 接受两个参数，分别是 resolve 和 reject
@@ -146,11 +147,12 @@ function resolvePromise(promise2, x, resolve, reject) {
     }
 }
 
-module.exports = Promise;
 // 有专门的测试脚本可以测试所编写的代码是否符合PromiseA + 的规范。
 
 // 首先，在promise实现的代码中，增加以下代码:
 
+/**
+ *
 Promise.defer = Promise.deferred = function () {
     let dfd = {};
     dfd.promise = new Promise((resolve, reject) => {
@@ -159,3 +161,92 @@ Promise.defer = Promise.deferred = function () {
     });
     return dfd;
 }
+*/
+
+
+
+Promise.resolve = function (param) {
+    if (param instanceof Promise) {
+        return param;
+    }
+    return new Promise((resolve, reject) => {
+        if (param && param.then && typeof param.then === 'function') {
+            setTimeout(() => {
+                param.then(resolve, reject);
+            });
+        } else {
+            resolve(param);
+        }
+    });
+}
+
+Promise.reject = function (reason) {
+    return new Promise((resolve, reject) => {
+        reject(reason);
+    });
+}
+
+
+Promise.prototype.catch = function (onRejected) {
+    return this.then(null, onRejected);
+}
+
+
+Promise.prototype.finally = function (callback) {
+    return this.then((value) => {
+        return Promise.resolve(callback()).then(() => {
+            return value;
+        });
+    }, (err) => {
+        return Promise.resolve(callback()).then(() => {
+            throw err;
+        });
+    });
+}
+
+
+Promise.all = function (promises) {
+    return new Promise((resolve, reject) => {
+        let index = 0;
+        let result = [];
+        if (promises.length === 0) {
+            resolve(result);
+        } else {
+            function processValue(i, data) {
+                result[i] = data;
+                if (++index === promises.length) {
+                    resolve(result);
+                }
+            }
+            for (let i = 0; i < promises.length; i++) {
+                //promises[i] 可能是普通值
+                Promise.resolve(promises[i]).then((data) => {
+                    processValue(i, data);
+                }, (err) => {
+                    reject(err);
+                    return;
+                });
+            }
+        }
+    });
+}
+
+Promise.race = function (promises) {
+    return new Promise((resolve, reject) => {
+        if (promises.length === 0) {
+            return;
+        } else {
+            for (let i = 0; i < promises.length; i++) {
+                Promise.resolve(promises[i]).then((data) => {
+                    resolve(data);
+                    return;
+                }, (err) => {
+                    reject(err);
+                    return;
+                });
+            }
+        }
+    });
+}
+
+module.exports = Promise;
