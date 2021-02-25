@@ -4,10 +4,8 @@ import re
 import requests
 import sys
 
-fileLink = 'http://at.alicdn.com/t/font_1760743_cqc31zkvkvd.js'
 
-
-def get_svgs_from_js_link(link):
+def get_svgs_from_js_link(fileLink):
     # -- 获取内容
     file_content = str(requests.get(fileLink).content)
 
