@@ -1,4 +1,5 @@
-// TODO: 有点麻烦啊， 先不看
+// https://www.cnblogs.com/tugenhua0707/p/5198407.html#_labe5
+
 /******************************************************
 有时候需要向某些对象发送请求，
 但是并不知道请求的接收者是谁，
@@ -19,48 +20,48 @@
 
   // 定义setcommand函数，该函数负责住按钮上**安装命令**。点击按钮点会执行<command对象的execute
 
-  var setCommand = function(button, command) {
-    button.onclick = function() {
+  var setCommand = function (button, command) {
+    button.onclick = function () {
       command.execute();
     };
   };
 
   // 下面我们自已来定义各个对象完成自已的业务操作
   var MenuBar = {
-    refresh: function() {
+    refresh: function () {
       console.log("刷新菜单目录");
-    }
+    },
   };
 
   var SubMenu = {
-    add: function() {
+    add: function () {
       console.log("增加子菜单");
     },
-    del: function() {
+    del: function () {
       console.log("删除子菜单");
-    }
+    },
   };
 
   // 下面是编写命今类
-  var RefreshMenuBarCommand = function(receiver) {
+  var RefreshMenuBarCommand = function (receiver) {
     this.receiver = receiver;
   };
 
-  RefreshMenuBarCommand.prototype.execute = function() {
+  RefreshMenuBarCommand.prototype.execute = function () {
     this.receiver.refersh();
   };
   // 增加命令操作
-  var AddSubMenuCommand = function(receiver) {
+  var AddSubMenuCommand = function (receiver) {
     this.receiver = receiver;
   };
-  AddSubMenuCommand.prototype.execute = function() {
+  AddSubMenuCommand.prototype.execute = function () {
     this.receiver.add();
   };
   // 删除命令操作
-  var DelSubMenuCommand = function(receiver) {
+  var DelSubMenuCommand = function (receiver) {
     this.receiver = receiver;
   };
-  DelSubMenuCommand.prototype.execute = function() {
+  DelSubMenuCommand.prototype.execute = function () {
     this.receiver.del();
   };
 })();
@@ -97,28 +98,28 @@ setCommand(b3, delBtn);
  bindEnv函数负责往按钮上面安装点击命令。点击按钮后，会调用
  函数
  */
-  var bindEnv = function(button, func) {
-    button.onclick = function() {
+  var bindEnv = function (button, func) {
+    button.onclick = function () {
       func();
     };
   };
   // 现在我们来编写具体处理业务逻辑代码
   var Todo1 = {
-    test1: function() {
+    test1: function () {
       alert("我是来做第一个测试的");
-    }
+    },
   };
   // 实现业务中的增删改操作
   var Menu = {
-    add: function() {
+    add: function () {
       alert("我是来处理一些增加操作的");
     },
-    del: function() {
+    del: function () {
       alert("我是来处理一些删除操作的");
     },
-    update: function() {
+    update: function () {
       alert("我是来处理一些更新操作的");
-    }
+    },
   };
   // 调用函数
   bindEnv(b1, Todo1.test1);
@@ -129,3 +130,55 @@ setCommand(b3, delBtn);
   // 更改按钮
   bindEnv(b4, Menu.update);
 })();
+
+{
+  // 宏命令
+
+  /**
+   *  宏命令是一组命令的集合，通过执行宏命令的方式，可以一次执行一批命令。
+   *  其实类似把页面的所有函数方法放在一个数组里面去，然后遍历这个数组，依次
+   *  执行该方法的。
+   */
+
+  var command1 = {
+    execute: function () {
+      console.log(1);
+    },
+  };
+  var command2 = {
+    execute: function () {
+      console.log(2);
+    },
+  };
+  var command3 = {
+    execute: function () {
+      console.log(3);
+    },
+  };
+  // 定义宏命令，command.add方法把子命令添加进宏命令对象，
+  // 当调用宏命令对象的execute方法时，会迭代这一组命令对象，
+  // 并且依次执行他们的execute方法。
+  var command = function () {
+    return {
+      commandsList: [],
+      add: function (command) {
+        this.commandsList.push(command);
+      },
+      execute: function () {
+        for (
+          var i = 0, commands = this.commandsList.length;
+          i < commands;
+          i += 1
+        ) {
+          this.commandsList[i].execute();
+        }
+      },
+    };
+  };
+  // 初始化宏命令
+  var c = command();
+  c.add(command1);
+  c.add(command2);
+  c.add(command3);
+  c.execute(); // 1,2,3
+}
