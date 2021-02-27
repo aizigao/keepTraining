@@ -4,7 +4,7 @@
   "description": "Example React Server-Side Rendering (SSR) application using react-grid-system and react-i18nify.",
   "main": "index.js",
   "scripts": {
-    "start": "node run.js",
+    "start": "nodemon node run.js",
     "lint": "eslint --ignore-path .gitignore --fix *.js components/**/*.jsx",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -42,6 +42,7 @@
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.19.0",
-    "eslint-plugin-react-hooks": "^2.5.0"
+    "eslint-plugin-react-hooks": "^2.5.0",
+    "nodemon": "^2.0.7"
   }
 }

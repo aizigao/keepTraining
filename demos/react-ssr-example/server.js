@@ -12,7 +12,10 @@ const app = express();
 const port = 3000;
 
 app.get('/bundle.js', (req, res) => {
-  browserify('./client.js', { debug: true }).transform(babelify).bundle().pipe(res);
+  browserify('./client.js', { debug: true })
+    .transform(babelify)
+    .bundle()
+    .pipe(res);
 });
 
 app.get('/', (req, res) => {
@@ -40,24 +43,28 @@ app.get('/', (req, res) => {
   console.info('react-grid-system example rendered server-side.');
 });
 
-
-app.get("/stream", (req, res) => {
+app.get('/stream', (req, res) => {
   const md = new MobileDetect(req.headers['user-agent']);
   let fallbackScreenClass = 'xxl';
   if (md.phone() !== null) fallbackScreenClass = 'xs';
   if (md.tablet() !== null) fallbackScreenClass = 'md';
 
-  res.write("<!DOCTYPE html><html><head><title>stream</title></head><body>");
-  res.write("<div id='app'>"); 
-  const stream = ReactDomServer.renderToNodeStream(<App fallbackScreenClass={fallbackScreenClass} />)
+  res.write('<!DOCTYPE html><html><head><title>stream</title></head><body>');
+  res.write("<div id='app'>");
+  const stream = ReactDomServer.renderToNodeStream(
+    <App fallbackScreenClass={fallbackScreenClass} />,
+  );
   stream.pipe(res, { end: false });
   stream.on('end', () => {
     res.write("</div><script src='bundle.js'></script></body></html>");
-    res.end()
+    res.end();
   });
 });
 
-
 app.listen(port, () => {
-  console.info('==> 🌎  Listening on port %s. Open up http://localhost:%s/ in your browser.', port, port);
+  console.info(
+    '==> 🌎  Listening on port %s. Open up http://localhost:%s/ in your browser.',
+    port,
+    port,
+  );
 });
