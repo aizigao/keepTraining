@@ -24,6 +24,7 @@ Container.of = (x) => {
   Container.prototype.map = function (f) {
     return Container.of(f(this.__value));
   };
+
   Container.of(2).map(function (two) {
     return two + 2;
   });
