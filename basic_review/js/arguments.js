@@ -11,7 +11,7 @@ var arrayLike = {
 // 读写
 console.log(array[0]) //name
 
-console.log(arrayLike[0]) //anme
+console.log(arrayLike[0]) //name
 array[0] = 'new name'
 arrayLike[0] = 'new name'
 
