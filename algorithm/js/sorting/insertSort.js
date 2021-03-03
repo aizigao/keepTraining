@@ -18,4 +18,4 @@ function insertionSort(array) {
   return array;
 }
 
-console.log(insertionSort(insertionSort(test)));
+console.log(insertionSort(test));
