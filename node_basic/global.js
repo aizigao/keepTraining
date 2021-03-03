@@ -29,9 +29,10 @@ console.log({ ...global });
 ****/
 
 //----- 模埠作用域下
-__filename; //绝地路径
+__filename; //绝对路径
 __dirname;
 
+console.log(__filename, __dirname);
 setInterval(() => {
   var d = new Date();
   console.log(

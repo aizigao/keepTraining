@@ -24,6 +24,14 @@ for item in range(5):
 print('----for range end')
 
 
+print('---for enumerate')
+
+for key, item in enumerate(['one', 'two', 'three', 'four']):
+    print('key is  %s, item is %s' % (key, item))
+
+print('---for enumerate end')
+
+
 # list comprehension.
 
 sqlist = []
@@ -33,10 +41,13 @@ print(sqlist)
 
 sqlist2 = [x*x for x in range(1, 11)]
 print(
+    # --
     'list comprehension.',
-    sqlist2)
+    sqlist2
+)
 
 sqlist3 = [x*x for x in range(1, 11) if x % 2 != 0]
+
 print(
     'list comprehension with filter',
     sqlist3)

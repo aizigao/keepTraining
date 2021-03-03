@@ -14,5 +14,7 @@ def sumOfN2(n):
     end_at = time.time()
     return [the_sum, "sum is requred %10.7f seconds"%(end_at - start_at)]
 
+
 print(sumOfN(1000))
 print(sumOfN2(1000))
+

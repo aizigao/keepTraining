@@ -6,4 +6,4 @@ def listsum(list):
     return list[0] + listsum(list[1:])
 
 
-print(listsum([2,4,6,8,10]))
+print(listsum([2, 4, 6, 8, 10]))

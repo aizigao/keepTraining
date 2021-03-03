@@ -4,6 +4,10 @@ Adapter lets classes work together that couldn't otherwise because of
 incompatible interfaces.
 """
 
+"""
+TODO: 这个例子有问题
+"""
+
 import abc
 
 

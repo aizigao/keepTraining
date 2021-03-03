@@ -53,7 +53,6 @@ class BinaryGate(LogicGate):
             else:
                 print("Cannot Connect: NO EMPTY PINS on this gate")
 
-
 class AndGate(BinaryGate):
 
     def __init__(self, n):

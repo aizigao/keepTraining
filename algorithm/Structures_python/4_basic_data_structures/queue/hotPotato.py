@@ -6,6 +6,7 @@ def hotPotato(namelist, num):
 
     for name in namelist:
         simqueue.enqueue(name)
+
     while simqueue.size() > 1:
 
         for i in range(num):

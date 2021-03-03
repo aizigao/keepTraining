@@ -17,6 +17,6 @@ def baseConverter(decNumber, base):
     return resString
 
 
-print(baseConverter(25,2))
-print(baseConverter(25,8))
-print(baseConverter(256,16))
+print(baseConverter(25, 2))
+print(baseConverter(25, 8))
+print(baseConverter(256, 16))

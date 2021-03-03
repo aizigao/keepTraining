@@ -57,6 +57,7 @@ class UnorderedList:
             else:
                 previous = current
                 current = current.getNext()
+
         if previous == None:
             self.head = current.getNext()
         else:
