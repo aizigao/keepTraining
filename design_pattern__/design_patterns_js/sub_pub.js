@@ -1,3 +1,4 @@
+// https://github.com/browserify/events/blob/main/events.js
 class Event {
   constructor() {
     this.subscribers = new Map([["any", []]]);
@@ -17,13 +18,13 @@ class Event {
   emit(content, type = "any") {
     const subs = this.subscribers;
     for (let fn of subs.get(type)) {
-      fn(content);
+      fn.apply(this, content);
     }
   }
   remove(removedFn, type = "any") {
     const subs = this.subscribers;
 
-    const newSub = subs.get(type).filter(fn => {
+    const newSub = subs.get(type).filter((fn) => {
       return fn !== removedFn;
     });
     subs.set(type, newSub);
@@ -31,10 +32,10 @@ class Event {
 }
 
 let event = new Event();
-const fn = str => {
+const fn = (str) => {
   console.log(str);
 };
-const fn2 = str => console.log("fn2" + str);
+const fn2 = (str) => console.log("fn2" + str);
 
 event.on(fn, "test");
 

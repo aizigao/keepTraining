@@ -1,14 +1,12 @@
-function deepCopy(obj) {
-  //判断是否是简单数据类型，
-  if (obj && typeof obj == "object") {
-    //复杂数据类型
-    var result = obj.constructor == Array ? [] : {};
-    for (let i in obj) {
-      result[i] = typeof obj[i] == "object" ? deepCopy(obj[i]) : obj[i];
-    }
-  } else {
-    //简单数据类型 直接 == 赋值
-    var result = obj;
+// 正则对象跟日期对象 没有处理
+function clone(obj) {
+  if (!obj && typeof obj !== "object") {
+    return;
   }
-  return result;
+  var newObj = obj.constructor === Object ? {} : [];
+  for (var key in obj) {
+    newObj[key] =
+      obj[key] && typeof obj[key] === "object" ? clone(obj[key]) : obj[key];
+  }
+  return newObj;
 }
