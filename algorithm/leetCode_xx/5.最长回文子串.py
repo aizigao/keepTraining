@@ -19,7 +19,9 @@ class Solution:
     # --- 3. Manacher 算法  TODO:
     def longestPalindrome(self, s: str) -> str:
         n = len(s)
-        dp = [([False] * n) for _ in range(n)]
+
+        # n * n dp list
+        dp = [ ([False] * n ) for _ in range(n)]
 
         ans = ""
         # 枚举子串的长度 l+1
