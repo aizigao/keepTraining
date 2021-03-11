@@ -22,7 +22,7 @@ f(x)=f(x−1)+f(x−2)
 class Solution:
     def climbStairs(self, n: int) -> int:
         #   p q r
-        # ->  p q r
+        # ->x p q r
         p, q, r = 0, 0, 1
 
         for i in range(n):

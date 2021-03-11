@@ -34,21 +34,58 @@ class Solution:
         Do not return anything, modify root in-place instead.
         """
 
-        preorderList = list()
+        preorderList = []
 
-        def preorderTraversal(root: TreeNode):
+        def preOrderTraversal(root):
             if not root:
                 return
             preorderList.append(root)
-            preorderTraversal(root.left)
-            preorderTraversal(root.right)
+            preOrderTraversal(root.left)
+            preOrderTraversal(root.right)
+        preOrderTraversal(root)
 
-        preorderTraversal(root)
+        n = len(preorderList)
+
+        for i in range(1, n):
+            prev, curr = preorderList[i-1], preorderList[i]
+            prev.left = None
+            prev.right = curr
+
+    # 迭代实现前序遍历
+    def flatten_2(self, root: TreeNode) -> None:
+        preorderList = list()
+
+        stack = list()
+        node = root
+        while node or stack:
+            while node:
+                # ---
+                preorderList.append(node)
+                # ---
+
+                stack.append(node)
+                node = node.left
+            node = stack.pop()
+            node = node.right
 
         size = len(preorderList)
-
         for i in range(1, size):
             prev, curr = preorderList[i - 1], preorderList[i]
             prev.left = None
             prev.right = curr
+
+    # 方法三：寻找前驱节点 O(n) / O(1) 这个不看了，
+    def flatten_3(self, root: TreeNode) -> None:
+        curr = root
+        while curr:
+            if curr.left:
+                predecessor = nxt = curr.left
+                while predecessor.right:
+                    predecessor = predecessor.right
+                predecessor.right = curr.right
+                curr.left = None
+                curr.right = nxt
+            curr = curr.right
+
+
 # @lc code=end
