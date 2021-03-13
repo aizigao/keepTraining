@@ -15,13 +15,13 @@ https://leetcode-cn.com/problems/longest-palindromic-substring/solution/zui-chan
 
 class Solution:
     # --- 1 动态规划 o
-    # -- 2. 中心扩展 TODO:
+    # -- 2. 中心扩展
     # --- 3. Manacher 算法  TODO:
     def longestPalindrome(self, s: str) -> str:
         n = len(s)
 
         # n * n dp list
-        dp = [ ([False] * n ) for _ in range(n)]
+        dp = [([False] * n) for _ in range(n)]
 
         ans = ""
         # 枚举子串的长度 l+1
