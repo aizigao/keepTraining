@@ -39,6 +39,9 @@
 ***/
 
 {
+  /**
+   * 限制set时的类型
+   */
   let numbers = [];
 
   numbers = new Proxy(numbers, {

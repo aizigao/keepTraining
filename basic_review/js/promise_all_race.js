@@ -2,7 +2,7 @@ let promise1 = Promise.resolve(1);
 let promise3 = Promise.resolve(3);
 let promise2 = Promise.resolve(2);
 
-Promise.myAll = function(promises) {
+Promise.myAll = function (promises) {
   return new Promise((resolve, reject) => {
     // -- promise is array ?
     if (!Array.isArray(promises)) {
@@ -14,14 +14,14 @@ Promise.myAll = function(promises) {
 
     for (let i = 0; i < len; i++) {
       Promise.resolve(promises[i]).then(
-        val => {
+        (val) => {
           counter += 1;
           result[i] = val;
           if (counter === len) {
             return resolve(result);
           }
         },
-        function(e) {
+        function (e) {
           return reject(e);
         }
       );
@@ -29,8 +29,8 @@ Promise.myAll = function(promises) {
   });
 };
 
-Promise.myRace = function(promises) {
-  return new Promise(function(resolve, reject) {
+Promise.myRace = function (promises) {
+  return new Promise(function (resolve, reject) {
     // -- promise is array ?
     if (!Array.isArray(promises)) {
       throw Error("arguments must be an Array");
@@ -38,10 +38,10 @@ Promise.myRace = function(promises) {
     var len = promises.length;
     for (let i = 0; i < len; i++) {
       Promise.resolve(promises[i]).then(
-        val => {
+        (val) => {
           resolve(val);
         },
-        function(e) {
+        function (e) {
           return reject(e);
         }
       );
@@ -52,9 +52,9 @@ Promise.myRace = function(promises) {
 let promiseAll = Promise.myAll([promise1, promise2, promise3]);
 let promiseRace = Promise.myRace([promise1, promise2, promise3]);
 
-promiseAll.then(res => {
+promiseAll.then((res) => {
   console.log(res);
 });
-promiseRace.then(res => {
+promiseRace.then((res) => {
   console.log(res);
 });

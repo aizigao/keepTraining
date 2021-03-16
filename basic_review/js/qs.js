@@ -1,37 +1,64 @@
+const listIt = (v) => {
+  if (Array.isArray(v)) {
+    return v;
+  }
+  return [v];
+};
 const myQs = {
   parse: (str) => {
     if (!str) {
       return {};
     }
-    return str.split("&").reduce((assem, cur) => {
-      const [key, valueEncoded] = cur.split("=");
 
-      let value = decodeURIComponent(valueEncoded).replace(/\+/g, " ");
-      if (/^(-)?[1-9]\d+$/.test(value)) {
-        value = Number(value);
-      } else if ("true" === value) {
-        value = true;
-      } else if ("false" === value) {
-        value = false;
-      } else if ("null" === value) {
-        value = null;
-      } else if ("undefined" === value) {
-        value = undefined;
+    return str.split("&").reduce((assem, singleStr) => {
+      let [key, value] = singleStr.split("=").map((i) => decodeURIComponent(i));
+
+      // 处理基本类型
+
+      // TODO: key值重复时，改为list
+      if (key in assem) {
       }
+
+      switch (true) {
+        // boolean
+        case value === "true":
+          value = true;
+          break;
+        case value === "false":
+          value = false;
+          break;
+        // nil
+        case value === "null":
+          value = null;
+          break;
+        case value === "undefined":
+          value = undefined;
+          break;
+        // number
+        case /^[-+]?\d+$/.test(value):
+          value = Number(value);
+          break;
+
+        // default
+        default:
+          value = value;
+      }
+
       return {
         ...assem,
-        [key]: value,
+        [key]: key in assem ? [...listIt(assem[key]), value] : value,
       };
     }, {});
   },
+
   stringify(obj) {
     const keys = Object.keys(obj);
-    const str = keys.reduce((assemStr, key) => {
-      const valueOrigin = obj[key];
-      value = encodeURIComponent(valueOrigin);
-      return assemStr + "&" + [key, value].join("=");
+    const rst = keys.reduce((assemStr, key) => {
+      const keyEncoded = encodeURIComponent(key);
+      const valueEncoded = encodeURIComponent(obj[key]);
+      return assemStr + [keyEncoded, valueEncoded].join("=");
     }, "");
-    return str.replace(/^&/, "");
+    return rst.replace(/^&/, "");
   },
 };
 
@@ -48,6 +75,6 @@ console.log(
 
 console.log(
   myQs.parse(
-    "string=xxxx&number=1234&boolean=true&object=%5Bobject%20Object%5D&nil1=null&nil2=undefined"
+    "string=xxxx&number=1234&boolean=true&object=%5Bobject%20Object%5D&nil1=null&nil2=undefined&test=test1&test=test2"
   )
 );

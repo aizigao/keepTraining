@@ -114,7 +114,7 @@ try {
   let proxy = new Proxy(map, {
     get(target, prop, receiver) {
       let value = Reflect.get(...arguments);
-      return typeof value == "function" ? value.bind(target) : value;
+      return typeof value === "function" ? value.bind(target) : value;
     },
   });
 

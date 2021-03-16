@@ -24,6 +24,7 @@ Function.prototype.myBind2 = function(obj){
         ))
     }
 }
+
 const t = {
     a: 23,
     bar() {
@@ -33,6 +34,6 @@ const t = {
 
 const xxx = {a:'xxx'}
 const a = 333
-const tt = t.bar.myBind2(xxx)
+const tt = t.bar.myBind(xxx)
 // t.bar()
 tt()

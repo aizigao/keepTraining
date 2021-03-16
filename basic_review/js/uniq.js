@@ -83,14 +83,14 @@ function uniq5(array) {
   return array
     .concat()
     .sort()
-    .filter(function(item, index, array) {
+    .filter(function (item, index, array) {
       return !index || item !== array[index - 1];
     });
 }
 
 function uni5(array) {
   var obj = {};
-  return array.filter(function(item, index, array) {
+  return array.filter(function (item, index, array) {
     return obj.hasOwnProperty(item) ? false : (obj[item] = true);
   });
 }
@@ -99,7 +99,7 @@ function uni5(array) {
 
 function uni5_1(array) {
   var obj = {};
-  return array.filter(function(item, index, array) {
+  return array.filter(function (item, index, array) {
     return obj.hasOwnProperty(typeof item + item)
       ? false
       : (obj[typeof item + item] = true);
@@ -108,7 +108,7 @@ function uni5_1(array) {
 
 function uniq5_2(array) {
   var obj = {};
-  return array.filter(function(item, index, array) {
+  return array.filter(function (item, index, array) {
     console.log(typeof item + JSON.stringify(item));
     return obj.hasOwnProperty(typeof item + JSON.stringify(item))
       ? false
@@ -159,5 +159,5 @@ var array = [
   /a/,
   /a/,
   NaN,
-  NaN
+  NaN,
 ];

@@ -14,4 +14,4 @@ obj[Symbol.iterator] = function () {
   };
 };
 
-console.log(obj);
+onsole.log(obj);

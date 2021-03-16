@@ -29,6 +29,7 @@ function compose(middleware) {
         return Promise.reject(err);
       }
     }
+
     return dispatch(0);
   };
 }

@@ -1,6 +1,8 @@
 var value = "global";
 
-// eg.1 
+// tdz
+
+// eg.1
 (function () {
   console.log(value); // Cannot access 'value' before initialization
 
