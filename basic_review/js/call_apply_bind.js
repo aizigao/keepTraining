@@ -1,6 +1,6 @@
 {
   var foo = {
-    value: 1
+    value: 1,
   };
 
   function bar(a) {
@@ -33,7 +33,7 @@ foo.bar(); // 1
 删除该函数
  **/
 
-Function.prototype.myCall = function(context) {
+Function.prototype.myCall = function (context) {
   var context = context || window;
   context.fn = this;
   var args = [];
@@ -50,7 +50,7 @@ Function.prototype.myCall = function(context) {
 const re = bar.myCall(foo, "xxx");
 console.log({ re });
 
-Function.prototype.myApply = function(context, arr) {
+Function.prototype.myApply = function (context, arr) {
   var context = Object(context) || window;
   context.fn = this;
 
@@ -69,7 +69,7 @@ Function.prototype.myApply = function(context, arr) {
   return result;
 };
 
-Function.prototype.myBind = function(context) {
+Function.prototype.myBind = function (context) {
   const fn = this;
   if (typeof this !== "function") {
     throw new Error(
@@ -77,7 +77,7 @@ Function.prototype.myBind = function(context) {
     );
   }
   var args = Array.prototype.slice.call(arguments, 1);
-  return function() {
+  return function () {
     var bindArgs = Array.prototype.slice.call(arguments);
     return fn.apply(context, args.concat(bindArgs));
   };
@@ -89,7 +89,7 @@ Function.prototype.myBind = function(context) {
 var value = 2;
 
 var foo = {
-  value: 1
+  value: 1,
 };
 
 function bar(name, age) {
@@ -111,13 +111,13 @@ console.log(obj.habit);
 console.log(obj.friend);
 // shopping
 // kevin
-Function.prototype.bind2 = function(context) {
+Function.prototype.bind2 = function (context) {
   var self = this;
   var args = Array.prototype.slice.call(arguments, 1);
 
-  var fNOP = function() {};
+  var fNOP = function () {};
 
-  var fBound = function() {
+  var fBound = function () {
     var bindArgs = Array.prototype.slice.call(arguments);
     // 当作为构造函数时，this 指向实例，此时结果为 true，将绑定函数的 this 指向该实例，可以让实例获得来自绑定函数的值
     // 以上面的是 demo 为例，如果改成 `this instanceof fBound ? null : context`，实例只是一个空对象，将 null 改成 this ，实例会具有 habit 属性
