@@ -3,28 +3,47 @@
 // fibo[i] = fibo[i-1] + fibo[i-2]
 // 0 1 1 2 3 5 8 13 21
 
+const getFibonacciDp = (n) => {
+  let p = 0;
+  let q = 1;
+  // p q r
+  //   p q
+  let ans = [p, q];
+  for (let i = 2; i < n; i++) {
+    const r = p + q;
+    ans.push(r);
+    p = q;
+    q = r;
+  }
+  return ans;
+};
 
-const getFibonacci=(n)=>{
-    let fibarr = []
-    let i = 0
+const getFibonacci = (n) => {
+  let fibarr = [];
+  let i = 0;
 
-    // 正向创建
-    while(i < n){
-        if(i <= 1){
-            fibarr.push(i)
-        }else{
-            fibarr.push(fibarr[i-1] + fibarr[i-2])
-        }
-        i++
+  // 正向创建
+  while (i < n) {
+    if (i <= 1) {
+      fibarr.push(i);
+    } else {
+      fibarr.push(fibarr[i - 1] + fibarr[i - 2]);
     }
-    return fibarr
-}
+    i++;
+  }
+  return fibarr;
+};
 
+console.log("xxx", getFibonacciDp(5));
+console.log("xxx", getFibonacci(5));
+console.log("xxx", getFibonacciDp(7));
+console.log("xxx", getFibonacci(7));
 
 // https://codepen.io/Jack_Pu/pen/LRaxZB
 // /**************
 //  * @example
-var canvas = document.querySelector('canvas');
+/**
+var canvas = document.querySelector("canvas");
 
 canvas.width = 600;
 canvas.height = 480;
@@ -34,62 +53,67 @@ var coor = {
   y: 240,
 };
 
-var ctx = canvas.getContext('2d');
+var ctx = canvas.getContext("2d");
 
-function draw(r, n ,prevR) {
-   if(n>2) {
-     switch(n%4) {
-      case 0 :
+function draw(r, n, prevR) {
+  if (n > 2) {
+    switch (n % 4) {
+      case 0:
         coor.y = coor.y - 5 * prevR;
         coor.y = coor.y + 5 * r;
 
         break;
-      case 1 :
+      case 1:
         coor.x = coor.x + 5 * prevR;
         coor.x = coor.x - 5 * r;
         break;
-      case 2 :
+      case 2:
         coor.y = coor.y + 5 * prevR;
         coor.y = coor.y - 5 * r;
         break;
-      case 3 :
+      case 3:
         coor.x = coor.x - 5 * prevR;
         coor.x = coor.x + 5 * r;
         break;
     }
   }
   ctx.beginPath();
-  ctx.arc(coor.x,coor.y,5*r,Math.PI*0.5*(n),Math.PI*0.5*(n-1),true);
-  if(n>1) {
-     switch(n%4) {
-      case 0 :
-        ctx.moveTo(coor.x - 5*r,coor.y);
+  ctx.arc(
+    coor.x,
+    coor.y,
+    5 * r,
+    Math.PI * 0.5 * n,
+    Math.PI * 0.5 * (n - 1),
+    true
+  );
+  if (n > 1) {
+    switch (n % 4) {
+      case 0:
+        ctx.moveTo(coor.x - 5 * r, coor.y);
 
         break;
-      case 1 :
-        ctx.moveTo(coor.x,coor.y + 5*r);
+      case 1:
+        ctx.moveTo(coor.x, coor.y + 5 * r);
         break;
-      case 2 :
-       ctx.moveTo(coor.x + 5*r,coor.y);
+      case 2:
+        ctx.moveTo(coor.x + 5 * r, coor.y);
         break;
-      case 3 :
-        ctx.moveTo(coor.x,coor.y-5*r);
+      case 3:
+        ctx.moveTo(coor.x, coor.y - 5 * r);
         break;
     }
   }
 
   ctx.lineWidth = 1;
-  ctx.strokeStyle = '#fff';
+  ctx.strokeStyle = "#fff";
   ctx.stroke();
 }
 
-
 var data = getFibonacci(10);
 
-for(var i = 0,l=data.length;i<l;i++) {
-  if(data[i]!=0) {
-    draw(data[i],i,data[i-1]);
-
+for (var i = 0, l = data.length; i < l; i++) {
+  if (data[i] != 0) {
+    draw(data[i], i, data[i - 1]);
   }
 }
 

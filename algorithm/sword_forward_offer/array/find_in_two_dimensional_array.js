@@ -11,12 +11,13 @@
 const test = [
   [1, 2, 3, 4, 5],
   [6, 7, 8, 9, 10],
-  [11, 12, 13, 14, 15][(16, 17, 18, 19, 20)]
+  [11, 12, 13, 14, 15],
+  [16, 17, 18, 19, 20],
 ];
 
 const find = (arr, target) => {
   const rows = arr.length - 1;
-  const cols = arr[0].length - 1
+  const cols = arr[0].length - 1;
 
   let i = rows;
   let j = 0;
