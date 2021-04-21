@@ -1,5 +1,7 @@
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS `BugStatus`;
 CREATE TABLE BugStatus (status VARCHAR(20) PRIMARY KEY);
-# 
+DROP TABLE IF EXISTS `Bugs`;
 CREATE TABLE Bugs (
     bug_id SERIAL PRIMARY KEY,
     date_reported DATE NOT NULL,
@@ -18,6 +20,7 @@ CREATE TABLE Bugs (
     FOREIGN KEY (status) REFERENCES BugStatus(status)
 );
 #
+DROP TABLE IF EXISTS `Comments`;
 CREATE TABLE Comments (
     comment_id SERIAL PRIMARY KEY,
     bug_id BIGINT UNSIGNED NOT NULL,
@@ -27,6 +30,7 @@ CREATE TABLE Comments (
     FOREIGN KEY (bug_id) REFERENCES Bugs(bug_id),
     FOREIGN KEY (author) REFERENCES Accounts(account_id)
 );
+DROP TABLE IF EXISTS `Screenshots`;
 CREATE TABLE Screenshots (
     bug_id BIGINT UNSIGNED NOT NULL,
     image_id BIGINT UNSIGNED NOT NULL,
@@ -35,20 +39,33 @@ CREATE TABLE Screenshots (
     PRIMARY KEY (bug_id, image_id),
     FOREIGN KEY (bug_id) REFERENCES Bugs(bug_id)
 );
+DROP TABLE IF EXISTS `Tags`;
 CREATE TABLE Tags (
     bug_id BIGINT UNSIGNED NOT NULL,
     tag VARCHAR(20) NOT NULL,
     PRIMARY KEY (bug_id, tag),
     FOREIGN KEY (bug_id) REFERENCES Bugs(bug_id)
 );
+DROP TABLE IF EXISTS `Products`;
 CREATE TABLE Products (
     product_id SERIAL PRIMARY KEY,
     product_name VARCHAR(50)
 );
+DROP TABLE IF EXISTS `BugsProducts`;
 CREATE TABLE BugsProducts(
     bug_id BIGINT UNSIGNED NOT NULL,
     product_id BIGINT UNSIGNED NOT NULL,
     PRIMARY KEY (bug_id, product_id),
     FOREIGN KEY (bug_id) REFERENCES Bugs(bug_id),
     FOREIGN KEY (product_id) REFERENCES Products(product_id)
+);
+CREATE TABLE Accounts (
+    account_id SERIAL PRIMARY KEY,
+    account_name VARCHAR(20),
+    first_name VARCHAR(20),
+    last_nameVARCHAR(20),
+    emailVARCHAR(100),
+    password_hash CHAR(64),
+    portrait_image BLOB,
+    hourly_rate NUMERIC(9, 2)
 );

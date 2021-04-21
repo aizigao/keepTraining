@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      .box {
+        width: 200px;
+        height: 200px;
+        border: 1px solid #ddd;
+      }
+      .green {
+        background-color: green;
+      }
+      .red {
+        background-color: red;
+      }
+      .yellow {
+        background-color: yellow;
+      }
+      .small {
+        width: 100px;
+        height: 100px;
+      }
+      .wrapper {
+        width: 100%;
+        height: 320px;
+        background-color: lightgreen;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper" id="wrapperx">
+      <div class="box red"></div>
+      <p>
+        dfsdfdsfsdafadfadfadfasdfasdfasdklj;dfjadfadfasdfasdfadfadfjkjdfadfadf
+      </p>
+      <p>
+        dfsdfdsfsdafadfadfadfasdfasdfasdklj;dfjadfadfasdfasdfadfadfjkjdfadfadf
+      </p>
+      <p>
+        dfsdfdsfsdafadfadfadfasdfasdfasdklj;dfjadfadfasdfasdfadfadfjkjdfadfadf
+      </p>
+      <div class="box green"></div>
+      <p>
+        dfsdfdsfsdafadfadfadfasdfasdfasdklj;dfjadfadfasdfasdfadfadfjkjdfadfadf
+      </p>
+      <div class="box red">
+        <div class="small yellow"></div>
+        <p>
+          dfsdfdsfsdafadfadfadfasdfasdfasdklj;dfjadfadfasdfasdfadfadfjkjdfadfadf
+        </p>
+      </div>
+      <p>
+        dfsdfdsfsdafadfadfadfasdfasdfasdklj;dfjadfadfasdfasdfadfadfjkjdfadfadf
+      </p>
+      <p>
+        dfsdfdsfsdafadfadfadfasdfasdfasdklj;dfjadfadfasdfasdfadfadfjkjdfadfadf
+      </p>
+    </div>
+    <script>
+      const $$ = (qsS) => [...document.querySelectorAll(qsS)];
+      const $ = (qsS) => document.querySelector(qsS);
+
+      const firstWraper = document.querySelector("#wrapperx");
+      let count = 0;
+
+      const splitDomByWrapper = ($wrapper) => {
+        const rect = $wrapper.getBoundingClientRect();
+        const { x, y, width, height } = rect;
+        count += 1;
+        const poses = [
+          [x + width, y + height], // right ele
+          [(x + width) / 2, y + height], // center ele
+          [x, y + height], // left ele
+        ];
+        const $eles = poses.map((pos) => {
+          return document.elementFromPoint(...pos);
+        });
+        const $firstOverFlowEle = $eles.filter(($ele) =>
+          $wrapper.contains($ele)
+        )[0];
+        console.log({ $eles, poses, $wrapper });
+        if (!$firstOverFlowEle) {
+          // 停止
+          return;
+        }
+
+        let isTouchOverFlowEle = false;
+        const $nextWrapper = document.createElement("div");
+        $nextWrapper.classList.add("wrapper");
+        [...$wrapper.children].forEach((element) => {
+          if (element === $firstOverFlowEle) {
+            isTouchOverFlowEle = true;
+          }
+          if (!isTouchOverFlowEle) {
+            return;
+          }
+          // 移除
+          $wrapper.removeChild(element);
+          $nextWrapper.appendChild(element);
+        });
+        if ([...$nextWrapper.children].length) {
+          $wrapper.parentNode.appendChild($nextWrapper);
+          splitDomByWrapper($nextWrapper);
+        }
+      };
+      splitDomByWrapper(firstWraper);
+    </script>
+  </body>
+</html>
