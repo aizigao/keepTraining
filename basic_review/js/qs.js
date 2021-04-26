@@ -15,10 +15,6 @@ const myQs = {
 
       // 处理基本类型
 
-      // TODO: key值重复时，改为list
-      if (key in assem) {
-      }
-
       switch (true) {
         // boolean
         case value === "true":
@@ -56,7 +52,7 @@ const myQs = {
     const rst = keys.reduce((assemStr, key) => {
       const keyEncoded = encodeURIComponent(key);
       const valueEncoded = encodeURIComponent(obj[key]);
-      return assemStr + [keyEncoded, valueEncoded].join("=");
+      return assemStr + "&" + [keyEncoded, valueEncoded].join("=");
     }, "");
     return rst.replace(/^&/, "");
   },
