@@ -4,6 +4,17 @@ import arg from 'arg'
 import { promisify } from 'util'
 import { createProject } from './main'
 
+import figlet from 'figlet'
+
+figlet('MY_CLI', function (err, data) {
+  if (err) {
+    console.log('Something went wrong...')
+    console.dir(err)
+    return
+  }
+  console.log(data)
+})
+
 function parseArgumentsIntoOptions(rawArgs) {
   const args = arg(
     {
