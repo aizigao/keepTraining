@@ -4,7 +4,7 @@ import arg from 'arg'
 import { promisify } from 'util'
 import { createProject } from './main'
 
-function parseArgumentsIntoOptions (rawArgs) {
+function parseArgumentsIntoOptions(rawArgs) {
   const args = arg(
     {
       '--git': Boolean,
@@ -12,26 +12,26 @@ function parseArgumentsIntoOptions (rawArgs) {
       '--install': Boolean,
       '-g': '--git',
       '-y': '--yes',
-      '-i': '--install'
+      '-i': '--install',
     },
     {
-      argv: rawArgs.slice(2)
+      argv: rawArgs.slice(2),
     }
   )
   return {
     skipPrompts: args['--yes'] || false,
     git: args['--git'] || false,
     template: args._[0],
-    runInstall: args['--install'] || false
+    runInstall: args['--install'] || false,
   }
 }
 
-async function promptForMissingOptions (options) {
+async function promptForMissingOptions(options) {
   const defaultTemplate = 'JavaScript'
   if (options.skipPrompts) {
     return {
       ...options,
-      template: options.template || defaultTemplate
+      template: options.template || defaultTemplate,
     }
   }
 
@@ -42,7 +42,7 @@ async function promptForMissingOptions (options) {
       name: 'template',
       message: 'Please choose which project template to use',
       choices: ['JavaScript', 'TypeScript'],
-      default: defaultTemplate
+      default: defaultTemplate,
     })
   }
 
@@ -51,7 +51,7 @@ async function promptForMissingOptions (options) {
       type: 'confirm',
       name: 'git',
       message: 'Initialize a git repository?',
-      default: false
+      default: false,
     })
   }
 
@@ -59,11 +59,11 @@ async function promptForMissingOptions (options) {
   return {
     ...options,
     template: options.template || answers.template,
-    git: options.git || answers.git
+    git: options.git || answers.git,
   }
 }
 
-export async function cli (args) {
+export async function cli(args) {
   let options = parseArgumentsIntoOptions(args)
   options = await promptForMissingOptions(options)
   await createProject(options)
