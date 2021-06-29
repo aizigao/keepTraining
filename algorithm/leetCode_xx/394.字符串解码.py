@@ -35,6 +35,9 @@ class Solution:
             else:
                 rst += c
         return rst
+    """
+    方法二：递归
+    """
 
 
 # @lc code=end
