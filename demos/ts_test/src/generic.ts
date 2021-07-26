@@ -26,8 +26,8 @@ interface GenericIdentityFn {
 // class
 
 class GenericNumber<T> {
-  zeroValue: T;
-  add: (x: T, y: T) => T;
+  zeroValue: T | undefined;
+  add: ((x: T, y: T) => T) | undefined;
 }
 
 let myGenericNumber = new GenericNumber<number>();
