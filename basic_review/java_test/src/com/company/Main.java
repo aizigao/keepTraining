@@ -1,5 +1,7 @@
 package com.company;
 
+// written by James Gosling and Henry McGilton.
+
 import java.util.Scanner;
 
 public class Main {
