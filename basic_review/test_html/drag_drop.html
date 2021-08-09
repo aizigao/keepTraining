@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .drop {
+        width: 100px;
+        height: 100px;
+        background-color: green;
+        border: 1px solid #ddd;
+      }
+      #p1 {
+        border: 1px solid #999;
+        padding: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <p id="p1" draggable="true">This element is draggable.</p>
+    <div class="drop" id="drop"></div>
+    <script>
+      // define darg image
+      const img = new Image();
+      img.src = "./assets/y.jpg";
+
+      window.addEventListener("DOMContentLoaded", () => {
+        // Get the element by id
+        const element = document.getElementById("p1");
+        // Add the ondragstart event listener
+        function dragstart_handler(ev) {
+          console.log("dragStart", ev);
+          // Add the target element's id to the data transfer object
+          ev.dataTransfer.setData("text/plain", ev.target.id);
+
+          // void dataTransfer.setDragImage(img | element, xOffset, yOffset);
+          ev.dataTransfer.setDragImage(img, 10, 10);
+          ev.dataTransfer.dropEffect = "move";
+        }
+        element.addEventListener("dragstart", dragstart_handler);
+        element.addEventListener("dragend", (ev) => {
+          console.log("dragend", ev);
+        });
+
+        // ----
+        const dropEle = document.getElementById("drop");
+        dropEle.addEventListener("drop", (ev) => {
+          console.log("ondrop", ev);
+          ev.preventDefault();
+          // Get the data, which is the id of the drop target
+          var data = ev.dataTransfer.getData("text");
+          ev.target.appendChild(document.getElementById(data).cloneNode(true));
+        });
+        dropEle.addEventListener("dragover", (ev) => {
+          ev.preventDefault();
+          console.log("dragover", ev);
+        });
+        dropEle.addEventListener("dragenter", (ev) => {
+          ev.preventDefault();
+          console.log("dragenter", ev);
+        });
+        dropEle.addEventListener("dragleave", (ev) => {
+          ev.preventDefault();
+          console.log("dragleave", ev);
+        });
+      });
+    </script>
+  </body>
+</html>
