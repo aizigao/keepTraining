@@ -4,16 +4,17 @@ const fs = require("fs");
 
 const code = `
   const moment = require('moment');
-  var a = 1;
+  var o = 1;
   const b = 2;
   function log (x, y = 'World') {
-    console.log('a')
-    console.log(a, x, y);
+    console.log('o')
+    console.log(o, x, y);
   }
 `;
 
 const AST = $(code);
-const rst = AST.replace("a", "ccccc").generate();
+console.log(AST);
+const rst = AST.replace("o", "ccccc").generate();
 console.log(rst);
 // console.log(AST);
 
