@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #fake-input {
+        width: auto;
+        display: inline-block;
+        line-height: 32px;
+        height: 100%;
+        min-width: 120px;
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+      #fake-input:focus {
+        box-shadow: none;
+      }
+      .fake-input-wrap {
+        overflow: hidden;
+        width: 120px;
+        height: 32px;
+        border: 1px solid #ddd;
+      }
+      .fake-input-wrap.focus {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="fake-input-wrap">
+      <div id="fake-input" contenteditable="plaintext-only">Test</div>
+    </div>
+    <script>
+      function ready(fn) {
+        if (document.readyState != "loading") {
+          fn();
+        } else {
+          document.addEventListener("DOMContentLoaded", fn);
+        }
+      }
+      ready(() => {
+        var elemDiv = document.getElementById("fake-input");
+        var eleWrap = elemDiv.parentElement;
+        elemDiv.onfocus = () => {
+          eleWrap.classList.add("focus");
+        };
+        elemDiv.onblur = function () {
+          console.log("text大小", elemDiv.clientWidth + "px");
+          eleWrap.classList.remove("focus");
+        };
+      });
+    </script>
+  </body>
+</html>
