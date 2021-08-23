@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #container {
+      }
+
+      #nested {
+        height: 50px;
+        overflow-y: scroll;
+        border: 1px solid blue;
+        overscroll-behavior: contain;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      <div id="nested">
+        test<br />
+        test b<br />
+        test<br />
+        test c<br />
+        test<br />
+        test<br />
+        test<br />
+        test b<br />
+        test<br />
+        test c<br />
+        test<br />
+        test<br />
+        test<br />
+        test b<br />
+        test<br />
+        test c<br />
+        test<br />
+        test<br />
+      </div>
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+      outside<br />
+    </div>
+
+    <script>
+      const handleScroll = async (event) => {
+        await new Promise((resolve) => window.requestAnimationFrame(resolve));
+        const ele = event.target;
+        const { scrollTop, scrollLeft, scrollHeight, clientHeight } = ele;
+        const atTop = scrollTop === 0;
+        const beforeTop = 1;
+        const atBottom = scrollTop === scrollHeight - clientHeight;
+        const beforeBottom = scrollHeight - clientHeight - 1;
+
+        if (atTop) {
+          ele.scrollTo(scrollLeft, beforeTop);
+        } else if (atBottom) {
+          ele.scrollTo(scrollLeft, beforeBottom);
+        }
+      };
+      const innerScroll = document.getElementById("nested");
+      innerScroll.addEventListener("scroll", handleScroll);
+    </script>
+  </body>
+</html>
