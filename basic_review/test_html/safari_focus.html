@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" class="mobile-search" name="term" />
+    <div class="mobile-search">button</div>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+    <script>
+      $(() => {
+        $(".mobile-search").click(function () {
+          $("input[name='term']").trigger("focus");
+        });
+        $(".mobile-search").click();
+				// $("input[name='term']").trigger("focus");
+      });
+    </script>
+  </body>
+</html>

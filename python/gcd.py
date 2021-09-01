@@ -11,4 +11,4 @@ def gcd(m,n):
         n = m % n
     return n
 
-print(gcd(20,10))
+print(gcd(40,10))
