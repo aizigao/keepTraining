@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders with or without a name 3`] = `"<h1>Hello, Margaret!</h1>"`;
+
+exports[`renders with or without a name: "<h1>Hello, Margaret!</h1>" 1`] = `"<h1>Hello, Margaret!</h1>"`;
