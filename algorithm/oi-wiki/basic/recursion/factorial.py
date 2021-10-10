@@ -8,4 +8,14 @@ def factrial(n):
         return n * factrial(n - 1)
 
 
-print(factrial(int(input('please input a number: \n'))))
+# 从底到上的 非递归式
+def factrial2(n):
+    rst = 1
+    for i in range(2, n + 1):
+        rst = rst * i
+    return rst
+
+
+num = int(input('please input a number: \n'))
+print(factrial(num))
+print(factrial2(num))
