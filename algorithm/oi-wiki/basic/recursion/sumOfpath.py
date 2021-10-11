@@ -28,4 +28,50 @@ root = [10,5,-3,3,2,null,11,3,-2,null,1], sum = 8
 3. -3 -> 11
 '''
 
+tree = {
+    # --
+    'val': 10,
+    "left": {
+        "val": 5,
+        "left": {
+            "val": 3,
+            "left": {
+                "val": 3,
+            },
+            "right": {
+                "val": -2,
+            }
+        },
+        "right": {
+            "val": 2,
+            "right": {
+                "val": 1,
+            }
+        }
+    },
+    "right": {
+        "val": -3,
+        "right": {
+            "val": 11,
+        }
+    }
+}
 
+# TODO: xxx
+
+
+def pathSum(root, sum):
+    if not root:
+        return 0
+    return count(root, sum) + pathSum(root.left, sum) + pathSum(
+        root.right, sum)
+
+
+def count(node, sum):
+    if not node:
+        return 0
+    return (node.val == sum) + count(node.left, sum - node.val) + count(
+        node.right, sum - node.val)
+
+
+print(pathSum(tree, 8))
