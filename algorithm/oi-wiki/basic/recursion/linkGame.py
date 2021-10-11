@@ -100,10 +100,10 @@ def linkGame(now, end):
     search(now_x, now_y, end_x, end_y, 0, -1)
 
     if minStep < float('inf'):
-        print('拐了%d的湾，走了%d步' % (minStep, len(target_path)))
-        print('路径', target_path)
+        print('拐了%d的弯，走了%d步, 到了 %s' % (minStep, len(target_path), str(end)))
+        print('行走路径%s' % (str(target_path)))
     else:
-        print('不能到达')
+        print('不能到达 %s\n' % str(end))
 
 
 test1 = [[2, 3], [5, 3]]
