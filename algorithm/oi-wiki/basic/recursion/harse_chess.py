@@ -1,3 +1,8 @@
+'''
+中国象棋里，给定马初始点，和目标点，算步骤
+'''
+
+
 def guess(housePos, generalPos, maxDepth):
     # board = [[' ' for j in range(0, w)] for i in range(0, h)]
     minStep = float('inf')
