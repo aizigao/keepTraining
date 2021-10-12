@@ -5,10 +5,12 @@ def guess(housePos, generalPos, maxDepth):
     curPath = []
     walkSet = set()
 
+    # 是否在棋盘上
     def inBoard(pos):
         (x, y) = pos
         return x > -1 and x < w and y > -1 and y < h
 
+    # 方向
     dirs = [
         # --
         (1, 2),
