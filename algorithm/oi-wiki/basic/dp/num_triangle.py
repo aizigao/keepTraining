@@ -72,7 +72,6 @@ def maxSum3():
                 dp[j],
                 dp[j+1]
             )
-            j += 1
         i -= 1
     return dp[0]
 
