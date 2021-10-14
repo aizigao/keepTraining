@@ -16,6 +16,23 @@ def factrial2(n):
     return rst
 
 
+# 模拟栈
+def factrial_dummy_stack(n):
+    s = []
+
+    s.append(n)
+    rst = 1
+    while s:
+        nn = s.pop()
+        if nn == 0:
+            break
+        else:
+            rst *= nn
+            s.append(nn - 1)
+    return rst
+
+
 num = int(input('please input a number: \n'))
 print(factrial(num))
 print(factrial2(num))
+print(factrial_dummy_stack(num))
