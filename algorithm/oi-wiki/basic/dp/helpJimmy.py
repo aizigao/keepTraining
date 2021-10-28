@@ -34,9 +34,9 @@ data = [
 '''
 
 # 初始化数据
-leftMinTime = [-1 for i in range(0, max_n + 10)]
+leftMinTimeOfK = [-1 for i in range(0, max_n + 10)]
 # rightMinTime = [-1 for i in range(0, max_n + 10)]
-L = [-1 for i in range(0, max_n + 10)]
+rightMinTimeOfK = [-1 for i in range(0, max_n + 10)]
 n = len(data)
 platForms = [{"Lx": X, "Rx": X, "h": Y}]
 for (idx, item) in enumerate(data):
@@ -72,14 +72,14 @@ def minTime(k, bLeft):
     nLeftTime = y - platForms[i]['h'] + x - platForms[i]['Lx']
     nRightTime = y - platForms[i]['h'] + platForms[i]['Rx'] - x
 
-    if leftMinTime[i] == -1:
-        leftMinTime[i] = minTime(i, True)
+    if leftMinTimeOfK[i] == -1:
+        leftMinTimeOfK[i] = minTime(i, True)
 
-    if L[i] == -1:
-        L[i] = minTime(i, False)
+    if rightMinTimeOfK[i] == -1:
+        rightMinTimeOfK[i] = minTime(i, False)
 
-    nLeftTime += leftMinTime[i]
-    nRightTime += L[i]
+    nLeftTime += leftMinTimeOfK[i]
+    nRightTime += rightMinTimeOfK[i]
 
     if nLeftTime < nRightTime:
         return nLeftTime
