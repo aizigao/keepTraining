@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://cdn.jsdelivr.net/npm/svga/dist/index.min.js"></script>
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+
+        <script>
+        window.onload = async ()=>{ 
+            const  { Parser, Player } = window.SVGA;
+            const parser = new Parser()
+            const svga = await parser.load('/assets/xx.svga')
+
+            const player = new Player(document.getElementById('canvas'))
+            await player.mount(svga)
+
+            player.onStart = () => console.log('onStart')
+            player.onResume = () => console.log('onResume')
+            player.onPause = () => console.log('onPause')
+            player.onStop = () => console.log('onStop')
+            player.onProcess = () => console.log('onProcess', player.progress)
+            player.onEnd = () => console.log('onEnd')
+
+            // 开始播放动画
+            player.start()
+        }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #BgVideo{
+            width: 320px;
+            height: 240px;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <!-- 
+        muted ios 在静音时才能自动播放
+        'x-webkit-airplay':true,  //设置允许设备播放
+                'x5-playsinline':true, // 设置android在微信中内联播放视频
+                'playsinline':true,
+                'preload':"auto",
+                'x5-video-player-type':'h5-page', // 关闭同层X5内核播放器    x5-video-player-type='h5' 启用Ｈ5同层播放器
+                'x5-video-player-fullscreen':false,
+                '-webkit-playsinline':true,
+                'tabindex':'-1',
+                'x5-video-orientation':"portraint" //控制横竖屏 可选值： landscape 横屏, portraint竖屏  默认值：portraint -->
+
+    <video id="BgVideo" src='https://iotcdn.cdnjtzy.com/ty-website/video/short.mp4'
+        muted 
+        autoplay
+        controls
+        playsinline
+        x-webkit-airplay='true'
+        x5-playsinline='true'
+        preload="auto"
+        x5-video-player-type="h5-page"
+        x5-video-player-fullscreen="false" 
+        x5-video-orientation="portraint" 
+        -webkit-playsinline=true
+        tabindex=-1
+     >
+    <script>
+        var bgvideo = document.getElementById("BgVideo");
+        bgvideo.oncanplay = ()=>{
+            bgvideo.muted = true;
+            bgvideo.play();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            #output {
+                width: 320px;
+                height: 240px;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="output"></canvas>
+
+        <script>
+            /**
+             * safari 不支持 captureStream, 自动播放有问题 
+             * android 移动端浏览器，对 video 标签 会劫持, 体检受限制
+             */
+            (async () => {
+                const source = document.createElement("video");
+                source.crossOrigin = "anonymous";
+                source.muted = true;
+                source.loop = true;
+                // source.autoplay = true;
+                // source.src =
+                // "https://upload.wikimedia.org/wikipedia/commons/a/a4/BBH_gravitational_lensing_of_gw150914.webm";
+                source.src =
+                    "https://iotcdn.cdnjtzy.com/ty-website/video/short.mp4";
+                await source.play();
+
+                const player = document.createElement("video");
+                player.muted = true;
+                const output = document.getElementById("output");
+                const ctx = output.getContext("2d");
+
+                const stream =
+                    (source.captureStream && source.captureStream()) ||
+                    source.mozCaptureStream();
+
+                player.addEventListener(
+                    "loadedmetadata",
+                    (evt) => {
+                        output.width = player.videoWidth;
+                        output.height = player.videoHeight;
+                        requestAnimationFrame(loop);
+                    },
+                    { once: true }
+                );
+                player.srcObject = stream;
+                player.play();
+
+                function loop() {
+                    ctx.drawImage(player, 0, 0);
+                    if (!source.paused) {
+                        requestAnimationFrame(loop);
+                    }
+                }
+            })().catch(console.error);
+        </script>
+    </body>
+</html>
