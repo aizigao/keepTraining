@@ -33,12 +33,15 @@ data = [
 -- output -----> 23
 '''
 
-# 初始化数据
+# 初始化dp数据
 leftMinTimeOfK = [-1 for i in range(0, max_n + 10)]
-# rightMinTime = [-1 for i in range(0, max_n + 10)]
 rightMinTimeOfK = [-1 for i in range(0, max_n + 10)]
+
 n = len(data)
 platForms = [{"Lx": X, "Rx": X, "h": Y}]
+
+
+# 初始数据毕按 h 排序
 for (idx, item) in enumerate(data):
     platForms.append({"Lx": item[0], "Rx": item[1], "h": item[2]})
 platForms = sorted(platForms, key=lambda i: i['h'], reverse=True)
@@ -58,11 +61,13 @@ def minTime(k, bLeft):
             break
         i += 1
 
+
     # 板子k左端正下方有别的板
     if i <= n:
         if y - platForms[i]['h'] > maxHeight:
             return inf
-    # 板子k左端正下方没有别的板
+
+    # i<=n 板子k左端正下方没有别的板
     else:
         if y > maxHeight:
             return inf
