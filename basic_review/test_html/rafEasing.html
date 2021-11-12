@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .test {
+                height: 2000px;
+                background: linear-gradient(
+                    to bottom,
+                    orange,
+                    yellow,
+                    green,
+                    cyan,
+                    blue,
+                    violet
+                ); /* Standard syntax (must be last) */
+            }
+            .goto {
+                position: fixed;
+                right: 24px;
+                bottom: 24px;
+                width: 60px;
+                height: 60px;
+                border-radius: 15px;
+                background-color: rgb(114, 144, 241);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 30px;
+                color: #fff;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="test"></div>
+        <div class="goto">go</div>
+        <script type="module">
+            import { rafEasing, EASING, delay } from "./lib/rafEasing.js";
+            function ready(fn) {
+                if (document.readyState != "loading") {
+                    fn();
+                } else {
+                    document.addEventListener("DOMContentLoaded", fn);
+                }
+            }
+            ready(() => {
+                const $gotoBtn = document.querySelector(".goto");
+                $gotoBtn.addEventListener("click", async () => {
+                    console.time("test");
+                    const re = rafEasing({
+                        from: window.scrollY,
+                        easing: EASING.easeOutQuint,
+                        to: 0,
+                        duration: 5000,
+                        onProgress(v) {
+                            window.scroll(0, v);
+                        },
+                        onFinish() {
+                            console.log("ok");
+                            console.timeEnd("test");
+                        },
+                    });
+                    re.run();
+                    await delay(1000);
+                    console.log("stop");
+                    re.stop();
+                    await delay(1000);
+                    console.log("resume");
+                    re.resume();
+                });
+            });
+        </script>
+    </body>
+</html>
