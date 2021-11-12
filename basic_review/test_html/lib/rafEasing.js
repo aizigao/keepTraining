@@ -34,8 +34,9 @@ const defualtArgs = {
 };
 
 function rafEasing(args) {
-    let requestId;
     let lastRunArgs = {};
+    let lastElapsed = 0;
+    let requestId;
     return {
         run(runArgs, isResume = false) {
             const { from, to, onProgress, duration, easing, onFinish } = {
@@ -48,13 +49,23 @@ function rafEasing(args) {
             if (from === to) {
                 return;
             }
+            if (!isResume) {
+                lastElapsed = 0;
+            }
             let start;
             const changeDelta = to - from;
             window.cancelAnimationFrame(requestId);
             const step = (timestamp) => {
-                if (start === undefined) start = timestamp;
+                if (start === undefined) {
+                    if (isResume && lastElapsed) {
+                        start = timestamp - duration * lastElapsed;
+                    } else {
+                        start = timestamp;
+                    }
+                }
                 const elapsed =
                     Math.min(timestamp - start, duration) / duration;
+                lastElapsed = elapsed;
                 const targetPrecent = easing(elapsed);
 
                 const processV = from + changeDelta * targetPrecent;
@@ -73,7 +84,6 @@ function rafEasing(args) {
             return this;
         },
         resume(args = {}) {
-            // TODO: 时间咋算呢？ 不搞了
             this.run(args, true);
             return this;
         },

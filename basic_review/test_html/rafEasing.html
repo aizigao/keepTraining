@@ -6,6 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <style>
+            body {
+                margin: 0;
+                padding: 0;
+            }
             .test {
                 height: 2000px;
                 background: linear-gradient(
@@ -50,12 +54,15 @@
             ready(() => {
                 const $gotoBtn = document.querySelector(".goto");
                 $gotoBtn.addEventListener("click", async () => {
-                    console.time("test");
                     const re = rafEasing({
-                        from: window.scrollY,
                         easing: EASING.easeOutQuint,
-                        to: 0,
                         duration: 5000,
+                    });
+                    console.time("test");
+                    console.log("run");
+                    re.run({
+                        from: window.scrollY,
+                        to: 0,
                         onProgress(v) {
                             window.scroll(0, v);
                         },
@@ -64,7 +71,6 @@
                             console.timeEnd("test");
                         },
                     });
-                    re.run();
                     await delay(1000);
                     console.log("stop");
                     re.stop();
