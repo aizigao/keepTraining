@@ -15,4 +15,5 @@ const render = (template,data)=>{
         return !isNil(result)?result:''
     })
 }
+
 console.log(render(template, data));
