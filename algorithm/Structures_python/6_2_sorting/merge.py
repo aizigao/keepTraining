@@ -1,36 +1,34 @@
 def mergeSort(alist):
-    print("Splitting ", alist)
-    if len(alist) <= 1:
+    size = len(alist)
+    if size <= 1:
         return alist
-    mid = len(alist) // 2
-    lefthalf = alist[:mid]
-    righthalf = alist[mid:]
+    mid = size // 2
+    left_list = alist[:mid]
+    l_size = len(left_list)
+    right_list = alist[mid:]
+    r_size = len(right_list)
 
-    mergeSort(lefthalf)
-    mergeSort(righthalf)
+    mergeSort(left_list)
+    mergeSort(right_list)
 
-    i = 0
-    j = 0
-    k = 0
-    while i < len(lefthalf) and j < len(righthalf):
-        if lefthalf[i] <= righthalf[j]:
-            alist[k] = lefthalf[i]
-            i = i + 1
+    l, r, k = 0, 0, 0
+
+    while l < l_size and r < r_size:
+        if left_list[l] <= right_list[r]:
+            alist[k] = left_list[l]
+            l += 1
         else:
-            alist[k] = righthalf[j]
-            j = j + 1
-        k = k + 1
-
-    # 尾处理
-    while i < len(lefthalf):
-        alist[k] = lefthalf[i]
-        i = i + 1
-        k = k + 1
-
-    while j < len(righthalf):
-        alist[k] = righthalf[j]
-        j = j + 1
-        k = k + 1
+            alist[k] = right_list[r]
+            r += 1
+        k += 1
+    while l < l_size:
+        alist[k] = left_list[l]
+        l += 1
+        k += 1
+    while r < r_size:
+        alist[k] = right_list[r]
+        r += 1
+        k += 1
 
 
 alist = [54, 26, 93, 17, 77, 31, 44, 55, 20]
