@@ -9,18 +9,14 @@
 class Solution:
     def maxProduct(self, nums):
 
-        #  int maxF = nums[0], minF = nums[0], ans = nums[0];
-        max_n = nums[0]
-        min_n = nums[0]
-        ans = nums[0]
-        size = len(nums)
+        ans = max_n = min_n = nums[0]
 
-        for i in range(1, size):
-            mx = max_n
-            mn = min_n
-
-            max_n = max(mx * nums[i], nums[i], mn * nums[i])
-            min_n = min(mn * nums[i], nums[i], mx * nums[i])
+        for i in range(1, len(nums)):
+            l_max_n = max_n
+            l_min_n = min_n
+            n = nums[i]
+            max_n = max(l_max_n * n, n, l_min_n * n)
+            min_n = min(l_max_n * n, n, l_min_n * n)
             ans = max(max_n, ans)
         return ans
 
