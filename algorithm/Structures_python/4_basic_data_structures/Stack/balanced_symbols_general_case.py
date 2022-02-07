@@ -1,4 +1,4 @@
-from pythonds.basic import Stack
+from pythonds.basic import List
 
 
 def matches(open, close):
