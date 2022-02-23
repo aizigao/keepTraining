@@ -1,0 +1,11 @@
+' 时序图
+' 通过描述对象之间发送消息的时间顺序显示多个对象之间的动态协作。
+' ->表示消息传递，-->表示异步消息传递，note [left | right]对消息进行说明。
+@startuml
+a --> b: how are you;
+note right: greeting;
+a -> a: I am thinking;
+note left: xxx;
+b -> a:fine;
+b --> b: xxx;
+@enduml

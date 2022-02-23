@@ -1,0 +1,14 @@
+' 用例图
+' 参与者与用例的交互。下图是饭店的用例图。
+
+
+@startuml
+actor customer
+actor chef
+rectangle restaurant{
+customer --> (eat food)
+customer --> (pay for food)
+chef --> (cook food)
+}
+' testdot
+@enduml

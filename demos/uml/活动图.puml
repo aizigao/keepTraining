@@ -1,0 +1,11 @@
+' 我一直是把活动图当流程图来用，描述程序的处理过程。下图描述的是一个经典的程序员笑话。
+@startuml
+(*) --> "buy 10 apples"
+if "is there watermelon " then;
+  -->[true] "buy a apple"
+  -right-> (*)
+else
+  ->[false] "Something else"
+  -->(*)
+endif
+@enduml

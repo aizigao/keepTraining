@@ -1,0 +1,11 @@
+' 描述一个对象在其生存期间的动态行为。下图是线程的状态图。
+
+
+@startuml
+[*] -> ready : start;
+ready -> running : get cpu;
+running -> ready : lost cpu;
+running -down-> block : io, sleep, locked;
+block -up-> ready : io return, sleep over, get lock;
+running -> [*] : complete;
+@enduml

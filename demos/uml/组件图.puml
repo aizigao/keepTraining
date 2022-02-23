@@ -1,0 +1,12 @@
+' 表示组件是如何互相组织以构建更大的组件或是软件系统。下图是Web项目的组件图。
+
+
+@startuml
+database "mysql" {
+    [database]
+}
+
+HTTP - [web server]
+[web server] - [app server]
+[app server] - [database]
+@enduml
