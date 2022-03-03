@@ -1,7 +1,6 @@
 ' 用例图
 ' 参与者与用例的交互。下图是饭店的用例图。
 
-
 @startuml
 actor customer
 actor chef
