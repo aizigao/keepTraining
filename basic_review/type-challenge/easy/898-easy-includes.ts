@@ -16,13 +16,19 @@
   > 在 Github 上查看：https://tsch.js.org/898/zh-CN
 */
 
+// import { Equal } from "@type-challenges/utils";
+
 /* _____________ 你的代码 _____________ */
 
 // type Includes<T extends readonly any[], U> = any;
 
-// type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends (<T>() => T extends Y ? 1 : 2) ? true : false
-// // U 和T中的每一个元素做比对，完全相同时才为true，使用了Equal
+type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y
+    ? 1
+    : 2
+    ? true
+    : false;
 
+//  U 和T中的每一个元素做比对，完全相同时才为true，使用了Equal
 type Includes<T extends unknown[], U> = T extends [infer K, ...infer P]
     ? Equal<K, U> extends true
         ? true
@@ -30,7 +36,7 @@ type Includes<T extends unknown[], U> = T extends [infer K, ...infer P]
     : false;
 
 /* _____________ 测试用例 _____________ */
-import { Equal, Expect } from "@type-challenges/utils";
+import { Expect } from "@type-challenges/utils";
 
 type cases = [
     Expect<
