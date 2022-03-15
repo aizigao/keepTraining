@@ -31,8 +31,6 @@
 
 /* _____________ Your Code Here _____________ */
 
-// TODO: 暂停。。。。。。
-
 type PrefixType<T extends string> = T extends `${infer F}${infer R}`
     ? F extends "-" | "+"
         ? F
