@@ -12,8 +12,8 @@ https://oi-wiki.org/basic/bubble-sort/
 
 **复杂度**:
 
--   在序列完全有序时, 不用执行任何交换操作: O(n)
--   是坏情况操作数 $\frac{(n-1)^n}2$, 复杂度 $O(n^2)$
+-   在序列完全有序时, 不用执行任何交换操作: O(n) （优化后版本）
+-   是坏情况操作数 $\frac{(n-1)^n}{2}$, 复杂度 $O(n^2)$
 -   平均 $O(n^2)$
 
 ![](images/2022-03-17-11-08-36.png)
@@ -28,4 +28,24 @@ def bubble_sort(a, n):
             if a[i] > a[i + 1]:
                 flag = True
                 a[i], a[i + 1] = a[i + 1], a[i]
+```
+
+### 优化版本
+
+A bubble sort is often considered the most inefficient sorting method since it must exchange items before the final location is known. These “wasted” exchange operations are very costly
+
+排到后台面已经 ok 了，就不可以跳过了
+
+```py
+def shortBubbleSort(alist):
+    exchanges = True
+    passnum = len(alist) - 1
+    while passnum > 0 and exchanges:
+        exchanges = False
+        for i in range(passnum):
+            if alist[i] > alist[i + 1]:
+                exchanges = True
+                alist[i], alist[i + 1] = alist[i + 1], alist[i]
+        passnum = passnum - 1
+
 ```

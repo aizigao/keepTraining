@@ -14,10 +14,10 @@
 # Python Version
 def insertion_sort(a, n):
     for i in range(2, n + 1):
-        key = a[i]
+        cur = a[i]
         j = i - 1
-        while j > 0 and a[j] > key:
+        while j > 0 and a[j] > cur:
             a[j + 1] = a[j]
             j = j - 1
-        a[j + 1] = key
+        a[j + 1] = cur
 ```
