@@ -14,26 +14,16 @@ https://oi-wiki.org/basic/counting-sort/
 -   求出每个数出现次数的 [前缀和](https://oi-wiki.org/basic/prefix-sum/)；
 -   利用出现次数的前缀和，从右至左计算每个数的排名。
 
+**oi-wiki**上面有点问题，下面是 wiki 上的
+
+-   找出待排序的数组中最大和最小的元素
+-   统计数组中每个值为 i 的元素出现的次数，存入数组 C 的第 i 项
+-   对所有的计数累加（从 C 中的第一个元素开始，每一项和前一项相加）
+-   反向填充目标数组：将每个元素 i 放在新数组的第 C[i]项，每放一个元素就将 C1 减去 1
+
 ![](images/counting-sort-1-animate-example.svg)
 
 -   稳定
 -   时间复杂度 O(n+w), 其中 w 为待排序数据的值域大小。
 
 ![](images/2022-03-17-11-26-41.png)
-
-```py
-# Python Version
-N = W = 100010
-n = w = 0
-a = b = [0] * N
-cnt = [0] * W
-
-def counting_sort():
-    for i in range(1, n + 1):
-        cnt[a[i]] += 1
-    for i in range(1, w + 1):
-        cnt[i] += cnt[i - 1]
-    for i in range(n, 0, -1):
-        b[cnt[a[i]] - 1] = a[i]
-        cnt[a[i]] -= 1
-```
