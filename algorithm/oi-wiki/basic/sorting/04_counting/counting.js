@@ -1,9 +1,18 @@
 countSort = function (alist) {
+    // 计数数组
     const C = [];
+
+    // 计数
     for (let i = 0; i < alist.length; i++) {
-        const j = alist[i];
-        C[j] >= 1 ? C[j]++ : (C[j] = 1);
+        const item = alist[i];
+        if (item in C) {
+            C[item] += 1;
+        } else {
+            C[item] = 1;
+        }
     }
+
+    // 下面没有用前缀和优化, 可以看 py 版本
     const D = [];
     for (let j = 0; j < C.length; j++) {
         if (C[j]) {
