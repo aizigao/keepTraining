@@ -9,7 +9,7 @@ def countingSort(a):
     for i in a:
         c[i - a_min] += 1
 
-    # 对所有的计数累加
+    # 对所有的计数累加, 值标识前面有多少项
     for i, v in enumerate(c):
         if i == 0:
             continue
@@ -19,6 +19,7 @@ def countingSort(a):
     result = [None for _ in range(len(a))]
     for i in a:
         result[c[i - a_min] - 1] = i
+        # 清空这一项
         c[i - a_min] -= 1
 
     return result
