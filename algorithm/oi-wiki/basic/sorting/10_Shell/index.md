@@ -1,5 +1,7 @@
 # 希尔排序
 
+
+https://www.programiz.com/dsa/shell-sort
 希尔排序（英语：Shell sort），也称为缩小增量排序法，是 插入排序 的一种改进版本。希尔排序以它的发明者希尔（英语：Donald Shell）命名。
 
 ## 工作原理
@@ -23,18 +25,3 @@
 ## 空间复杂度
 
 希尔排序的空间复杂度为 O(1)。
-
-```py
-# Python Version
-def shell_sort(array, length):
-    h = 1
-    while h < length / 3:
-        h = int(3 * h + 1)
-    while h >= 1:
-        for i in range(h, length):
-            j = i
-            while j >= h and array[j] < array[j - h]:
-                array[j], array[j - h] = array[j - h], array[j]
-                j -= h
-        h = int(h / 3)
-```

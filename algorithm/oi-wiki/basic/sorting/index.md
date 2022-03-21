@@ -37,3 +37,5 @@ https://oi-wiki.org/basic/sort-intro/
 
 
 
+
+![](images/2022-03-18-18-02-44.png)
