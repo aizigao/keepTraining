@@ -2,6 +2,27 @@
 
 # To heapify subtree rooted at index i.
 # n is size of heap
+'''
+heapify(array)
+   Root = array[0]
+   Largest = largest( array[0] , array [2 * 0 + 1]. array[2 * 0 + 2])
+   if(Root != Largest)
+       Swap(Root, Largest)
+
+
+example:
+
+        30(0)                 
+       /   \         
+    70(1)   50(2)
+
+Child (70(1)) is greater than the parent (30(0))
+
+Swap Child (70(1)) with the parent (30(0))
+        70(0)                 
+       /   \         
+    30(1)   50(2)
+'''
 
 
 def heapify(arr, n, i):
@@ -13,7 +34,6 @@ def heapify(arr, n, i):
     # greater than root
     if l < n and arr[largest] < arr[l]:
         largest = l
-
     # See if right child of root exists and is
     # greater than root
     if r < n and arr[largest] < arr[r]:
@@ -34,8 +54,10 @@ def heapSort(arr):
     n = len(arr)
 
     # Build a maxheap.
+    # print([i for i in range(n // 2 - 1, -1, -1)])
     for i in range(n // 2 - 1, -1, -1):
         heapify(arr, n, i)
+        print('result', arr)
 
     # One by one extract elements
     for i in range(n - 1, 0, -1):
@@ -44,7 +66,15 @@ def heapSort(arr):
 
 
 # Driver code
-arr = [12, 11, 13, 5, 6, 7]
+arr = [
+    12,
+    11,
+    13,
+    5,
+    61,
+    7,
+    80,
+]
 heapSort(arr)
 n = len(arr)
 print("Sorted array is")

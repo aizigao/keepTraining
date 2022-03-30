@@ -1,37 +1,40 @@
 /*
   3057 - Push
   -------
-  by jiangshan (@jiangshanmeta) #简单 #array
+  by jiangshan (@jiangshanmeta) #easy #array
   
-  ### 题目
+  ### Question
   
-  在类型系统里实现通用的 ```Array.push``` 。
+  Implement the generic version of ```Array.push```
   
-  举例如下，
+  For example
   
   ```typescript
   type Result = Push<[1, 2], '3'> // [1, 2, '3']
   ```
   
-  > 在 Github 上查看：https://tsch.js.org/3057/zh-CN
+  > View on GitHub: https://tsch.js.org/3057
 */
 
-/* _____________ 你的代码 _____________ */
+/* _____________ Your Code Here _____________ */
 
-type Push<T extends unknown[], U> = [...T, U];
+// type Push<T extends any[], U> = U[] extends T[number][] ? T : [...T, U];
 
-/* _____________ 测试用例 _____________ */
+type Push<T extends any[], U> = U[] extends T[number][] ? T : [...T, U];
+
+/* _____________ Test Cases _____________ */
 import { Equal, Expect, ExpectFalse, NotEqual } from "@type-challenges/utils";
 
 type cases = [
     Expect<Equal<Push<[], 1>, [1]>>,
     Expect<Equal<Push<[1, 2], "3">, [1, 2, "3"]>>,
-    Expect<Equal<Push<["1", 2, "3"], boolean>, ["1", 2, "3", boolean]>>
+    Expect<Equal<Push<["1", 2, "3"], boolean>, ["1", 2, "3", boolean]>>,
+    Expect<Equal<Push<["1", 2, "3"], "3">, ["1", 2, "3"]>>
 ];
 
-/* _____________ 下一步 _____________ */
+/* _____________ Further Steps _____________ */
 /*
-  > 分享你的解答：https://tsch.js.org/3057/answer/zh-CN
-  > 查看解答：https://tsch.js.org/3057/solutions
-  > 更多题目：https://tsch.js.org/zh-CN
+  > Share your solutions: https://tsch.js.org/3057/answer
+  > View solutions: https://tsch.js.org/3057/solutions
+  > More Challenges: https://tsch.js.org
 */
