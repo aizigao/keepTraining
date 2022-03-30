@@ -21,23 +21,25 @@ class Solution:
     # 方案一 二分加并归
     def findMedianSortedArrays(self, nums1: List[int],
                                nums2: List[int]) -> float:
+        # 取第k个数
         def getKEle(k):
             idx1, idx2 = 0, 0
-            while True:
-                # base condition
 
+            while True:
+                # base
                 if idx1 == m:
-                    return nums2[idx1 + k - 1]
+                    return nums2[idx2 + k - 1]
                 if idx2 == n:
-                    return nums1[idx2 + k - 1]
+                    return nums1[idx1 + k - 1]
                 if k == 1:
                     return min(nums1[idx1], nums2[idx2])
 
                 nIdx1 = min(idx1 + k // 2 - 1, m - 1)
                 nIdx2 = min(idx2 + k // 2 - 1, n - 1)
-                pivot1, pivot2 = nums1[nIdx1], nums2[nIdx2]
 
-                if pivot1 <= pivot2:
+                povit1, povit2 = nums1[nIdx1], nums2[nIdx2]
+
+                if povit1 <= povit2:
                     k -= nIdx1 - idx1 + 1
                     idx1 = nIdx1 + 1
                 else:
@@ -45,14 +47,15 @@ class Solution:
                     idx2 = nIdx2 + 1
 
         m, n = len(nums1), len(nums2)
-        total_len = m + n
+        totalLen = m + n
 
-        # 长度为奇数
-        if total_len % 2 == 1:
-            return getKEle((total_len + 1) // 2)
-        # 长度为偶数
+        # 共长度为奇数
+        if totalLen % 2 == 1:
+            return getKEle((totalLen + 1) // 2)
         else:
-            return (getKEle(total_len // 2) + getKEle(total_len // 2 + 1)) / 2
+            return (getKEle(totalLen // 2) + getKEle(totalLen // 2 + 1)) / 2
+
+    # 方法二 划分数组
 
 
 # @lc code=end
