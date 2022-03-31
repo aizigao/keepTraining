@@ -11,6 +11,8 @@
 #         self.val = val
 #         self.next = next
 
+import queue
+
 
 def mergeSort(a, b):
     if not (a and b):
@@ -51,7 +53,7 @@ class Solution1:
 
 
 ## 方法二 分治合并
-class Solution:
+class Solution2:
     def merge(self, lists, l, r):
 
         if l == r:
@@ -66,6 +68,18 @@ class Solution:
     def mergeKLists(self,
                     lists: List[Optional[ListNode]]) -> Optional[ListNode]:
         return self.merge(lists, 0, len(lists) - 1)
+
+
+## 方法三： 使用优先队列合并 TODO:
+'''
+这个方法和前两种方法的思路有所不同，我们需要维护当前每个链表没有被合并的元素的最前面一个，k 个链表就最多有 k 个满足这样条件的元素，每次在这些元素里面选取 val 属性最小的元素合并到答案中。在选取最小元素的时候，我们可以用优先队列来优化这个过程。
+'''
+
+
+class Solution:
+    def mergeKLists(self,
+                    lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        pass
 
 
 # @lc code=end
