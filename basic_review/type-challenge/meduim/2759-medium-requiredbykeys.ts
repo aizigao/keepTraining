@@ -32,10 +32,12 @@
 
 type MapObj<T> = { [P in keyof T]: T[P] };
 
-type RequiredByKeys<
-    T extends object,
-    K extends string | number | symbol = keyof T
-> = MapObj<Omit<T, K> & { [P in keyof T as P extends K ? P : never]-?: T[P] }>;
+type RequiredByKeys< T extends object, K extends string | number | symbol = keyof T > = MapObj<
+Omit<T, K> & 
+{ 
+  [P in keyof T as P extends K ? P : never]-?: T[P] 
+}
+>;
 
 /* _____________ Test Cases _____________ */
 import { Equal, Expect, ExpectFalse, NotEqual } from "@type-challenges/utils";
