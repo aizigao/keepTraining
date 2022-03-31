@@ -38,6 +38,8 @@ def mergeSort(a, b):
 - 时间复杂度：故渐进时间复杂度为 O(k^2 n)
 - 空间复杂度：没有用到与 k 和 n 规模相关的辅助空间，故渐进空间复杂度为 O(1)。
 '''
+
+
 class Solution1:
     def mergeKLists(self,
                     lists: List[Optional[ListNode]]) -> Optional[ListNode]:
@@ -51,15 +53,15 @@ class Solution1:
 ## 方法二 分治合并
 class Solution:
     def merge(self, lists, l, r):
+
         if l == r:
             return lists[l]
         if l > r:
             return None
+
         mid = (l + r) // 2
-        return mergeSort(
-            self.merge(lists, l, mid),
-            self.merge(lists, mid + 1, r),
-        )
+        return mergeSort(self.merge(lists, l, mid),
+                         self.merge(lists, mid + 1, r))
 
     def mergeKLists(self,
                     lists: List[Optional[ListNode]]) -> Optional[ListNode]:
