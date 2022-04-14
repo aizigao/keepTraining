@@ -14,7 +14,7 @@ def binarySearch(nums, target):
     ans = -1
 
     while l <= r and not found:
-        mid = (l+r)//2
+        mid = (l + r) // 2
         mid_val = nums[mid]
 
         if mid_val == target:
@@ -39,13 +39,14 @@ class Solution:
             l = oneOfTargetIdx
             r = oneOfTargetIdx
 
-            while l >= 1 and nums[l-1] == nums[oneOfTargetIdx]:
+            while l >= 1 and nums[l - 1] == nums[oneOfTargetIdx]:
                 l -= 1
 
-            while r < n - 1 and nums[r+1] == nums[oneOfTargetIdx]:
+            while r < n - 1 and nums[r + 1] == nums[oneOfTargetIdx]:
                 r += 1
             ans = [l, r]
 
         return ans
+
 
 # @lc code=end
