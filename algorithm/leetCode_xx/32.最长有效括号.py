@@ -8,6 +8,16 @@
 # @lc code=start
 class Solution:
     # 方法一： DP
+    '''
+    dp[i] 表示为以i为结尾最大的长度
+    
+    - s[i] == '(' 时, dp[i] = 0
+    - s[i] == ') 时,
+        s[i-1] == ')'， 则dp[i] = dp[i-2] + 2 
+        s[i-1] == ')', 则
+            如果 s[i -dp[i-1] -1] 一定为 '(' 则
+            dp[i] = dp[i-1] + dp[i- dp[i-1] -1 - 1] + 2
+    '''
     def longestValidParentheses(self, s: str) -> int:
         maxans = 0
         size = len(s)
