@@ -10,25 +10,28 @@
 class Solution:
     # O(m*n) / O(m*n)
     def maximalSquare(self, matrix: List[List[str]]) -> int:
-        if len(matrix) == 0 or len(matrix[0]) == 0:
-            return 0
+        ans = 0
+        if not matrix or not matrix[0]:
+            return ans
 
-        maxSide = 0
         rows = len(matrix)
         columns = len(matrix[0])
-        dp = [([0] * columns) for _ in range(rows)]
 
-        for i in range(rows):
-            for j in range(columns):
-                #  -- 初始化
-                if matrix[i][j] == '1':
-                    if i == 0 or j == 0:
-                        dp[i][j] = 1
+        dp = [[0 for c in range(columns)] for r in range(rows)]
+
+        maxSide = 0
+        for r in range(rows):
+            for c in range(columns):
+                if matrix[r][c] == '1':
+                    if r == 0 and c == 0:
+                        dp[r][c] = 1
                     else:
-                        dp[i][j] = min(dp[i - 1][j], dp[i]
-                                       [j - 1], dp[i - 1][j - 1]) + 1
-                    maxSide = max(maxSide, dp[i][j])
-
+                        dp[r][c] = min(
+                            dp[r - 1][c - 1],
+                            dp[r][c - 1],
+                            dp[r - 1][c],
+                        ) + 1
+                    maxSide = max(maxSide, dp[r][c])
         return maxSide * maxSide
 
 
