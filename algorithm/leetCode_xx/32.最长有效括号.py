@@ -4,8 +4,10 @@
 # [32] 最长有效括号
 #
 
-
 # @lc code=start
+from re import L
+
+
 class Solution:
     # 方法一： DP
     '''
@@ -44,7 +46,7 @@ class Solution:
     空间: O(n) 栈大小
     '''
 
-    def longestValidParentheses(self, s: str) -> int:
+    def longestValidParentheses2(self, s: str) -> int:
         maxans = 0
         stack = [-1]
 
@@ -59,6 +61,55 @@ class Solution:
                 else:
                     maxans = max(maxans, i - stack[-1])
         return maxans
+
+    '''
+    方法三
+    不需要额外的空间
+    我们利用两个计数器left 和 right 
+
+    - 首先，我们从左到右遍历字符串，
+    - 对于遇到的每个(，我们增加 left 计数器，
+    - 对于遇到的每个 ) ，我们增加 right 计数器
+
+    - 每当 left 计数器与right 计数器相等时，我们计算当前有效字符串的长度，并且记录目前为止找到的最长子字符串。
+    - 当 right 计数器比 left 计数器大时，我们将 left 和 right 计数器同时变回 0
+
+    时间: O(n)
+    空间: O(n)
+    '''
+
+    def longestValidParentheses(self, s: str) -> int:
+        left, right, maxlength = 0, 0, 0
+
+        for i in range(len(s)):
+            if s[i] == '(':
+                left += 1
+            else:
+                right += 1
+
+            if left == right:
+                maxlength = max(maxlength, 2 * right)
+            
+            # ) 多于 ( 则重新计数
+            elif right > left:
+                left = 0
+                right = 0
+
+        left = 0
+        right = 0
+
+        for i in range(len(s) - 1, 0, -1):
+            if s[i] == '(':
+                left += 1
+            else:
+                right += 1
+
+            if left == right:
+                maxlength = max(maxlength, 2 * left)
+            elif left > right:
+                left = 0
+                right = 0
+        return maxlength
 
 
 # @lc code=end
