@@ -47,6 +47,8 @@ class Solution:
     '''
     方法二
     单调栈
+    时间 O(m*n)
+    空间 O(m*n)
     '''
 
     def maximalRectangle(self, matrix: List[List[str]]) -> int:
@@ -56,7 +58,7 @@ class Solution:
         m = len(matrix)
         n = len(matrix[0])
 
-        left = [[0 for c in range(n)] for r in range(m)]
+        left = [[0 for j in range(n)] for i in range(m)]
 
         for i in range(m):
             for j in range(n):
