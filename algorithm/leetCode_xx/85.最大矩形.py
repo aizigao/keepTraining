@@ -18,33 +18,30 @@ class Solution:
     def maximalRectangle(self, matrix: List[List[str]]) -> int:
         if not matrix:
             return 0
-        m = len(matrix)
-        n = len(matrix[0])
 
-        left = [[0 for j in range(n)] for i in range(m)]
+        rows = len(matrix)
+        columns = len(matrix[0])
 
-        for i in range(m):
-            for j in range(n):
-                if matrix[i][j] == '1':
-                    if j == 0:
-                        left[i][j] = 1
+        left = [[0 for c in range(columns)] for r in range(rows)]
+
+        for r in range(rows):
+            for c in range(columns):
+                if matrix[r][c] == '1':
+                    if r == 0 and c == 0:
+                        left[r][c] = 1
                     else:
-                        left[i][j] = left[i][j - 1] + 1
+                        left[r][c] = left[r][c - 1] + 1
 
         ret = 0
-
-        for i in range(m):
-            for j in range(n):
-                if matrix[i][j] == '0':
-                    continue
-                width = left[i][j]
-                area = width
-
-                for k in range(i - 1, -1, -1):
-                    width = min(width, left[k][j])
-                    area = max(area, (i - k + 1) * width)
-
-                ret = max(ret, area)
+        for r in range(rows):
+            for c in range(columns):
+                if matrix[r][c] == '1':
+                    width = left[r][c]
+                    area = width
+                    for k in range(r - 1, -1, -1):
+                        width = min(width, left[k][c])
+                        area = max(area, width * (r - k + 1))
+                    ret = max(area, ret)
         return ret
 
 
