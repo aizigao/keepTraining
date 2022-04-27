@@ -32,7 +32,7 @@ class Solution:
                     else:
                         left[r][c] = left[r][c - 1] + 1
 
-        ret = 0
+        rst = 0
         for r in range(rows):
             for c in range(columns):
                 if matrix[r][c] == '1':
@@ -41,8 +41,8 @@ class Solution:
                     for k in range(r - 1, -1, -1):
                         width = min(width, left[k][c])
                         area = max(area, width * (r - k + 1))
-                    ret = max(area, ret)
-        return ret
+                    rst = max(area, rst)
+        return rst
 
 
 # @lc code=end
