@@ -15,7 +15,7 @@ class Solution:
     时间: O(m^2*n)
     空间: O(m*n)
     '''
-    def maximalRectangle(self, matrix: List[List[str]]) -> int:
+    def maximalRectangle1(self, matrix: List[List[str]]) -> int:
         if not matrix:
             return 0
 
@@ -43,6 +43,53 @@ class Solution:
                         area = max(area, width * (r - k + 1))
                     rst = max(area, rst)
         return rst
+
+    '''
+    方法二
+    单调栈
+    '''
+
+    def maximalRectangle(self, matrix: List[List[str]]) -> int:
+        if not matrix:
+            return 0
+
+        m = len(matrix)
+        n = len(matrix[0])
+
+        left = [[0 for c in range(n)] for r in range(m)]
+
+        for i in range(m):
+            for j in range(n):
+                if matrix[i][j] == '1':
+                    if i == 0 and j == 0:
+                        left[i][j] = 1
+                    else:
+                        left[i][j] = left[i][j - 1] + 1
+
+        ret = 0
+
+        for j in range(n):
+            up = [0] * m
+            down = [0] * m
+            stack = []
+            for i in range(m):
+                while stack and left[stack[-1]][j] >= left[i][j]:
+                    stack.pop()
+                up[i] = stack[-1] if stack else -1
+                stack.append(i)
+
+            stack = []
+            for i in range(m - 1, -1, -1):
+                while stack and left[stack[-1]][j] >= left[i][j]:
+                    stack.pop()
+                down[i] = stack[-1] if stack else m
+                stack.append(i)
+
+            for i in range(m):
+                height = down[i] - up[i] - 1
+                area = left[i][j] * height
+                ret = max(ret, area)
+        return ret
 
 
 # @lc code=end
