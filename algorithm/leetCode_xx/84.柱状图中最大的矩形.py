@@ -9,30 +9,35 @@
 class Solution:
     '''
     方法一: 单调栈
+    时间复杂度：O(N)
+    空间复杂度：O(N)
     '''
     def largestRectangleArea(self, heights: List[int]) -> int:
         n = len(heights)
+        if n == 0:
+            return 0
 
+        ans = 0
         left, right = [0] * n, [0] * n
-        mono_stack = []
+
+        # 左侧单调栈
+        stack = []
+        for i in range(n):
+            while stack and heights[stack[-1]] >= heights[i]:
+                stack.pop()
+            left[i] = stack[-1] if stack else -1
+            stack.append(i)
+
+        # 右侧单调栈
+        stack = []
+        for i in range(n - 1, -1, -1):
+            while stack and heights[stack[-1]] >= heights[i]:
+                stack.pop()
+            right[i] = stack[-1] if stack else n
+            stack.append(i)
 
         for i in range(n):
-            while mono_stack and heights[mono_stack[-1]] >= heights[i]:
-                mono_stack.pop()
-            left[i] = mono_stack[-1] if mono_stack else -1
-            mono_stack.append(i)
-
-        mono_stack = []
-        for i in range(n - 1, -1, -1):
-            while mono_stack and heights[mono_stack[-1]] >= heights[i]:
-                mono_stack.pop()
-            right[i] = mono_stack[-1] if mono_stack else n
-            mono_stack.append(i)
-        ans = 0
-
-        if n > 0:
-            for i in range(n):
-                ans = max((right[i] - left[i] - 1) * heights[i], ans)
+            ans = max(ans, (right[i] - left[i] - 1) * heights[i])
         return ans
 
 
