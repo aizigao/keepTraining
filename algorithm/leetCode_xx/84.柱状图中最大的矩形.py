@@ -12,7 +12,7 @@ class Solution:
     时间复杂度：O(N)
     空间复杂度：O(N)
     '''
-    def largestRectangleArea(self, heights: List[int]) -> int:
+    def largestRectangleArea1(self, heights: List[int]) -> int:
         n = len(heights)
         if n == 0:
             return 0
@@ -36,6 +36,28 @@ class Solution:
             right[i] = stack[-1] if stack else n
             stack.append(i)
 
+        for i in range(n):
+            ans = max(ans, (right[i] - left[i] - 1) * heights[i])
+        return ans
+
+    '''
+    方法二：单调栈 + 常数优化
+    '''
+
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        n = len(heights)
+        left, right = [0] * n, [n] * n
+
+        mono_stack = []
+
+        for i in range(n):
+            while mono_stack and heights[mono_stack[-1]] >= heights[i]:
+                right[mono_stack[-1]] = i
+                mono_stack.pop()
+
+            left[i] = mono_stack[-1] if mono_stack else -1
+            mono_stack.append(i)
+        ans = 0
         for i in range(n):
             ans = max(ans, (right[i] - left[i] - 1) * heights[i])
         return ans
