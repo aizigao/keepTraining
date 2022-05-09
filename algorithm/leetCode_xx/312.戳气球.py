@@ -17,7 +17,7 @@ class Solution:
     时间: O(n^3) 其中 n 是气球数量。区间数为 n^2 ，区间迭代复杂度为 O(n)，最终复杂度为 O(n^2 * n) 
     空间：O(n^2) 其中 n 是气球数量。缓存大小为区间的个数。
     '''
-    def maxCoins(self, nums: List[int]) -> int:
+    def maxCoins_1(self, nums: List[int]) -> int:
 
         n = len(nums)
         val = [1] + nums + [1]
@@ -39,9 +39,23 @@ class Solution:
             return best
 
         return solve(0, n + 1)
+
     '''
-    TODO: dp
+    二. dp
     '''
+
+    def maxCoins(self, nums: List[int]) -> int:
+        n = len(nums)
+        rec = [[0] * (n + 2) for _ in range(n + 2)]
+        val = [1] + nums + [1]
+
+        for i in range(n - 1, -1, -1):
+            for j in range(i + 2, n + 2):
+                for k in range(i + 1, j):
+                    total = val[i] * val[k] * val[j]
+                    total += rec[i][k] + rec[k][j]
+                    rec[i][j] = max(rec[i][j], total)
+        return rec[0][n + 1]
 
 
 # @lc code=end
