@@ -12,7 +12,7 @@ class Solution:
     dp
     每间房状态只有抢或不抢
     '''
-    def rob(self, nums: List[int]) -> int:
+    def rob_1(self, nums: List[int]) -> int:
         if not nums:
             return 0
         n = len(nums)
@@ -21,6 +21,7 @@ class Solution:
             return nums[0]
 
         dp = [0] * n
+
         dp[0] = nums[0]
         dp[1] = max(nums[0], nums[1])
 
@@ -32,8 +33,21 @@ class Solution:
     dp 优化
     '''
 
-    def rob2(self, nums: List[int]) -> int:
-        pass
+    def rob(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+        n = len(nums)
+        if n == 1:
+            return nums[0]
+
+        p = nums[0]
+        q = max(nums[0], nums[1])
+
+        for i in range(2, n):
+            temp = max(p + nums[i], q)
+            p = q
+            q = temp
+        return q
 
 
 # @lc code=end
