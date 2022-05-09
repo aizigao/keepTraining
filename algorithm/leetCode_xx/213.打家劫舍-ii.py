@@ -13,27 +13,25 @@ class Solution:
     '''
     def rob(self, nums: List[int]) -> int:
 
-        if not nums:
-            return 0
         n = len(nums)
+
+        if n == 0:
+            return 0
         if n == 1:
             return nums[0]
+
         if n == 2:
             return max(nums[0], nums[1])
 
         def robRange(start, end):
             p = nums[start]
-            q = max(nums[start], nums[start + 1])
+            q = max(nums[start + 1], nums[start])
 
             for i in range(start + 2, end + 1):
-                temp = max(p + nums[i], q)
+                t = max(p + nums[i], q)
                 p = q
-                q = temp
+                q = t
             return q
-
-        '''
-        如果 偷窃了第一间房屋，则不能偷窃最后一间房
-        '''
 
         return max(robRange(0, n - 2), robRange(1, n - 1))
 
