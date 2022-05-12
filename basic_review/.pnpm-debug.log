@@ -1,0 +1,17 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 error pnpm": {
+    "code": "ERR_PNPM_UNEXPECTED_STORE",
+    "expectedStorePath": "/Users/aizigao/.pnpm-store/v3",
+    "actualStorePath": "/Users/aizigao/Library/pnpm/store/v3",
+    "modulesDir": "/Users/aizigao/MyWorkPlace/keepTraining/node_modules",
+    "err": {
+      "name": "pnpm",
+      "message": "Unexpected store location",
+      "code": "ERR_PNPM_UNEXPECTED_STORE",
+      "stack": "pnpm: Unexpected store location\n    at checkCompatibility (/usr/local/Cellar/node/16.5.0/pnpm-global/5/node_modules/.pnpm/192.168.14.11+8888+pnpm@7.0.1/node_modules/pnpm/dist/pnpm.cjs:92563:15)\n    at /usr/local/Cellar/node/16.5.0/pnpm-global/5/node_modules/.pnpm/192.168.14.11+8888+pnpm@7.0.1/node_modules/pnpm/dist/pnpm.cjs:93085:44\n    at Array.map (<anonymous>)\n    at validateModules (/usr/local/Cellar/node/16.5.0/pnpm-global/5/node_modules/.pnpm/192.168.14.11+8888+pnpm@7.0.1/node_modules/pnpm/dist/pnpm.cjs:93083:34)\n    at getContext (/usr/local/Cellar/node/16.5.0/pnpm-global/5/node_modules/.pnpm/192.168.14.11+8888+pnpm@7.0.1/node_modules/pnpm/dist/pnpm.cjs:92979:34)\n    at async mutateModules (/usr/local/Cellar/node/16.5.0/pnpm-global/5/node_modules/.pnpm/192.168.14.11+8888+pnpm@7.0.1/node_modules/pnpm/dist/pnpm.cjs:119782:19)\n    at async handler (/usr/local/Cellar/node/16.5.0/pnpm-global/5/node_modules/.pnpm/192.168.14.11+8888+pnpm@7.0.1/node_modules/pnpm/dist/pnpm.cjs:121370:33)\n    at async /usr/local/Cellar/node/16.5.0/pnpm-global/5/node_modules/.pnpm/192.168.14.11+8888+pnpm@7.0.1/node_modules/pnpm/dist/pnpm.cjs:176187:21\n    at async run (/usr/local/Cellar/node/16.5.0/pnpm-global/5/node_modules/.pnpm/192.168.14.11+8888+pnpm@7.0.1/node_modules/pnpm/dist/pnpm.cjs:176161:34)\n    at async runPnpm (/usr/local/Cellar/node/16.5.0/pnpm-global/5/node_modules/.pnpm/192.168.14.11+8888+pnpm@7.0.1/node_modules/pnpm/dist/pnpm.cjs:176379:5)"
+    }
+  }
+}
