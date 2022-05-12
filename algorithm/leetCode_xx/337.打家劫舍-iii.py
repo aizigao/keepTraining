@@ -20,15 +20,17 @@ class Solution:
     '''
     def rob(self, root: TreeNode) -> int:
         def dfs(node):
-            if not node: return 0, 0
+            if not node:
+                return 0, 0
 
             l_sel, l_not_sel = dfs(node.left)
             r_sel, r_not_sel = dfs(node.right)
 
+            # 当前选中，则子树不选中
             sel = node.val + l_not_sel + r_not_sel
-            no_sel = max(l_sel, l_not_sel) + max(r_sel, r_not_sel)
-
-            return sel, no_sel
+            # 当前不选中，则子树可选可不选，取最大值
+            not_sel = max(l_sel, l_not_sel) + max(r_sel, r_not_sel)
+            return sel, not_sel
 
         return max(dfs(root))
 
