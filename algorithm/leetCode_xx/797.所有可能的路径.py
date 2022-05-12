@@ -13,7 +13,6 @@ class Solution:
         n = len(graph)
         # 到终点
         if s == n - 1:
-            print(path)
             res.append(path[:])
         for ss in graph[s]:
             self.traverse(graph, ss, path, res)
