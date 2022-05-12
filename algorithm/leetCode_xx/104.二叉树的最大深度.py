@@ -18,8 +18,7 @@ class Solution:
     # -- 深度优先
     O(n) / O(height)
     """
-
-    def maxDepth(self, root: TreeNode) -> int:
+    def maxDepth1(self, root: TreeNode) -> int:
         if root is None:
             return 0
 
@@ -27,5 +26,27 @@ class Solution:
         right_max_heigt = self.maxDepth(root.right)
 
         return max(left_max_height, right_max_heigt) + 1
+
+    def maxDepth(self, root: TreeNode) -> int:
+        maxDepth = 0
+        depth = 0
+
+        def traverse(node):
+            nonlocal maxDepth
+            nonlocal depth
+            if not node:
+                return
+
+            depth += 1
+
+            if not node.left and not node.right:
+                maxDepth = max(depth, maxDepth)
+            traverse(node.left)
+            traverse(node.right)
+            depth -= 1
+
+        traverse(root)
+        return maxDepth
+
 
 # @lc code=end
