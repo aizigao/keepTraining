@@ -21,10 +21,11 @@ class Solution:
     def maxDepth1(self, root: TreeNode) -> int:
         if root is None:
             return 0
-
+        # // 利用定义，计算左右子树的最大深度
         left_max_height = self.maxDepth(root.left)
         right_max_heigt = self.maxDepth(root.right)
 
+        # 然后再加上根节点自己
         return max(left_max_height, right_max_heigt) + 1
 
     def maxDepth(self, root: TreeNode) -> int:
