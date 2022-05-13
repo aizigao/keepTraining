@@ -60,7 +60,7 @@ class Solution:
         return root
 
     # 层序遍历
-    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+    def connect2(self, root: 'Optional[Node]') -> 'Optional[Node]':
         if not root:
             return
         q = [root]
@@ -79,6 +79,33 @@ class Solution:
 
                 if cur.right:
                     q.append(cur.right)
+        return root
+
+    # https://leetcode.cn/problems/populating-next-right-pointers-in-each-node/solution/tian-chong-mei-ge-jie-dian-de-xia-yi-ge-you-ce-2-4/
+
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        if not root:
+            return
+
+        # 最左侧节点
+        leftmost = root
+
+        while leftmost.left:
+            head = leftmost
+
+            while head:
+                # connection 1
+                head.left.next = head.right
+
+                # connection 2
+                if head.next:
+                    head.right.next = head.next.left
+
+                head = head.next
+
+            # 去下一层的最左的节点
+            leftmost = leftmost.left
+
         return root
 
 
