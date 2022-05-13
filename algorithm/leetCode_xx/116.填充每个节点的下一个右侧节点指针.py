@@ -41,25 +41,44 @@ void traverse(Node node1, Node node2) {
 
 
 class Solution:
-    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+    # 来自东哥套路
+    def connect_1(self, root: 'Optional[Node]') -> 'Optional[Node]':
         if not root:
             return
 
         def traverse(node1, node2):
             if not node1 or not node2:
                 return
-            # -- 前数位置 ---
-            #  将传入的两个节点穿起来
             node1.next = node2
 
-            # 链接相同父节点的两个子节点
             traverse(node1.left, node1.right)
             traverse(node2.left, node2.right)
-
-            # 链接 跨越父节点的两个节点
             traverse(node1.right, node2.left)
 
         traverse(root.left, root.right)
+
+        return root
+
+    # 层序遍历
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        if not root:
+            return
+        q = [root]
+
+        while q:
+            size = len(q)
+            # 这里会遍历这一层的内容
+            for i in range(size):
+                cur = q.pop(0)
+
+                if i < size - 1:
+                    cur.next = q[0]
+
+                if cur.left:
+                    q.append(cur.left)
+
+                if cur.right:
+                    q.append(cur.right)
         return root
 
 
