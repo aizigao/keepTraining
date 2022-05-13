@@ -88,24 +88,24 @@ class Solution:
             return
 
         # 最左侧节点
-        leftmost = root
 
+        leftmost = root
         while leftmost.left:
+            # 遍历这一层节点组织成的链表，为下一层的节点更新 next 指针
+
             head = leftmost
 
             while head:
-                # connection 1
+                # connect 1
                 head.left.next = head.right
 
-                # connection 2
                 if head.next:
                     head.right.next = head.next.left
 
                 head = head.next
 
-            # 去下一层的最左的节点
+            # 到下一层的 left most
             leftmost = leftmost.left
-
         return root
 
 
