@@ -191,7 +191,7 @@ def levelTraverse(root):
     while q:
         sz = len(q)
         i = 0
-        while i < sz:
+        for i in q:
             cur = q.pop(0)
             # 将下一层节点放入队列
             if cur.left:
@@ -200,6 +200,4 @@ def levelTraverse(root):
             if cur.right:
                 q.append(cur.right)
             i+=1
-
-
 ```
