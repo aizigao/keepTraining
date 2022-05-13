@@ -16,11 +16,14 @@
 class Solution:
     def invertTree(self, root: TreeNode) -> TreeNode:
         if not root:
-            return root
+            return
 
-        left = self.invertTree(root.left)
-        right = self.invertTree(root.right)
-        root.left, root.right = root.right, root.left
+        right = self.invertTree(root.left)
+        left = self.invertTree(root.right)
+
+        root.left = left
+        root.right = right
         return root
+
 
 # @lc code=end

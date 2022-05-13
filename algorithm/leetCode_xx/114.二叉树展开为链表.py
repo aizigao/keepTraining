@@ -11,8 +11,6 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-
-
 """
 给你二叉树的根结点 root ，请你将它展开为一个单链表：
 
@@ -25,31 +23,29 @@
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 """
 
+from multiprocessing import dummy
+
 
 class Solution:
     # -- 这个是 O(n)
     # 方法一：前序遍历
     def flatten(self, root: TreeNode) -> None:
-        """
-        Do not return anything, modify root in-place instead.
-        """
+        q = []
 
-        preorderList = []
-
-        def preOrderTraversal(root):
-            if not root:
+        def travserse(node):
+            if not node:
                 return
-            preorderList.append(root)
-            preOrderTraversal(root.left)
-            preOrderTraversal(root.right)
-        preOrderTraversal(root)
+            q.append(node)
+            travserse(node.left)
+            travserse(node.right)
 
-        n = len(preorderList)
+        travserse(root)
 
-        for i in range(1, n):
-            prev, curr = preorderList[i-1], preorderList[i]
+        for i in range(1, len(q)):
+            prev = q[i - 1]
+            cur = q[i]
             prev.left = None
-            prev.right = curr
+            prev.right = cur
 
     # 迭代实现前序遍历
     def flatten_2(self, root: TreeNode) -> None:
