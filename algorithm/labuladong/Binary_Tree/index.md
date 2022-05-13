@@ -130,3 +130,76 @@ def traverse(root):
     # 后序位置
     depth -=1
 ```
+
+```py
+def maxDepth(root):
+    if not root:
+        return 0
+    left_max = maxDepth(root.left)
+    right_max = maxDepth(root.right)
+
+    return max(left_max,right_max) +1
+```
+
+中序位置主要用在 BST 场景中，你完全可以把 BST 的中序遍历认为是遍历有序数组。
+前序位置的代码只能从函数参数中获取父节点传递来的数据，而后序位置的代码不仅可以获取参数数据，还可以获取到子树通过函数返回值传递回来的数据。
+
+如果把根节点看做第 1 层，如何打印出每一个节点所在的层数？
+
+```py
+
+def traverse(root, level =1):
+    if not root:
+        return 0
+    print(level)
+    traverse(root.left, level+1)
+    traverse(root.right,level+1)
+traverse(root, 1)
+```
+
+如何打印出每个节点的左右子树各有多少节点
+
+```py
+def traverse(root):
+    if not root:
+        return 0
+    l_c = traverse(root.left)
+    r_c = traverse(root.right)
+
+    return l_c + r_c  + 1
+traverse(root)
+```
+
+543 题「 二叉树的直径」
+
+### 层序遍历
+
+二叉树题型主要是用来培养递归思维的，而层序遍历属于迭代遍历
+
+![](images/2022-05-12-23-46-40.png)
+
+```py
+
+# // 输入一棵二叉树的根节点，层序遍历这棵二叉树
+def levelTraverse(root):
+    if not root:
+        return
+    q = []
+    q.append(root)
+
+    # 从上到下遍历二叉树的每一层
+    while q:
+        sz = len(q)
+        i = 0
+        while i < sz:
+            cur = q.pop(0)
+            # 将下一层节点放入队列
+            if cur.left:
+                q.append(cur.left)
+
+            if cur.right:
+                q.append(cur.right)
+            i+=1
+
+
+```
