@@ -201,3 +201,21 @@ def levelTraverse(root):
                 q.append(cur.right)
             i+=1
 ```
+
+遍历的其实是两个相邻节点之间的「空隙」
+![](images/2022-05-13-11-36-18.png)
+
+```py
+
+
+def traverse(node1, node2):
+    if not node1 or not node2:
+        return
+    # // 连接相同父节点的两个子节点
+    traverse(node1.left, node1.right)
+    traverse(node2.left, node2.right)
+
+    traverse(node1.right, node2.left)
+
+traverse(root.left, root.right)
+```

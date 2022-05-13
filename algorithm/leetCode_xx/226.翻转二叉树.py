@@ -14,7 +14,7 @@
 
 
 class Solution:
-    def invertTree(self, root: TreeNode) -> TreeNode:
+    def invertTree1(self, root: TreeNode) -> TreeNode:
         if not root:
             return
 
@@ -23,6 +23,18 @@ class Solution:
 
         root.left = left
         root.right = right
+        return root
+
+    def invertTree(self, root: TreeNode) -> TreeNode:
+        if not root:
+            return
+
+        # 前序
+        root.left, root.right = root.right, root.left
+
+        # --
+        self.invertTree(root.left)
+        self.invertTree(root.right)
         return root
 
 
