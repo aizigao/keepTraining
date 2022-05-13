@@ -15,29 +15,28 @@
 class Solution:
     def maxProduct(self, root: Optional[TreeNode]) -> int:
         ans = 0
+        root_sum = 0
 
-        treeSum = 0
-
-        def travserse(node):
+        def traverse(node):
             nonlocal ans
-            nonlocal treeSum
+            nonlocal root_sum
+
             if not node:
                 return 0
 
-            # 左树和
-            l_sum = travserse(node.left)
-            # 右树和
-            r_sum = travserse(node.right)
+            l_sum = traverse(node.left)
+            r_sum = traverse(node.right)
+            cur_sum = l_sum + r_sum + node.val
 
-            # 后序
-            root_sum = l_sum + r_sum + node.val
-            # cur = max((l_sum + node.val) * r_sum, l_sum * (r_sum + node.val))
-            ans = max(ans, root_sum * (treeSum - root_sum))
+            ans = max((root_sum - cur_sum) * cur_sum, ans)
+            return cur_sum
 
-            return root_sum
+        # 先求 总和
+        root_sum = traverse(root)
 
-        treeSum = travserse(root)
-        travserse(root)
+        # 再次计算
+        traverse(root)
+
         return int(ans % (1e9 + 7))
 
 
