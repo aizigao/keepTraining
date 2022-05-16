@@ -70,16 +70,28 @@ class Solution2:
         return self.merge(lists, 0, len(lists) - 1)
 
 
-## 方法三： 使用优先队列合并 TODO:
+## 方法三： 使用优先队列合并
 '''
 这个方法和前两种方法的思路有所不同，我们需要维护当前每个链表没有被合并的元素的最前面一个，k 个链表就最多有 k 个满足这样条件的元素，每次在这些元素里面选取 val 属性最小的元素合并到答案中。在选取最小元素的时候，我们可以用优先队列来优化这个过程。
 '''
+
+import heapq
 
 
 class Solution:
     def mergeKLists(self,
                     lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        pass
+        minHeap = []
+        for head in lists:
+            while head:
+                heapq.heappush(minHeap, head.val)  #把listi中的数据逐个加到堆中
+                head = head.next
+        dummy = ListNode(0)  #构造虚节点
+        p = dummy
+        while minHeap:
+            p.next = ListNode(heapq.heappop(minHeap))  #依次弹出最小堆的数据
+            p = p.next
+        return dummy.next
 
 
 # @lc code=end
