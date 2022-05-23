@@ -35,6 +35,7 @@ class BinHeap:
                     mc], self.heapList[i]
             i = mc
 
+    # 返回小的子节点
     def minChild(self, i):
         if i * 2 + 1 > self.currentSize:
             return i * 2
