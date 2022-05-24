@@ -21,18 +21,12 @@ class Solution:
                 return True
 
             if root.val > left and root.val < right:
-                return dfs(
-                    root.left,
-                    left,
-                    root.val
-                ) and dfs(
-                    root.right,
-                    root.val,
-                    right
-                )
+                return dfs(root.left, left, root.val) and dfs(
+                    root.right, root.val, right)
             else:
                 return False
 
+        # 限定以 root 为根的子树节点必须满足 right.val > root.val > left.val */
         return dfs(root, -float('inf'), float('inf'))
 
     # --
@@ -56,5 +50,6 @@ class Solution:
             root = root.right
 
         return True
+
 
 # @lc code=end
