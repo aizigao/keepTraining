@@ -16,8 +16,10 @@ class Solution:
     def insertIntoBST(self, root: TreeNode, val: int) -> TreeNode:
         if not root:
             return TreeNode(val)
-        # if (root.val == val)
-        #  BST 中一般不会插入已存在元素
+
+        # 一般插入时不处理 相同结点
+        # if val == root.val:
+        #     pass
 
         if val > root.val:
             root.right = self.insertIntoBST(root.right, val)
