@@ -15,27 +15,26 @@
 
 class Solution:
     # 一 dfs
-    def isValidBST_1(self, root: TreeNode) -> bool:
-        def dfs(root, left, right):
-            if not root:
+    def isValidBST(self, root: TreeNode) -> bool:
+        def dfs(node, left, right):
+            if not node:
                 return True
 
-            if root.val > left and root.val < right:
-                return dfs(root.left, left, root.val) and dfs(
-                    root.right, root.val, right)
-            else:
+            if node.val <= left:
+                return False
+            if node.val >= right:
                 return False
 
-        # 限定以 root 为根的子树节点必须满足 right.val > root.val > left.val */
+            l = dfs(node.left, left, node.val)
+            r = dfs(node.right, node.val, right)
+            return l and r
+
+        # left.val < root.val < right.val
         return dfs(root, -float('inf'), float('inf'))
 
     # --
-    # --
-    # --
-    # --
-    # --
     # -- 方法二：中序遍历
-    def isValidBST(self, root: TreeNode) -> bool:
+    def isValidBST2(self, root: TreeNode) -> bool:
         stack, inorder = [], float('-inf')
 
         while stack or root:
