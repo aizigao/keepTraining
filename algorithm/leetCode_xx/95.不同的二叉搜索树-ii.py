@@ -22,19 +22,20 @@ class Solution:
             if start > end:
                 return [None]
 
-            allTrees = []
+            rst = []
+            # 在 start ,end 中取 一个节点做为根
             for i in range(start, end + 1):
-                leftTrees = generateTrees(start, i - 1)
-                rightTress = generateTrees(i + 1, end)
+                left = generateTrees(start, i - 1)
+                right = generateTrees(i + 1, end)
 
-                # 左树 和 右树各取一个 拼接
-                for l in leftTrees:
-                    for r in rightTress:
-                        currTree = TreeNode(i)
-                        currTree.left = l
-                        currTree.right = r
-                        allTrees.append(currTree)
-            return allTrees
+                # 从左子树集合中选出一棵左子树，从右子树集合中选出一棵右子树，拼接到根节点上
+                for l in left:
+                    for r in right:
+                        cur = TreeNode(i)
+                        cur.left = l
+                        cur.right = r
+                        rst.append(cur)
+            return rst
 
         return generateTrees(1, n) if n else []
 
