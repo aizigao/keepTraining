@@ -12,16 +12,14 @@ class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
         l = 0
         r = len(nums) - 1
-
-        # 转化第k大元素
-        k = len(nums) - k
+        k = r - k + 1
 
         while l <= r:
             mid = self.partition(nums, l, r)
-            if mid < k:
-                l = mid + 1
-            elif mid > k:
+            if mid > k:
                 r = mid - 1
+            elif mid < k:
+                l = mid + 1
             else:
                 return nums[mid]
         return -1
@@ -29,13 +27,15 @@ class Solution:
     def partition(self, nums, l, r):
         pivot = random.randint(l, r)
         nums[pivot], nums[r] = nums[r], nums[pivot]
+
         i = l - 1
         for j in range(l, r):
             if nums[j] < nums[r]:
                 i += 1
                 nums[j], nums[i] = nums[i], nums[j]
         i += 1
-        nums[i], nums[r] = nums[r], nums[i]
+        nums[r], nums[i] = nums[i], nums[r]
+
         return i
 
     # 二，堆排序
