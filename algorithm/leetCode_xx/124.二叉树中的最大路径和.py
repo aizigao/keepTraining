@@ -18,19 +18,20 @@ class Solution:
             return 0
         res = -float('inf')
 
-        def onSideMax(root):
+        def onSidePathMax(root):
+            nonlocal res
             if not root:
                 return 0
-            nonlocal res
-            l = max(0, onSideMax(root.left))
-            r = max(0, onSideMax(root.right))
 
-            pathMaxPath = root.val + l + r
-            res = max(res, pathMaxPath)
+            l = max(0, onSidePathMax(root.left))
+            r = max(0, onSidePathMax(root.right))
 
+            pathMax = l + r + root.val
+            res = max(pathMax, res)
             return max(l, r) + root.val
 
-        onSideMax(root)
+        onSidePathMax(root)
+
         return res
 
 
