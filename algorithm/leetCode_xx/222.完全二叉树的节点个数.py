@@ -45,6 +45,7 @@ class Solution:
         # 如果左右高度相同,为 满二叉树
         if hl == hr:
             return pow(2, hl) - 1
+        # 如果左右侧的高度不同，则按照普通二叉树的逻辑计算
         return 1 + self.countNodes(root.left) + self.countNodes(root.right)
 
 
