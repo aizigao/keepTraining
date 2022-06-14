@@ -23,8 +23,8 @@ class Solution:
 
         p2 = dummy2
 
+        # 负责遍历原链表，类似合并两个有序链表的逻辑
         p = head
-
         while p:
             if p.val >= x:
                 p2.next = p
