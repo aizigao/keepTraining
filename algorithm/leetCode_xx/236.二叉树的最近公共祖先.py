@@ -52,9 +52,22 @@ def find(root, val1, val2):
 
 
 class Solution:
+    def lowestCommonAncestor1(self, root: 'TreeNode', p: 'TreeNode',
+                              q: 'TreeNode') -> 'TreeNode':
+        return find(root, p.val, q.val)
+
+    # bst 性质
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode',
                              q: 'TreeNode') -> 'TreeNode':
-        return find(root, p.val, q.val)
+        ancestor = root
+        while True:
+            if p.val < ancestor.val and q.val < ancestor.val:
+                ancestor = ancestor.left
+            elif p.val > ancestor.val and q.val > ancestor.val:
+                ancestor = ancestor.right
+            else:
+                break
+        return ancestor
 
 
 # @lc code=end
