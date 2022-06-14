@@ -9,9 +9,15 @@
 class Solution:
     # 方法一：基于快速排序的选择方法 O(nlogn)
     # 时间复杂度：O(n) 空间 O(logn)
+    '''
+    partition 函数执行的次数是 logN
+    ，每次输入的数组大小缩短一半。 所以总的时间复杂度为：
+    N + N/2 + N/4 + N/8 + ... + 1 = 2N = O(N)
+    '''
     def findKthLargest(self, nums: List[int], k: int) -> int:
         l = 0
         r = len(nums) - 1
+        # 转为取 第k个索引元素
         k = r - k + 1
 
         while l <= r:
@@ -25,7 +31,7 @@ class Solution:
         return -1
 
     def partition(self, nums, l, r):
-        pivot = random.randint(l, r)
+        pivot = random.randint(l, r) # shuffle
         nums[pivot], nums[r] = nums[r], nums[pivot]
 
         i = l - 1
