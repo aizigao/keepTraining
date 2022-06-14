@@ -52,13 +52,14 @@ def find(root, val1, val2):
 
 
 class Solution:
+    # 使用模板
     def lowestCommonAncestor1(self, root: 'TreeNode', p: 'TreeNode',
                               q: 'TreeNode') -> 'TreeNode':
         return find(root, p.val, q.val)
 
     # bst 性质
-    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode',
-                             q: 'TreeNode') -> 'TreeNode':
+    def lowestCommonAncestor(self, root: TreeNode, p: TreeNode,
+                             q: TreeNode) -> TreeNode:
         ancestor = root
         while True:
             if p.val < ancestor.val and q.val < ancestor.val:
