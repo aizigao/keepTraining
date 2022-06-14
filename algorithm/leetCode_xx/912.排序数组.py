@@ -21,7 +21,7 @@ class Solution:
         return i
 
     def randomized_quicksort(self, nums, l, r):
-        if r <= l:
+        if l >= r:
             return
         mid = self.randomized_partition(nums, l, r)
         self.randomized_quicksort(nums, l, mid - 1)
