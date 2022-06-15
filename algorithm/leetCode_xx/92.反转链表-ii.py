@@ -74,6 +74,7 @@ class Solution:
         if left == 1:
             return reverseN(head, right)
 
+        # 前进到反转的起点触发 base case
         head.next = self.reverseBetween(head.next, left - 1, right - 1)
         return head
 
