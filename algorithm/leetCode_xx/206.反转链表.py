@@ -32,6 +32,7 @@ class Solution:
     '''
 
     def reverseList(self, head: ListNode) -> ListNode:
+        # 链表为空或者只有一个节点的时候
         if not head or not head.next:
             return head
         '''
