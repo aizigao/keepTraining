@@ -27,5 +27,14 @@ class Solution:
             current = old_next
         return prev
 
+    def reverseList2(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+
+        last = self.reverseList(head.next)
+        head.next.next = head
+        head.next = None
+        return last
+
 
 # @lc code=end
