@@ -16,7 +16,7 @@ https://leetcode-cn.com/problems/reverse-linked-list/solution/
 
 
 class Solution:
-    def reverseList(self, head: ListNode) -> ListNode:
+    def reverseList1(self, head: ListNode) -> ListNode:
         prev = None
         current = head
 
@@ -27,13 +27,22 @@ class Solution:
             current = old_next
         return prev
 
-    def reverseList2(self, head: ListNode) -> ListNode:
+    '''
+    递归 输入一个节点 head，将「以 head 为起点」的链表反转，并返回反转之后的头结点。
+    '''
+
+    def reverseList(self, head: ListNode) -> ListNode:
         if not head or not head.next:
             return head
-
+        '''
+        1 -> 2 -> 3 -> 4 -> none
+        ==>
+        1  None <- 1 <- 2 <- 3 <- 4
+        '''
         last = self.reverseList(head.next)
         head.next.next = head
         head.next = None
+
         return last
 
 
