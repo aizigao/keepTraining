@@ -41,6 +41,8 @@ class Solution:
                     dp[i][j] = (dp[i + 1][j - 1] and s[i] == s[j])
                 # 当前满足条件并且没有超出
                 if dp[i][j] and l + 1 > len(ans):
-                    ans = s[i:j+1]
+                    ans = s[i:j + 1]
         return ans
+
+
 # @lc code=end
