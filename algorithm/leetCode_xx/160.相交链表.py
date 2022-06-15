@@ -10,6 +10,16 @@
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
+'''
+a1->a2->a3
+         |
+         |----> c1,c2,c3
+b1->b2---|
+
+a1,a2,a3 -> c1,c2,c3 -> b1,b2 -> c1(oops)
+b1,b2 -> c1,c2,c3 -> a1,a2,a3 -> c1(oops)
+
+'''
 
 
 class Solution:
