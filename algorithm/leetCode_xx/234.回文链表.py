@@ -39,7 +39,7 @@ class Solution:
     }
     '''
 
-    def isPalindrome(self, head: ListNode) -> bool:
+    def isPalindrome2(self, head: ListNode) -> bool:
 
         self.front_pointer = head
 
@@ -56,6 +56,24 @@ class Solution:
 
     # TODO: 再看看其它的方法
     # 快慢指针
+
+    # 东哥 前后序 递归
+
+    def isPalindrome(self, head: ListNode) -> bool:
+
+        left = head
+
+        def reverse(right):
+            nonlocal left
+            if not right:
+                return True
+            res = reverse(right.next)
+            # 后序
+            res = res and right.val == left.val
+            left = left.next
+            return res
+
+        return reverse(head)
 
 
 # @lc code=end
