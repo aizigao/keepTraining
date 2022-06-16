@@ -39,26 +39,7 @@ class Solution:
     }
     '''
 
-    def isPalindrome2(self, head: ListNode) -> bool:
-
-        self.front_pointer = head
-
-        def recursively_check(current_node=head):
-            if current_node is not None:
-                if not recursively_check(current_node.next):
-                    return False
-                if self.front_pointer.val != current_node.val:
-                    return False
-                self.front_pointer = self.front_pointer.next
-            return True
-
-        return recursively_check()
-
-    # TODO: 再看看其它的方法
-    # 快慢指针
-
     # 东哥 前后序 递归
-
     def isPalindrome(self, head: ListNode) -> bool:
 
         left = head
@@ -74,6 +55,9 @@ class Solution:
             return res
 
         return reverse(head)
+
+    # TODO: 再看看其它的方法
+    # 快慢指针
 
 
 # @lc code=end
