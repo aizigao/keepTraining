@@ -25,12 +25,20 @@ class Solution:
         # return vals == vals[::-1]
         n = len(vals)
         for i, v in enumerate(vals):
-            if v != vals[n - i-1]:
+            if v != vals[n - i - 1]:
                 return False
         return True
 
     # 方法二：递归
     # O(n) / O(1)
+    '''
+    void traverse(ListNode head) {
+        // 前序遍历代码
+        traverse(head.next);
+        // 后序遍历代码
+    }
+    '''
+
     def isPalindrome(self, head: ListNode) -> bool:
 
         self.front_pointer = head
@@ -45,7 +53,9 @@ class Solution:
             return True
 
         return recursively_check()
+
     # TODO: 再看看其它的方法
+    # 快慢指针
 
 
 # @lc code=end
