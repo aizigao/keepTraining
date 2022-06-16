@@ -40,7 +40,7 @@ class Solution:
     '''
 
     # 东哥 前后序 递归
-    def isPalindrome(self, head: ListNode) -> bool:
+    def isPalindrome2(self, head: ListNode) -> bool:
 
         left = head
 
@@ -58,6 +58,50 @@ class Solution:
 
     # TODO: 再看看其它的方法
     # 快慢指针
+    '''
+    odd 
+    1 -> 2 -> 3 -> 2 -> 1
+              s         f
+    even
+    1 -> 2 -> 2 -> 1 -> none
+              s          f
+    '''
+
+    def isPalindrome(self, head: ListNode) -> bool:
+        def reverse(head):
+            pre = None
+            cur = head
+            while cur:
+                next = cur.next
+                cur.next = pre
+                pre = cur
+                cur = next
+            return pre
+
+        slow, fast = head, head
+        # ----- 找到中点 -------
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        # 如果fast指针没有指向null，说明链表长度为奇数，slow还要再前进一步：
+        if fast:
+            slow = slow.next
+
+        # --------------
+        left = head
+        right = reverse(slow)
+
+        while right:
+            if left.val != right.val:
+                return False
+            p = left
+            left = left.next
+            right = right.next
+        # 恢复链表
+        # TODO: xxx
+
+        return True
 
 
 # @lc code=end
