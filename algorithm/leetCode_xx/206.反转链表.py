@@ -56,7 +56,7 @@ class Solution:
         if not head or not head.next:
             return head
         '''
-        1 -> 2 -> 3 -> 4 -> none
+        1 -> 2 -> 3 -> 4 -> None
         ==>
         1  None <- 1 <- 2 <- 3 <- 4
         '''
