@@ -12,6 +12,7 @@ class Solution:
         l = 0
         r = len(nums) - 1
 
+        # 因为是已有顺序，所以二分化查找
         while l < r:
             sum = nums[l] + nums[r]
 
@@ -21,7 +22,6 @@ class Solution:
                 l += 1
             else:
                 return [l + 1, r + 1]
-
         return []
 
 
