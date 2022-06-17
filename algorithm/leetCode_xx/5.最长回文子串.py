@@ -15,9 +15,7 @@ https://leetcode-cn.com/problems/longest-palindromic-substring/solution/zui-chan
 
 class Solution:
     # --- 1 动态规划 o
-    # -- 2. 中心扩展
-    # --- 3. Manacher 算法  TODO:
-    def longestPalindrome(self, s: str) -> str:
+    def longestPalindrome1(self, s: str) -> str:
         n = len(s)
 
         # n * n dp list
@@ -43,6 +41,29 @@ class Solution:
                 if dp[i][j] and l + 1 > len(ans):
                     ans = s[i:j + 1]
         return ans
+
+    # -- 2. 中心扩展
+    def longestPalindrome(self, s: str) -> str:
+        res = ''
+        n = len(s)
+
+        def palindrome(s, l, r):
+            # 防止越界
+            while l >= 0 and r < n  \
+                and s[l] == s[r]:
+                l -= 1
+                r += 1
+            return s[l + 1:r]
+
+        for i in range(n):
+            # 以s[i] 为中心点
+            s1 = palindrome(s, i, i)
+            s2 = palindrome(s, i, i + 1)
+            res = res if len(res) > len(s1) else s1
+            res = res if len(res) > len(s2) else s2
+        return res
+
+    # --- 3. Manacher 算法  TODO:
 
 
 # @lc code=end
