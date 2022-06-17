@@ -13,12 +13,13 @@ class Solution:
     nums[0...slow] 为无重复元素
     '''
     def removeDuplicates(self, nums: List[int]) -> int:
-        if not nums:
+        n = len(nums)
+        if not n:
             return 0
 
         slow = fast = 0
 
-        while fast < len(nums):
+        while fast < n:
             if nums[fast] != nums[slow]:
                 slow += 1
                 # 数据在 nums[0...slow] 内
