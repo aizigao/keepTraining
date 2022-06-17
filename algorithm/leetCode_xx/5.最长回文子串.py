@@ -58,6 +58,7 @@ class Solution:
         for i in range(n):
             # 以s[i] 为中心点
             s1 = palindrome(s, i, i)
+            # 以s[i] 和 s[i+1] 为中心
             s2 = palindrome(s, i, i + 1)
             res = res if len(res) > len(s1) else s1
             res = res if len(res) > len(s2) else s2
