@@ -9,8 +9,9 @@
 class NumArray:
     def __init__(self, nums: List[int]):
         n = len(nums)
-        preSum = [0 for i in range(n + 1)]
 
+        # 计算前缀和
+        preSum = [0 for i in range(n + 1)]
         for i in range(1, n + 1):
             preSum[i] = preSum[i - 1] + nums[i - 1]
         self.preSum = preSum
