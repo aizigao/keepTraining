@@ -90,7 +90,7 @@ class Solution:
 
         # --------------
         left = head
-        right = reverse(slow)
+        last = right = reverse(slow)
 
         while right:
             if left.val != right.val:
@@ -99,7 +99,7 @@ class Solution:
             left = left.next
             right = right.next
         # 恢复链表
-        # TODO: xxx
+        left.next = reverse(last)
 
         return True
 
