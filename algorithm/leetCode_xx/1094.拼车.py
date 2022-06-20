@@ -34,13 +34,16 @@ class Difference:
 
 class Solution:
     def carPooling(self, trips: List[List[int]], capacity: int) -> bool:
-        diff = Difference([0 for i in range(1001)])
-        for trip in trips:
-            [numsPassanger, fr, to] = trip
-            diff.increment(fr, to - 1, numsPassanger)
+        diff = Difference([0] * 1001)
 
-        res = diff.result()
-        for i in res:
+        for trip in trips:
+            [num, fr, to] = trip
+
+            diff.increment(fr, to - 1, num)
+
+        rst = diff.result()
+
+        for i in rst:
             if capacity < i:
                 return False
         return True
