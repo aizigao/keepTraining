@@ -3,8 +3,6 @@
 #
 # [3] 无重复字符的最长子串
 #
-
-
 '''
 时间复杂度：O(N)，其中 NN 是字符串的长度。左指针和右指针分别会遍历整个字符串一次。
 
@@ -15,29 +13,56 @@
 来源：力扣（LeetCode）
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 '''
+'''
+l, r = 0
+
+while r < len(s):
+    # 增大窗口
+    window.append(s[r])
+    r+=1
+    while (windowNeedsShrink):
+        # 缩小窗口
+        window.pop(0)
+        l+=1
+'''
 
 # @lc code=start
 
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        r_idx = -1
+        win = dict()
         rst = 0
+        l, r = 0, 0
 
-        os = set()
-        n = len(s)
+        while r < len(s):
+            char = s[r]
+            r += 1
+            # 更新数据
+            win[char] = 1 if char not in win else win[char] + 1
 
-        for i in range(n):
+            # 收缩
+            while char in win and win[char] > 1:
+                d = s[l]
+                l += 1
+                win[d] -= 1
+            rst = max(rst, r - l)
 
-            # 每次移除时，移除最左侧的元素
-            if i is not 0:
-                os.remove(s[i-1])
-
-            while r_idx + 1 < n and s[r_idx+1] not in os:
-                os.add(s[r_idx+1])
-                r_idx += 1
-            rst = max(rst, r_idx-i+1)
         return rst
+
+        # occ = set()
+        # n = len(s)
+        # rk = -1
+        # ans = 0
+
+        # for i in range(n):
+        #     if i != 0:
+        #         occ.remove(s[i - 1])
+        #     while rk + 1 < n and s[rk + 1] not in occ:
+        #         occ.add(s[rk + 1])
+        #         rk += 1
+        #     ans = max(ans, rk - i + 1)
+        # return ans
 
 
 # @lc code=end
