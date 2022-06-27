@@ -15,14 +15,15 @@ def f(weights, x):
     days = 0
     n = len(weights)
     i = 0
+
     while i < n:
         cap = x
 
         while i < n:
-            if cap < weights[i]:
-                break
-            else:
+            if cap >= weights[i]:
                 cap -= weights[i]
+            else:
+                break
             i += 1
         days += 1
     return days
