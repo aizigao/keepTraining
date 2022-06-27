@@ -71,6 +71,8 @@ class Solution:
             elif f(piles, mid) > h:
                 left = mid + 1
             '''
+
+            # 简化
             if f(piles, mid) <= h:
                 right = mid
             else:
