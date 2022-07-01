@@ -75,7 +75,8 @@ class Solution:
                     break
 
                 # 若之后，则可以pop
-                inStack[ord(stk.pop())] = False
+                delc = stk.pop()
+                inStack[ord(delc)] = False
 
             stk.append(c)
             inStack[cOrd] = True
