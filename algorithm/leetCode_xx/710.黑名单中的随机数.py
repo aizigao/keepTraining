@@ -18,24 +18,27 @@ class Solution:
     # [0,N) 看做一个数组，然后将 blacklist 中的元素移到数组的最末尾，
     def __init__(self, n: int, blacklist: List[int]):
         m = len(blacklist)
-        self.sz = n - m
+        self.bound = n - m
+        w = self.bound
         self.b2w = {}
 
-        # 在 [n-m, n) 的hashMap
-        black = {b for b in blacklist if b >= self.sz}
-        w = self.sz
+        #在 [n-m, n) 内的 black map
+        black = {b for b in blacklist if b >= self.bound}
 
-        # [0, n) 范围
+        # [0,n) 中 blacklist
+
         for b in blacklist:
-            # 如果在 [0,n-m), 将 b 映射到 [n-m, n)中的 在blackList的上值上
-            if b < self.sz:
+            # 若是 [0,n -m)中时，将b 映射到 [n-m,n)上
+            if b < self.bound:
+                # 找到 [n-m, n)中不在 black里的值
                 while w in black:
                     w += 1
+                # 完成映射
                 self.b2w[b] = w
                 w += 1
 
     def pick(self) -> int:
-        x = randrange(self.sz)
+        x = randrange(0, self.bound)
         return self.b2w.get(x, x)
 
 
