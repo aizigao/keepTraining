@@ -18,30 +18,24 @@ class Solution:
     # [0,N) 看做一个数组，然后将 blacklist 中的元素移到数组的最末尾，
     def __init__(self, n: int, blacklist: List[int]):
         m = len(blacklist)
-        self.bound = n - m
-        # 白名单数
-        w = self.bound
-
-        # [n-m,n) 范围内的黑名单数存入一个哈希集合 black
-        black = {b for b in blacklist if b >= self.bound}
-
+        self.sz = n - m
         self.b2w = {}
 
-        # 对于每个 [0,n-m) 范围内的黑名单数 b，首先不断增加 w 直至其不在黑名单中，然后将 b 映射到 w 上，并将 w 增加一。
+        # 在 [n-m, n) 的hashMap
+        black = {b for b in blacklist if b >= self.sz}
+        w = self.sz
 
-        # 范围在 [0, n)
+        # [0, n) 范围
         for b in blacklist:
-            if b < self.bound:
-                # 在[n,n-m) 范围内时
-
-                # 不断增加 w 直至其不在黑名单中
+            # 如果在 [0,n-m), 将 b 映射到 [n-m, n)中的 在blackList的上值上
+            if b < self.sz:
                 while w in black:
                     w += 1
                 self.b2w[b] = w
                 w += 1
 
     def pick(self) -> int:
-        x = randrange(self.bound)
+        x = randrange(self.sz)
         return self.b2w.get(x, x)
 
 
