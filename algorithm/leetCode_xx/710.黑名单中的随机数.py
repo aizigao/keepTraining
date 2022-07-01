@@ -12,8 +12,6 @@ from random import randrange
 如果 x 不在黑名单中，则直接返回 x；
 如果 x 在黑名单中，则返回 x 映射到 [n-m,n) 范围内的白名单数。
 '''
-
-
 class Solution:
     # [0,N) 看做一个数组，然后将 blacklist 中的元素移到数组的最末尾，
     def __init__(self, n: int, blacklist: List[int]):
