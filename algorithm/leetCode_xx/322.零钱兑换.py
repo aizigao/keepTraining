@@ -62,10 +62,13 @@ class Solution:
         dp[0] = 0
 
         # 便利所有状态
-        for coin in coins:
+        for x in range(amount + 1):
             # 求选择的最小值
-            # i - coin < 0 无解跳过
-            for x in range(coin, amount + 1):
+            for coin in coins:
+                # x - coin < 0 无解跳过
+                # if x - coin < 0:
+                if coin > x:
+                    continue
                 dp[x] = min(dp[x], dp[x - coin] + 1)
         return dp[amount] if dp[amount] != float('inf') else -1
 
