@@ -58,19 +58,21 @@ class Solution:
 
     def coinChange(self, coins, amount):
         # 新建一个长度为 amount+1的数组
-        dp = [float('inf')] * (amount + 1)
+        cannotReachMax = amount + 1
+        dp = [cannotReachMax] * (amount + 1)
+
+        # base case
         dp[0] = 0
 
-        # 便利所有状态
+        # 便利状态
         for x in range(amount + 1):
-            # 求选择的最小值
+            # 做选择
             for coin in coins:
-                # x - coin < 0 无解跳过
-                # if x - coin < 0:
+                # 过滤不可能的状态
                 if coin > x:
                     continue
                 dp[x] = min(dp[x], dp[x - coin] + 1)
-        return dp[amount] if dp[amount] != float('inf') else -1
+        return dp[amount] if dp[amount] != cannotReachMax else -1
 
 
 # @lc code=end
