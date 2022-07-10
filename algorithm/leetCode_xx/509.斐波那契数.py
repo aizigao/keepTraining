@@ -43,7 +43,7 @@ class Solution:
     3. 自底向上
     '''
 
-    def fib(self, n: int) -> int:
+    def fib2(self, n: int) -> int:
         if n == 0:
             return 0
         dp = [0] * (n + 1)
@@ -55,6 +55,23 @@ class Solution:
         for i in range(2, n + 1):
             dp[i] = dp[i - 1] + dp[i - 2]
         return dp[n]
+
+    '''
+    优化
+    '''
+
+    def fib(self, n: int) -> int:
+        if n == 0:
+            return 0
+
+        prev = 0
+        cur = 1
+
+        for i in range(2, n + 1):
+            sum = prev + cur
+            prev = cur
+            cur = sum
+        return cur
 
 
 # @lc code=end
