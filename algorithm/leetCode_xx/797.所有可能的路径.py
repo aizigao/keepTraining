@@ -7,7 +7,6 @@
 
 # @lc code=start
 class Solution:
-    # TODO: 官方的解法也要看一看
     def traverse(self, graph, s, path, res):
         path.append(s)
         n = len(graph)
