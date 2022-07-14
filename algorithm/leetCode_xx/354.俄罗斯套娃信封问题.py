@@ -11,6 +11,9 @@ import functools
 class Solution:
     '''
     先对宽度 w 进行升序排序，如果遇到 w 相同的情况，则按照高度 h 降序排序；之后把所有的 h 作为一个数组，在这个数组上计算 LIS 的长度就是答案。
+
+
+    两个 w 相同的信封不能相互包含，所以对于宽度 w 相同的信封，对高度 h 进行降序排序，保证 LIS 中不存在多个 w 相同的信封（因为题目说了长宽相同也无法嵌套）。
     '''
     def maxEnvelopes(self, envelopes: List[List[int]]) -> int:
         n = len(envelopes)
