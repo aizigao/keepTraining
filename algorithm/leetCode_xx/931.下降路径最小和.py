@@ -44,12 +44,29 @@ class Solution:
         return self.memo[i][j]
 
     # 自底向上
+    '''
+    matrix 
+    [
+     [2, 1, 3], 
+     [6, 5, 4], 
+     [7, 8, 9]
+    ]
+
+    dp
+    [
+        [99999, 2, 1, 3, 99999],
+        [99999, 7, 6, 5, 99999],
+        [99999, 13, 13, 14, 99999]
+    ]
+    '''
+
     def minFallingPathSum(self, matrix: List[List[int]]) -> int:
         n = len(matrix)
         '''
         dp数组 0 左右填充为0
         '''
         dp = [[99999] * (n + 2) for i in range(n)]
+        print(matrix)
 
         # // base case
         for j in range(n):
@@ -61,9 +78,10 @@ class Solution:
                 k = j + 1
                 dp[i][k] = min(dp[i - 1][k - 1], dp[i - 1][k],
                                dp[i - 1][k + 1]) + matrix[i][j]
+        print(dp)
         res = float('inf')
-        for i in range(1, n + 1):
-            res = min(dp[n - 1][i], res)
+        for k in range(1, n + 1):
+            res = min(dp[n - 1][k], res)
         return res
 
 
