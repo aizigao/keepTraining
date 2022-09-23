@@ -17,8 +17,9 @@ class Solution:
         max_ans = nums[0]
 
         for n in nums:
-            pre = max(pre+n, n)
+            pre = max(pre + n, n)
             max_ans = max(pre, max_ans)
         return max_ans
+
 
 # @lc code=end
