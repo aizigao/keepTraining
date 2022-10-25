@@ -32,12 +32,11 @@ dp = [[0 for w in range(W+1)] for i in range(N+1)]
 for i in range(1, N+1):
     for w in range(1, W+1):
         # 选择 把物品 i 装进背包, 不把物品 i 装进背包
-
-        # 边界 w - wt[i-1] < 0
-
         if w - wt[i-1] < 0:
+            # 边界
             dp[i][w] = dp[i-1][w]
         else:
+            # 择优
             dp[i][w] = max(
                 dp[i-1][w],  # 不装
                 val[i-1] + dp[i-1][w - wt[i-1]]
