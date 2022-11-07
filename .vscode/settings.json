@@ -1,4 +1,7 @@
 {
   "pasteImage.path": "${currentFileDir}/images",
-  "editor.tabSize": 4
+  "editor.tabSize": 4,
+  "code-runner.executorMap": {
+    "python": "python",
+  }
 }
