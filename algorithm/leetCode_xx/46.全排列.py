@@ -13,7 +13,8 @@ O(n*n!) / O(n)
 
 
 class Solution:
-    def permute(self, nums: List[int]) -> List[List[int]]:
+    # 001 写的太抽象了
+    def permutex(self, nums):
         n = len(nums)
         res = []
 
@@ -30,4 +31,35 @@ class Solution:
         backtrack(0)
         return res
 
+    def permute(self, nums):
+        track = []
+        used = dict()
+        self.res = []
+        self.backtrack(nums, track, used)
+        return self.res
+
+    def backtrack(self, nums, track, used):
+        if len(track) == len(nums):
+            self.res.append(
+                track.copy()
+            )
+            return
+
+        for i in range(len(nums)):
+            # 排除不合法的选择
+            if i in used and used[i]:
+                continue
+
+            track.append(nums[i])
+            used[i] = True
+
+            self.backtrack(nums, track, used)
+
+            track.pop()
+            used[i] = False
+
+
 # @lc code=end
+
+
+print(Solution().permute([1, 2, 3]))
