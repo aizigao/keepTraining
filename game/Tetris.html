@@ -166,6 +166,7 @@
     const playfield = [];
 
     // populate the empty state
+    // 加两行 offscreen
     for (let row = -2; row < 20; row++) {
       playfield[row] = [];
 
@@ -173,7 +174,6 @@
         playfield[row][col] = 0;
       }
     }
-    console.log({ playfield })
 
     // how to draw each tetromino
     // @see https://tetris.fandom.com/wiki/SRS
