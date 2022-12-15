@@ -6,6 +6,7 @@ const w = window
 
 w.demo1 = () => {
   // ArrayBuffer 对固定长度的连续内存空间的引用。 是核心对象是原始的二进制数据。
+  // 0000_0000
   let buffer = new ArrayBuffer(16); // 创建一个长度为 16 Byte 的 buffer
 
   console.log('byteLength ', buffer.byteLength) // 16
@@ -20,6 +21,7 @@ w.demo1 = () => {
 
   console.log('BYTES_PER_ELEMENT', Uint32Array.BYTES_PER_ELEMENT); // 每个整数 4 个字节
 
+  console.log(view)
   console.log('view.length', view.length); // 4，它存储了 4 个整数
   console.log('byteLength', view.byteLength); // 16，字节中的大小
 
@@ -36,10 +38,9 @@ w.demo1 = () => {
 // 越界
 w.typedArrayOutOfBounds = () => {
 
-
   let uint8array = new Uint8Array(16);
-  let num = 0b100000000; // 256
-  let num2 = 0b100000001; // 257
+  let num =  0b1_0000_0000; // 256
+  let num2 = 0b1_0000_0001; // 257
 
   uint8array[0] = num;
   uint8array[1] = num2;
@@ -52,7 +53,7 @@ w.typedArrayOutOfBounds = () => {
 
   uint8ClampedArr[0] = num;
   uint8ClampedArr[1] = num2;
-  console.log('uint8ClampedArr[0]', uint8ClampedArr[0]); // 0
+  console.log('uint8ClampedArr[0]', uint8ClampedArr[0]); // 255
   console.log('uint8ClampedArr[1]', uint8ClampedArr[1], uint8ClampedArr[1].toString('2')); // 255 --> 0b1111_1111
 }
 
@@ -68,6 +69,7 @@ w.demoDataView = () => {
   console.log(dataView.getUint8(0)); // 255
 
   // 现在在偏移量为 0 处获取 16 位数字，它由 2 个字节组成，一起解析为 65535
+  // 0000000_000001  --> 
   console.log(dataView.getUint16(0)); // 65535（最大的 16 位无符号整数）
 
   // 在偏移量为 0 处获取 32 位数字

@@ -6,13 +6,39 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    #json-input {
+      width: 300px;
+      height: 150px;
+      border: 1px solid #ddd;
+    }
+  </style>
 </head>
 
-<a href="./blob.html"></a>
+
+<textarea name="" id='json-input' cols="30" rows="10"></textarea>
+
+<button id="btn">download</button>
 
 <body>
-  <script type="module">
-    import './scripts/index.js'
+  <script>
+    document.querySelector('#btn').addEventListener('click', () => {
+      const jsonInput = document.querySelector('#json-input')
+
+      console.log(jsonInput.value)
+      let blob = new Blob([jsonInput.value], { type: 'text/plain' });
+      console.log(blob)
+      const url = URL.createObjectURL(blob)
+
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = 'test.txt';
+      document.body.appendChild(a);
+      a.click();
+      console.log({ url })
+      window.URL.revokeObjectURL(url);
+    })
   </script>
 </body>
 
