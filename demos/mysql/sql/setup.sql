@@ -40,8 +40,8 @@ create table Bugs (
     foreign key (status) references BugStatus(status)
 );
 
-DROP TABLE IF EXISTS `Comment`;
-create table Comment(
+DROP TABLE IF EXISTS `Comments`;
+create table Comments(
     comment_id serial primary key ,
     bug_id bigint unsigned not null ,
     author bigint unsigned not null ,
