@@ -98,13 +98,12 @@ DELETE FROM Contacts WHERE product_id = 456 AND account_id = 34;
 
 ### 单纯的树
 
-
 评论可以评论原文， 相互评论
-
 
 反
 
 检索回复会很长
+
 ```sql
 CREATE TABLE Comments(
   comment_id SERIAL PRIMARY KEY,
@@ -114,16 +113,13 @@ CREATE TABLE Comments(
 )
 ```
 
-
 **名词**
 
-- root 
+- root
 - leaf
 - nonleaf
 
-
 **[反] 总是依赖父节点**
-
 
 邻接表
 ![](images/2023-01-10-11-00-11.png)
@@ -131,32 +127,37 @@ CREATE TABLE Comments(
 
 使用邻接表查询所有后代
 
-
 查询两层
+
 ```sql
 SELECT c1.*, c2.*
-FROM Comments c1 LEFT OUTER JOIN Comments c2  
+FROM Comments c1 LEFT OUTER JOIN Comments c2
   ON c2.parent_id = c1.comment_id;
 
 ```
 
-
 笨拙，count() 困难
+
 ```sql
-SELECT c1.*, c2.*, c3.*, c4.* 
+SELECT c1.*, c2.*, c3.*, c4.*
   FROM Comments c1 -- 1st level
     LEFT OUTER JOIN Comments c2
-      ON c2.Parent_id =  c1.Comment_id -- 2nd level 
+      ON c2.Parent_id =  c1.Comment_id -- 2nd level
     LEFT OUTER JOIN Comments c3
-      ON c3.Parent_id c2.Comment_id -- 3rd level 
+      ON c3.Parent_id c2.Comment_id -- 3rd level
     LEFT OUTER JOIN Comments c4
       ON c4.Parent_id c3.Comment_id; -- 4th level
 ```
 
-
 一些情况下邻接表比较方便, 增加节点
 
 ```sql
-UPDATE INTO Comments (bug_id, parent_id, author, comment) 
+UPDATE INTO Comments (bug_id, parent_id, author, comment)
   VALUES (1234, 7, 'Kukla', 'thanks')
+```
+
+更新节点位置
+
+```sql
+UPDATE SET parent_id = 3 WHERE comment_id = 6;
 ```
