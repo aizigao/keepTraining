@@ -161,3 +161,249 @@ UPDATE INTO Comments (bug_id, parent_id, author, comment)
 ```sql
 UPDATE SET parent_id = 3 WHERE comment_id = 6;
 ```
+
+删除节点会很复杂, 目标删除 4，保证外键完整要查找所有子节点
+
+```sql
+SELECT comment_id FROM Comments WHERE parent_id = 4; -- 5,6
+SELECT comment_id FROM Comments WHERE parent_id = 5; -- none
+SELECT comment_id FROM Comments WHERE parent_id = 6; -- 7
+SELECT comment_id FROM Comments WHERE parent_id = 7; -- none
+
+DELETE FROM Comments WHERE comment_id IN (7);
+DELETE FROM Comments WHERE comment_id IN (5,6);
+DELETE FROM Comments WHERE comment_id = 4;
+```
+
+**[方案] 使用其他树模型**
+
+目前的 MySQL、MariaDB 和主流数据库都支持 CTE 递归查询了
+
+```sql
+-- 表结构
+CREATE TABLE Comments (
+  comment_id SERIAL PRIMARY KEY,
+  parent_id BIGINT UNSIGNED,
+  author VARCHAR(20),
+  content VARCHAR(255)
+);
+
+-- 插入数据
+INSERT INTO Comments (comment_id, parent_id, author, content) VALUES
+(1, null, 'Fran', '这个Bug的成因是什么'),
+(2, 1, 'Ollie', '我觉得是一个空指针'),
+(3, 2, 'Fran', '不，我查过了'),
+(4, 1, 'Kukla', '我们需要查无效输入'),
+(5, 4, 'Ollie', '是的，那是个问题'),
+(6, 4, 'Fran', '好，查一下吧'),
+(7, 6, 'Kukla', '解决了'),
+(8, 7, 'Fran', '非常棒');
+
+-- 递归查找评论id为4的所有子评论
+WITH RECURSIVE cte AS (
+  SELECT * FROM Comments WHERE comment_id = 4    -- 条件：评论id = 4
+  UNION                                          -- 递归：父评论id为此评论id的评论
+  SELECT c.* FROM Comments c JOIN cte t WHERE c.parent_id = t.comment_id
+)
+SELECT * FROM cte;
+```
+
+- 路径枚举
+- 嵌套表
+- 闭包表
+
+**路径枚举**
+
+邻接表从树中获取一个给定节点的所有祖先开销大， 路径枚举所有祖先联合为一个字符串
+
+```sql
+CREATE TABLE Comments (
+  comment_id SERIAL PRIMARY KEY,
+  path VARCHAR(1000),
+  parent_id BIGINT UNSIGNED,
+  author VARCHAR(20),
+  comment VARCHAR(255)
+  comment_date DATETIME NOT NULL,
+);
+```
+
+![](images/2023-01-10-15-07-03.png)
+
+找到评论 7 的祖先
+
+```sql
+
+select *
+from Comments As c
+where '1/4/6/7/' like c.path || '%' -- 1/4/6/% , 1/4/% 1/%
+```
+
+找到评论 4 的后代
+
+```sql
+select *
+from Comments As c
+where c.path like '1/4/' || '%'
+```
+
+评论 4 下的每个用户的评论数量
+
+```sql
+select COUNT(*)
+From Comments as c Where c.path like '1/4' || '%'
+Group By c.author
+```
+
+insert
+
+```sql
+INSERT INTO Comments(author, comment) VALUES ('Ollie', 'Good Job!');
+
+UPDATE Comments
+  Set path = (Select path From Comments Where comment_id = 7)
+    || LAST_INSERT_ID() || '/'
+  Where comment_id = LAST_INSERT_ID()
+```
+
+存在乱穿马路的问题
+
+**嵌套集**
+
+```sql
+CREATE TABLE Comments (
+  comment_id SERIAL PRIMARY KEY,
+  nsleft INTEGER NOT NULL,
+  nsright INTEGER NOT NULL,
+  parent_id BIGINT UNSIGNED,
+  author VARCHAR(20),
+  comment VARCHAR(255)
+  comment_date DATETIME NOT NULL,
+);
+```
+
+nsleft 的数值小于节点的所有后代 id， nsright 大于节点的所有后代
+
+深度递归，进入时分配 nsleft, 返回时分配 nsright
+
+![](images/2023-01-10-15-45-32.png)
+![](images/2023-01-10-15-47-08.png)
+
+查找 #4 及其后代
+
+```sql
+SELECT c2.*
+FROM Comments As c1
+  JOIN Comments As c2
+  ON c2.nsleft BETWEEN c1.nsleft AND c1.nsright
+WHERE c1.comment_id = 4;
+```
+
+查找 #6 及其祖先
+
+```sql
+SELECT c2.*
+FROM Comments As c1
+  JOIN Comments As c2
+  ON c1.nsleft BETWEEN c2.nsleft AND c2.nsright
+WHERE c1.comment_id = 6;
+```
+
+当你要删除一个非叶子节点时，他的后代会自动代替被删除的节点，成为直接祖先的直接后代
+
+![](images/2023-01-10-16-03-01.png)
+
+**闭包表**
+
+```sql
+CREATE TABLE Comments (
+  comment_id SERIAL PRIMARY KEY,
+  parent_id BIGINT UNSIGNED,
+  author VARCHAR(20),
+  comment VARCHAR(255)
+  comment_date DATETIME NOT NULL,
+);
+
+CREATE TABLE TreePaths (
+  ancestor BIGINT UNSIGNED NOT NULL,
+  descendant BIGINT UNSIGNED NOT NULL,
+  PRIMARY KEY (ancestor, descendant),
+  FOREIGN KEY (ancestor) REFERENCES Comments(comment_id),
+  FOREIGN KEY (descendant) REFERENCES Comments(comment_id)
+);
+```
+
+![](images/2023-01-10-16-07-31.png)
+
+**\#4 的后代**
+
+```sql
+
+select c.*
+from comments as c
+  JOIN TreePaths as t ON c.comment_id = t.descendant
+Where t.ancestor = 4
+```
+
+**\#6 的后代**
+
+```sql
+select c.*
+from comments as c
+  JOIN TreePaths as t ON c.comment_id = t.ancestor
+Where t.descendant = 6
+```
+
+**insert**
+
+为 5 增加一个子节点
+
+```sql
+INSERT INTO TreePaths (ancestor, descendant)
+  select t.ancestor, 8
+  from TreePaths as t
+  where t.descendant = 5
+  union all
+  select 8, 8;
+```
+
+删除 7
+
+```sql
+delete from TreePaths where descendant = 7;
+```
+
+删除 4 及后代
+
+```sql
+Delete from TreePaths
+Where descendant in (
+  Select descendant
+  From TreePaths
+  Where ancestor = 4
+);
+```
+
+![](images/2023-01-10-16-20-06.png)
+
+---
+
+### 需要 ID
+
+```sql
+
+create table ArticleTags (
+  id SERIAL primary key,
+  article_id BIGINT UNSIGNED NOT NULL,
+  tag_id BIGINT UNSIGNED NOT NULL,
+  FOREIGN KEY (article_id) REFERENCES Articles(id)
+  FOREIGN KEY (tag_id) REFERENCES Tags(id)
+)
+
+
+-- 查询 327 下的文章数量, 数量不对，重复关联了
+
+Select tag_id, COUNT(*) As article_per_tag
+From ArticleTags Where tag_id = 327;
+```
+
+![](images/2023-01-10-17-32-42.png)
