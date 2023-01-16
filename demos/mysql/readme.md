@@ -610,3 +610,101 @@ SET @sql = concat(
 PREPARE stmt FROM @sql;
 EXECUTE stmt;
 ```
+
+### 多态关联
+
+Comments（评论表）可能被 Bugs（错误表）和特性表（Features）同时用到。
+其实原著中有一句话我非常赞同： 当你看清楚问题的根源时，解决方案将变得异常简单：多态关联是一个反向关联。
+
+![](images/2023-01-16-15-17-48.png)
+![](images/2023-01-16-16-57-45.png)
+
+**[反]使用双用途外键**
+
+Comments 里面多了个 type 字段说明是评论来自 Bugs 还是来自 Features 的。就像一个孩子有两个父亲。
+
+| comment_id | issue_type | issue_id | comment  |
+| ---------- | ---------- | -------- | -------- |
+| 1          | bug        | 1        | bug 1    |
+| 2          | feature    | 1        | feture 1 |
+| 3          | bug        | 2        | bug 2    |
+
+```sql
+CREATE TABLE Comments(
+  comment_id SERIAL PRIMARY KEY,
+  issue type VARCHAR (20), --"Bugs" or "FeatureRequests'
+  issue_id BIGINT UNSIGNED NOT NULL,
+  author BIGINT UNSIGNED NOT NULL,
+  comment date DATETIME,
+  comment TEXT,
+  FOREIGN KEY  (author) REFERENCES Accounts (account_id)
+);
+```
+
+外键必须指定一个准确的表，无法使用外键
+
+查询 1234 的评论
+
+```sql
+select *
+from Bugs as b join Comments as c
+  on (b.issue_id = c.issue_id and c.issue_type = 'Bugs')
+Where b.issue_id = 1234;
+
+
+
+-- 不确定时
+select *
+from Comments as c
+left join Bugs as b
+  on (b.issue_id = c.issue_id and c.issue_type = 'Bugs')
+left join FeatureRequests as f
+  on (f.issue_id = c.issue_id and c.issue_type = 'FeatureRequests')
+```
+
+**[方案] 反向引用**
+
+多态关联是一个反向关联
+
+```sql
+CREATE TABLE BugsComments(
+  issue_id BIGINT UNSIGNED NOT NULL,
+  comment_id BIGINT UNSIGNED NOT NULL,
+  PRIMARY KEY  (issue_id, comment_id),
+  -- UNIQUE KEY comment_id, -- 可选，每条评论都只有一个bug
+  FOREIGN KEY  (issue_id) REFERENCES Bugs (issue_id).
+  FOREIGN KEY  (comment_id) REFERENCES Comments(comment_id)
+);
+
+CREATE TABLE FeaturesComments(
+  issue_id BIGINT UNSIGNED NOT NULL,
+  comment_id BIGINT UNSIGNED NOT NULL,
+  PRIMARY KEY  (issue_id, comment_id),
+  FOREIGN KEY  (issue_id) REFERENCES FeaturesRequests(issue_id).
+  FOREIGN KEY  (comment_id) REFERENCES Comments(comment_id)
+);
+```
+
+![](images/2023-01-16-17-13-17.png)
+
+```sql
+
+select *
+from BugsComments As b
+  Join Comments  as c using (comment_id)
+where b.issue_id = 1234;
+```
+
+```sql
+SELECT*
+FROM Comments AS c
+  LEFT OUTER JOIN  (BugsComments J0IN Bugs AS b USING  (issue_id))
+    USING  (comment_id)
+  LEFT OUTER JOIN  (FeaturesComments JOIN FeatureRequests AS f USING  (issue_id))
+    USING  (comment_id)
+WHERE c.Comment_id =9876;
+```
+
+### 9 元数据分裂
+
+
