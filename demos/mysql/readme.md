@@ -407,3 +407,206 @@ From ArticleTags Where tag_id = 327;
 ```
 
 ![](images/2023-01-10-17-32-42.png)
+
+### 6.实体-属性-值 eav 模式
+
+按日期统计记录条数
+
+- 所有值都在同一列种
+- 数据类型可以比较
+
+```sql
+SElECT date_reported, COUNT(*)
+FROM Bugs
+group by date_reported;
+```
+
+**老方案**
+
+- 新增字段
+  - 实现成本高，每次添加商品都需要进行前后端开发、调试，浪费时间和人力。
+  - 数据库的字段可能会越来越多，而很多字段大部分商品都是不需要的，需要设置为 NULL，导致内存大量浪费。
+- 预留字段 ext1 ext2 ext3
+
+  - 字段一样，但是含义不一样，需要前端做大量适配。
+  - 字段的类型可能不一样，预留字段还得考虑不同的类型。
+  - 预留字段太少了作用有限，太多了和新增字段一样会有存储和性能问题。
+  - 扩展字段是公用的，不能根据字段名顾名思义，得在启用时维护对应关系，使用时查找对应关系。
+  - 扩展字段的数量无法精确定义。
+
+- extra json 字段
+  - JSON 数据仅仅只能用于展示，如果用于条件查询、数据更新其效率是很低的。查询时需要遍历表解析 JSON。
+
+**[反] 使用泛型属性表**
+
+- 实体：通常来说这就是一个指向父表的外键，父表的每条记录表示一个实体对象
+- 属性：在传统的表中，属性即每一列的名字，但在这个新的设计中，我们需要根据不同的记录来解析其标识的对象属性。
+- 值：对于每个实体的每一个不同属性，都有一个对应的值。 比如，一个给定的 Bug 是一个实体对象，我们通过它的主键来标识它，它的主键值
+
+```sql
+
+create table Issues(
+  issue_id serial primary key
+);
+
+insert into Issues (issue_id) values (1234);
+
+create table IssueAttributes(
+  issue_id bigint unsigned not null,
+  attr_name varchar(100) not null,
+  attr_value varchar(100),
+  primary key (issued_id, attr_name),
+  foreign key (issue_id) references Issues(issue_id)
+)
+
+
+INSERT INTO IssueAttributes  (issue_id, attr_name, attr_value)
+VALUES
+ (1234, 'product', '1'),
+ (1234, 'date reported', '2009-06-01'),
+ (1234, ' status', 'NEW'),
+ (1234, 'description', 'Saving does not work'),
+ (1234, 'reported_by' 'Bi71').
+ (1234, 'version_affected', '1.0').
+ (1234, 'severity', 'loss of functionality').
+ (1234, 'priority' 'high');
+```
+
+- 两张表的列都很少
+- 新增的属性不会对现有的表结构造成影响，不需要新增列
+- 避免了由于空值造成的表内容混乱
+
+查询属性
+
+```sql
+-- 正常 --
+select issue_id,date_reported from Issues;
+
+-- EAV --
+select issue_id, attr_value as 'date_reported'
+from IssueAttributes
+where attr_name = 'date_reported'
+```
+
+- 无法声明强制属性, eav 中每个属性为表中的一行，而非一列, 需要检查每个 issue_id 都存在这一行
+- 无法使用数据类型, eav 中 attr_value 都是 string
+- 无法保证引用的完整性
+- 无法配置属性名，命名不规范时会出现多个同义的 attr_name
+-
+
+重组行，由于每个属性在 IssueAttributes 表里都存储在独立的行中，要想像上面那样按行获取所有这些属性就需要执行一个联结查询，并将结果合并成行。同时，必须在写查询语句的时候就知道所有的属性名称。下面的查询语句重组了上表展示的行：
+
+```sql
+SELECT i.Issue_id,
+i1.Attr _value AS "date_reported",
+i2.Attr_value AS "status",
+i3.Attr_value AS "priority",
+i4. Attr_value AS "description"
+
+FROM Issues AS i
+
+LEFT OUTER JOIN IssueAttributes AS i1
+  ON i.issue_id i1.Issue_id AND i1.Attr_name ='date reported'
+
+LEFT OUTER JOIN IssueAttributes AS i2
+  ON i.issue_id i2.Issue_id AND i2.Attr_name 'status'
+
+LEFT OUTER JOIN IssueAttributes AS i3
+  ON i.issue id i3.issue id AND i3.attr name 'priority';
+
+LEFT OUTER JOIN IssueAttributes AS i4
+  ON i.issue_id i4.issue_id AND i4.attr_name 'description';
+
+WHERE i.issue_id =1234;
+```
+
+**合理使用反模式**
+
+在关系数据库中很难为 EAV 这个反模式正名，因为这就不得不放弃关系型范式的太多优点。但这不影响在某些程序中合理地使用这种设计来支持动态属性。
+
+大多数应用程序仅仅在有限的几张表甚至于仅一张中需要存储无范式的数据，而其他的数据需求适用于标准的表设计。如果你明白在你的项目中使用 EAV 设计的风险和你要做的额外工作，并且谨慎地使用它，它的副作用会变得较小。但请一定要记住，那些富有经验的数据库顾问给出的报告显示，使用 EAV 设计的系统在一年以内就会变得极其笨重。
+
+配合 MongoDB 吧
+
+**模型化子类型**
+
+单表继承
+
+每张表的列数是有限的，没有限制哪个属性属于哪个类型
+
+```sql
+CREATE TABLE Issues(
+  issue_id SERIAL PRIMARY KEY,
+  reported_by BIGINT UNSIGNED NOT NULL,
+  product_id BIGINT UNSIGNED,
+  `priority` VARCHAR(20),
+  version_resolvedVARCHAR (20),
+  `status` VARCHAR(20),
+  issue_type VARCHAR(10), -- BUG or FEATURE
+  severity VARCHAR (20), -- only for bugs
+  version_affected VARCHAR (20), -- only for bugs
+  sponsor VARCHAR (50), -- only for feature requests
+  FOREIGN KEY  (reported_by) REFERENCES Accounts(account_id),
+  FOREIGN KEY  (product_id) REFERENCES Products (product_id)
+);
+```
+
+实体表继承
+
+另一个解决方案是为每个子类型创建一张独立的表。每个表包含那些属于基类的共有属性，同时也包含子类型特殊化的属性。然而，很难将通用属性和子类特有的属性区分开来。因此，如果将一个新的属性增加到通用属性中，必须为每个子类表都加一遍。
+
+类表继承
+
+模拟继承
+
+```sql
+CREATE TABLE Issues(
+  issue_id SERIAL PRIMARY KEY,
+  reported_by BIGINT UNSIGNED NOT NULL,
+  product_id BIGINT UNSIGNED,
+  `priority` VARCHAR(20),
+  `version` resolved VARCHAR(20).
+  `status` VARCHAR (20),
+  FOREIGN KEY  (reported_by) REFERENCES Accounts(account_id),
+  FOREIGN KEY  (product_id) REFERENCES Products(product_id),
+);
+
+CREATE TABLE Bugs(
+  issue_id BIGINT UNSIGNED PRIMARY KEY,
+  severity VARCHAR(20),
+  version_affected VARCHAR (20),
+  FOREIGN KEY  (issue_id) REFERENCES Issues(issue_id)
+);
+
+CREATE TABLE FeatureRequests(
+  issue_id BIGINT UNSIGNED PRIMARY KEY.
+  sponsor VARCHAR(50),
+  FOREIGN KEY  (issue_id) REFERENCES Issues(issue_id)
+);
+```
+
+特性表
+
+```sql
+-- 特性
+CREATE TABLE Features(
+  feature_id SERIAL PRIMARY KEY,
+  name       VARCHAR(255) UNIQUE NOT NULL,
+  comment    VARCHAR(255) NULL
+);
+-- 产品特性
+CREATE TABLE ProductFeatures (
+  product_id  BIGINT UNSIGNED NOT NULL,
+  feature_id  BIGINT UNSIGNED NOT NULL,
+  PRIMARY KEY (product_id, feature_id),
+  FOREIGN KEY (product_id) REFERENCES Products(product_id),
+  FOREIGN KEY (feature_id) REFERENCES Features(feature_id)
+);
+-- 当表名是变量，可采用存储过程实现，甚至可以使用循环
+SET @sql = concat(
+    'SELECT * FROM ',
+    (SELECT name FROM features WHERE feature_id = 1)
+);
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+```
