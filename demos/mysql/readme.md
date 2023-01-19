@@ -707,4 +707,100 @@ WHERE c.Comment_id =9876;
 
 ### 9 元数据分裂
 
+```sql
+CREATE TABLE Customers (
+  customer id NUMBER(9) PRIMARY KEY,
+  contact_info VARCHAR(255),
+  business_type VARCHAR (20),
+  revenue NUMBER(9,2)
+);
+```
 
+但是销售部门需要按年来划分这些收入以便于跟宗每个客户的动态。他们决定增加一系列的列，每一列都按照年份来命名。
+
+```sql
+ALTER TABLE Customers ADD (revenue2002 NUMBER(9, 2));
+ALTER TABLE Customers ADD (revenue2003 NUMBER(9,2)):
+ALTER TABLE Customers ADD (revenue2004 NUMBER(9,2)):
+```
+
+**[反] 克隆表与克隆列**
+
+- 一张长表 拆成多个小表
+- 一列拆成 子列
+
+手动分隔 合理场景是 归档数据
+
+**[方案]分区及标准化**
+
+水平分区, mysql 5.1， 表拆分 单还可以以单表方式操作
+
+```sql
+CREATE TABLE Bugs (
+  bug_id SERIAL PRIMARY KEY,
+  date_reported DATE
+  -- other columns
+) PARTTION BY HASH (YEAR(date_reported)) PARTTIONS 4;
+```
+
+垂直分区, 根据列拆分
+
+- 关联表
+
+##　物理数据库设计反模式
+
+### 10.取整错误
+
+不要用 float double 用 numberic 和 decimal
+
+### 11.每日新花样
+
+不要用枚举
+
+### 12.幽灵文件
+
+目标：存储图片或其他多媒体大文件（BLOB）, 但现在大家一般是 oss 了，
+oss 考虑点
+
+- 文件如何去重，特别是大文件？
+- 流媒体文件如何在线播放？
+- 动辄 5G、10G 的文件也要存 BOLB 吗？
+- 不同的 bug 引用了同一份文件副本，有几份存几份 BLOB 么？
+
+文件其实属于基类。以下为建议数据结构：
+
+```sql
+CREATE TABLE files (
+  id CHAR(32) PRIMARY KEY, -- 文件 HASH，文件名，一般是 MD5
+  mime VARCHAR(255) NOT NULL, -- 文件 MIME，可计算为文件扩展名
+  size BIGINT UNSIGNED NOT NULL -- 文件大小
+  -- 无 path？因为有 buckets 表和 file_buckets 表，二者结合解决存放位置问题
+);
+
+CREATE TABLE BugFiles (
+  bug_id BIGINT UNSIGNED NOT NULL,
+  file_id BIGINT UNSIGNED NOT NULL,
+  PRIMARY KEY (bug_id, file_id),
+  FOREIGN KEY (bug_id) REFERENCES Bugs(bug_id),
+  FOREIGN KEY (file_id) REFERENCES files(id)
+);
+```
+
+### 13. 乱用索引
+
+目标：优化性能（INDEX)
+
+**[反]无规划的使用索引**
+
+- 无索引或者索引不足：导致历遍全表
+- 使用了太多的索引或者使用了一些无效索引：导致不必要的额外开销
+- 执行一些让索引无能为力的查询：根本没有用到索引
+
+**[方案] 解决方案：MENTOR 你的索引**
+
+- Measure（测量）：查看“慢查询”日志
+- Explain（解释）：查询执行计划（QEP）
+- Nominate（挑选）：查询分析器
+- Test（测试）：把找出来的问题做相应测试
+- Optimize（优化）：优化索引性能
+- Rebuild（重建）：重建索引

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        background: goldenrod;
+        width: 300px;
+        height: 300px;
+        margin: 30px auto;
+        transition: all 2s linear;
+        display: block;
+      }
+
+      .hidden {
+        display: none;
+        opacity: 0;
+      }
+      .visuallyhidden {
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box" class="box"></div>
+
+    <button>TOGGLE VISIBILITY</button>
+    <script>
+      let box = document.getElementById("box"),
+        btn = document.querySelector("button");
+
+      btn.addEventListener(
+        "click",
+        function () {
+          if (box.classList.contains("hidden")) {
+            box.classList.remove("hidden");
+            setTimeout(function () {
+              box.classList.remove("visuallyhidden");
+            }, 20);
+          } else {
+            box.classList.add("visuallyhidden");
+            box.addEventListener(
+              "transitionend",
+              function (e) {
+                box.classList.add("hidden");
+              },
+              {
+                capture: false,
+                once: true,
+                passive: false
+              }
+            );
+          }
+        },
+        false
+      );
+    </script>
+  </body>
+</html>
