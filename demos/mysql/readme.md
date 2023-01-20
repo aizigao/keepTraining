@@ -794,6 +794,24 @@ CREATE TABLE BugFiles (
 
 - 无索引或者索引不足：导致历遍全表
 - 使用了太多的索引或者使用了一些无效索引：导致不必要的额外开销
+
+```sql
+CREATE INDEX Telephone Book ON Accounts(last_name, first_name)；
+
+SELECT * FROM Accounts ORDER BY first_name, last_name; -- 顺序不对
+
+SELECT * FROM Bugs WHERE MONTH(date_reported) = 4; -- 表达式索引
+
+SELECT * FROM Bugs WHERE last name = "Charles" OR firstname = "Charles"; -- 等同下行
+
+SELECT * FROM Bugs WHERE last_name ='Charles'
+UNION
+SELECT * FROM Bugs WHERE first.name = 'Charles';
+
+
+SELECT * FROM Bugs WHERE description LIKE "%crash%" -- 由于这个查询断言的匹配子串可能出现在该字段的任何部分，因此即使经过排序的索引结构书帮不上任何忙
+```
+
 - 执行一些让索引无能为力的查询：根本没有用到索引
 
 **[方案] 解决方案：MENTOR 你的索引**
@@ -803,4 +821,28 @@ CREATE TABLE BugFiles (
 - Nominate（挑选）：查询分析器
 - Test（测试）：把找出来的问题做相应测试
 - Optimize（优化）：优化索引性能
+  MySQL 中，使用 LOAD INDEX INTO CACHE 添加内存
 - Rebuild（重建）：重建索引
+  索引在平衡的时候共效率最高，当你更新或者删除记录时，索引就逐渐变得不平衡，就如同文件系统随着时间的推移会产生很多磁盘碎片一样。在实际运行中，你可能看不出一个平衡索引和一个有些不平衡的索引的区别。但我们想要最大限度地使用索引，因此要定期对索引进行维护。
+  ![](images/2023-01-19-16-18-47.png)
+
+## 查询反模式
+
+### 14. 对未知的恐惧
+
+目标：辨别悬空值（NULL)
+
+获取全名的时候，将中间名的列声明成了 NULL，导致中间名为 NULL 的全名也成了 NULL。
+
+```sql
+SELECT CONCAT(first_name, middle_initial, last_name) FROM Accounts; -- output: NULL
+```
+
+**[反]将 NULL 作为普通的值，反之亦然**
+
+- 将所有列一律声明为 NOT NULL
+- 列中的每一个值都必须存在且有意义的时候，却用了 NULL
+
+**[方案] 将NULL视为特殊值**
+
+值必须存在且有意义的时候，请务必声明为NOT NULL，可结合DEFAULT赋予默认值。
