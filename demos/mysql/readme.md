@@ -838,11 +838,35 @@ SELECT * FROM Bugs WHERE description LIKE "%crash%" -- 由于这个查询断言�
 SELECT CONCAT(first_name, middle_initial, last_name) FROM Accounts; -- output: NULL
 ```
 
+- NULL 和０不同，10 倍的未知数还是未知数
+- null 和字符串也不一样, 字符串与 null 联合还是 null (oracle 中不一样)
+- null 和 false 也不一样, AND OR NOT 涉及 NULl 结果不太一致
+- null 的相反值还是 null
+
+```sql
+
+SELECT * FROM Bugs WHERE assigned_to = 123； -- 你可能会觉得如下查询会返回上面那个查询的补集，也就是所有之前查询没有返回的行：
+SELECT * FROM Bugs WHERE NOT (assigned_to - 123)；-- 然而，这两个查询都不会返回 assigned_to 是 NULL 的记录。任何和NULL 的比较都返回“未 知”，既不是 TRUE 也不是 FALSE。即使 NULL的相反值也是 NULL。
+
+-- 下面这个错误是在查询 NULL 或者非 NULL 值时常犯的：
+SELECT * FROM Bugs WHERE assigned_to = NULL; -- 使用 IS NULL
+
+SELECT * FROM Bugs WHERE assigned_to <> NULL；
+```
+
 **[反]将 NULL 作为普通的值，反之亦然**
 
 - 将所有列一律声明为 NOT NULL
 - 列中的每一个值都必须存在且有意义的时候，却用了 NULL
 
-**[方案] 将NULL视为特殊值**
+**[方案] 将 NULL 视为特殊值**
 
-值必须存在且有意义的时候，请务必声明为NOT NULL，可结合DEFAULT赋予默认值。
+使用 NULL 并不是反模式，反模式是将 NULL 作为一个普通值处理或者使用一个普通的值来取代 NULL 的作用。
+值必须存在且有意义的时候，请务必声明为 NOT NULL，可结合 DEFAULT 赋予默认值。
+
+![](images/2023-01-20-10-39-58.png)
+![](images/2023-01-20-10-40-32.png)
+
+### 15.模棱两可的分组
+
+目标：获取每组的最大值（GROUP BY）
