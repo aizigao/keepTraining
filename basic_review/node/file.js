@@ -12,9 +12,9 @@ const main = () => {
   fs.readFile(file, "utf-8", (err, data) => {
     console.log(data);
     // => [Error: EISDIR: illegal operation on a directory, read <directory>]
-    const rdata = data.replace(/([\d.]*)rem/g, (match, $1) => {
-      const r = np.divide(Number($1), 0.02);
-      return r + "px";
+    const rdata = data.replace(/([\d.]*)px/g, (match, $1) => {
+      const r = np.times(Number($1), 0.02)
+      return r + "rem";
     });
     fs.writeFile(file, rdata, (err) => {
       if (err) {
