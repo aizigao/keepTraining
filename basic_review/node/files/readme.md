@@ -1,0 +1,11 @@
+- 用于修改文件权限和所有权的功能。
+  - chmod()
+  - chown()
+- 用于处理硬链接和软链接的功能。
+  - link()
+  - symlink()
+  - readlink()
+  - lutimes()
+  - lchmod()
+  - lchown()
+- 当使用 stat() ，一些元数据没有被设置或显示意外的值。lstat()
