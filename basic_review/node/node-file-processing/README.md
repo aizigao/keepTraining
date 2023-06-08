@@ -1,5 +1,7 @@
 # Comprehensive Guide to File Processing in Node
 
+https://blog.logrocket.com/file-processing-node-js-comprehensive-guide/
+
 This repository contains a comprehensive demonstration of file, directory and link functions provided by the built-in Node.js `fs` module. 
 
 The `fs` module includes 3 different types of APIs (callback, promise, sync). Examples in this repository are built using the newest, promise-based API. There are a few examples of the callback and sync APIs for comparison purposes.
