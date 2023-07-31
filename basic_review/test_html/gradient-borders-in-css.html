@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* ------- 0001 ------------------ */
+      body {
+        height: 100vh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        background: #222;
+      }
+
+      .module-border-wrap {
+        max-width: 250px;
+        position: relative;
+        background: linear-gradient(to right, red, purple);
+        padding: 3px;
+      }
+
+      .module {
+        background: #222;
+        color: white;
+        padding: 2rem;
+      }
+
+      /* -------- 0002 --------- */
+
+      .gradient-box {
+        display: flex;
+        align-items: center;
+        width: 300px;
+        margin: auto;
+        max-width: 22em;
+
+        position: relative;
+        box-sizing: border-box;
+
+        color: #fff;
+        background: #000;
+        background-clip: padding-box; /* !importanté */
+        border: solid 5px transparent; /* !importanté */
+        border-radius: 1em;
+      }
+      .gradient-box:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+        margin: -5px; /* !importanté */
+        border-radius: inherit; /* !importanté */
+        background: linear-gradient(to right, red, orange);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- // 0001 -->
+    <div class="module-border-wrap">
+      <div class="module">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero pariatur
+        corporis quaerat voluptatum eos tempora temporibus nisi voluptates sed,
+        exercitationem sequi dolore culpa incidunt accusamus, quasi unde
+        reprehenderit ea molestias.
+      </div>
+    </div>
+
+    <!-- 0002 -->
+    <div class="gradient-box">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
+        bibendum, lorem vel tincidunt imperdiet, nibh elit laoreet felis, a
+        bibendum nisl tortor non orci. Donec pretium fermentum felis, quis
+        aliquet est rutrum ut. Integer quis massa ut lacus viverra pharetra in
+        eu lacus. Aliquam tempus odio adipiscing diam pellentesque rhoncus.
+        Curabitur a bibendum est.
+      </p>
+    </div>
+  </body>
+</html>
