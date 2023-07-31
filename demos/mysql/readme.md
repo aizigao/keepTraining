@@ -870,3 +870,28 @@ SELECT * FROM Bugs WHERE assigned_to <> NULL；
 ### 15.模棱两可的分组
 
 目标：获取每组的最大值（GROUP BY）
+
+| product_name        | date_reported  | bug_id   |
+| ------------------- | -------------- | -------- |
+| Open RoundFile      | 2009-12-19     | ~~1234~~ |
+| Open RoundFile      | ~~2010-06-01~~ | 2248     |
+| Visual TurboBuilder | 2010-02-16     | 3456     |
+| Visual TurboBuilder | 2010-02-10     | 4077     |
+| Visual TurboBuilder | 2010-02-16     | 5150     |
+| ReConsider          | 2010-01-01     | 5678     |
+| ReConsider          | 2009-11-09     | 8063     |
+
+**[反]：引用非分组列**
+
+```sql
+SELECT  product_name, max(date_reported) AS latest, bug_id
+FROM    bugs GROUP BY product_name ORDER BY bug_id;
+```
+
+输出
+
+| product_name        | date_reported  | bug_id   |
+| ------------------- | -------------- | -------- |
+| Open RoundFile      | ~~2010-06-01~~ | ~~1234~~ |
+| Visual TurboBuilder | 2010-02-16     | 3456     |
+| ReConsider          | 2010-01-01     | 5678     |
