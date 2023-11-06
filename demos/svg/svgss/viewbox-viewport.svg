@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- preserveAspectRatio="xMinYMin meet" -->
+<!-- xMin 左对齐 -->
+<!-- xMax 右对齐 -->
+<!-- xMid 居中对齐 -->
+<!-- YMin 上对齐-->
+<!-- YMax 下对齐-->
+<!-- YMid 居中对齐-->
+
+<!-- meet 保持纵横比缩放viewBox适应viewport -->
+<!-- slice 保持纵横比同时比例小的方向放大填满viewport -->
+<!-- none 扭曲纵横比以充分适应viewport -->
+<svg 
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+  width="400" 
+  height="200" 
+  viewBox="0 0 200 200" 
+  preserveAspectRatio="xMidYMid meet"
+  style="background:#fff; border: 2px solid red">
+    <rect x='0' y='0' width='200' height='200' fill='green'/>
+    <rect x="10" y="10" width="150" height="150" fill="#cd0000"/>
+</svg>

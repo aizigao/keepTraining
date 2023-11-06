@@ -1,0 +1,23 @@
+<svg width="300" height="300" style="outline: 5px solid #e6e6e6">
+  <defs>
+    <marker
+      id="markerArrow"
+      markerWidth="13"
+      markerHeight="13"
+      refx="2"
+      refy="6"
+      orient="auto"
+    >
+      <path d="M2,2 L2,11 L10,6 L2,2" style="fill: #000000;" />
+    </marker>
+  </defs>
+  <line
+    x1="0"
+    y1="0"
+    x2="100"
+    y2="50"
+    stroke="red"
+    stroke-width="1"
+    marker-end="url(#markerArrow)"
+  />
+</svg>
