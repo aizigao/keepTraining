@@ -1,0 +1,15 @@
+{
+  "name": "less_plugins",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx lessc ./src/index.less ./dist/index.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "less": "^4.2.0"
+  }
+}
