@@ -3,7 +3,7 @@
   "editor.tabSize": 2,
   "[python]": {
     "editor.tabSize": 4,
-    "editor.wordBasedSuggestions": false
+    "editor.wordBasedSuggestions": "off"
   },
   "code-runner.executorMap": {
     "python": "python"
