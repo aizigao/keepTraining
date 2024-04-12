@@ -1,0 +1,1 @@
+emcc -o hello.html hello.c helper_functions.c -O3 -s WASM=1 -s "EXPORTED_RUNTIME_METHODS=['ccall']"  -s EXPORTED_FUNCTIONS="['_test']" --bind -s FETCH=1

@@ -1,0 +1,2 @@
+<!-- https://www.birdol.com/cainiaobiancheng/WXWebAssembly.html -->
+emcc --no-entry -Os demo.c -o refdb.wasm -s EXPORTED_FUNCTIONS="['_test']"

@@ -1,0 +1,73 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ImageData Processing with Wasm Demo</title>
+  </head>
+  <body>
+    <input type="file" id="fileInput" accept="image/*" />
+    <canvas id="outputCanvas"></canvas>
+    <script>
+      Module = {};
+      Module.onRuntimeInitialized = function () {};
+      let fileInput = document.getElementById("fileInput");
+      let outputCanvas = document.getElementById("outputCanvas");
+      let ctx = outputCanvas.getContext("2d");
+
+      fileInput.addEventListener("change", function (event) {
+        let file = event.target.files[0];
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+          let img = new Image();
+          img.onload = function () {
+            outputCanvas.width = img.width;
+            outputCanvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+
+            // Get image data
+            let imageData = ctx.getImageData(0, 0, img.width, img.height);
+
+            const pDataPtr = Module._malloc(imageData.data.length);
+            Module.HEAPU8.set(imageData.data, pDataPtr);
+
+            const mmjImgPtr = Module._allocateMMJImg(
+              pDataPtr,
+              img.width,
+              img.height,
+              5 // iType
+            );
+
+            const rst = Module.ccall(
+              "MMJ_SetImgBCS",
+              "number",
+              ["number", "number", "number", "number"],
+              [mmjImgPtr, 0, 40 * 2.4, 0]
+            );
+
+            console.log("MMJ_SetImgBCS rst", rst);
+
+            var pDataArrayBuffer = Module.HEAPU8.subarray(
+              pDataPtr,
+              pDataPtr + imageData.data.length
+            );
+            console.log({ pDataArrayBuffer, length: imageData.data.length }); // 这里可以使用pDataArray来访问数据
+            imageData.data.set(pDataArrayBuffer);
+            console.log("new Image Data", imageData);
+
+            ctx.putImageData(imageData, 0, 0);
+
+            // Free memory
+            Module._free(mmjImgPtr);
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    </script>
+    <script src="hello.js"></script>
+  </body>
+</html>
