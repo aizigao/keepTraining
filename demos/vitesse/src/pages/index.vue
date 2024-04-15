@@ -1,54 +1,55 @@
 <script setup lang="ts">
-defineOptions({
-  name: 'IndexPage',
+import { transform } from 'cypress/types/lodash'
+
+// https://www.zhangxinxu.com/wordpress/2012/06/css3-transform-matrix-%E7%9F%A9%E9%98%B5/
+
+const s = reactive({
+  rotationAngle: 0,
+  scaleX: 1,
+  scaleY: 1,
 })
-const user = useUserStore()
-const name = ref(user.savedName)
-
-const router = useRouter()
-function go() {
-  if (name.value)
-    router.push(`/hi/${encodeURIComponent(name.value)}`)
-}
-
-const { t } = useI18n()
+// const s = setting
 </script>
 
 <template>
   <div>
-    <div text-4xl>
-      <div i-carbon-campsite inline-block />
-    </div>
-    <p>
-      <a rel="noreferrer" href="https://github.com/antfu/vitesse" target="_blank">
-        Vitesse
-      </a>
-    </p>
-    <p>
-      <em text-sm opacity-75>{{ t('intro.desc') }}</em>
-    </p>
-
-    <div py-4 />
-
-    <TheInput
-      v-model="name"
-      :placeholder="t('intro.whats-your-name')"
-      autocomplete="false"
-      @keydown.enter="go"
-    />
-    <label class="hidden" for="input">{{ t('intro.whats-your-name') }}</label>
-
-    <div>
-      <button
-        m-3 text-sm btn
-        :disabled="!name"
-        @click="go"
+    <div class="wrap">
+      <img
+        src="/Jietu20220624-151802.png" class="img"
+        :style="{
+          transform: `rotate(${s.rotationAngle}deg) scaleX(${s.scaleX})
+          scaleY(${s.scaleY})
+          `,
+        }
+        "
       >
-        {{ t('button.go') }}
+    </div>
+    <div class="btns flex">
+      <button @click="s.rotationAngle = (s.rotationAngle + 90) % 360">
+        旋转
+      </button>
+      <button @click="s.scaleX = -s.scaleX">
+        水平
+      </button>
+      <button @click="s.scaleY = -s.scaleY">
+        垂直
       </button>
     </div>
   </div>
 </template>
+
+<style lang="less">
+.img {
+  width: 200px;
+  height: 200px;
+  display: block;
+  transform-origin: center center;
+}
+.btns {
+  display: flex;
+  width: 200px;
+}
+</style>
 
 <route lang="yaml">
 meta:
