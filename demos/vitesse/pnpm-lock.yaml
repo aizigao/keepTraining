@@ -17,6 +17,9 @@ dependencies:
   '@vueuse/head':
     specifier: ^2.0.0
     version: 2.0.0(vue@3.4.21)
+  mupdf:
+    specifier: ^0.2.0
+    version: 0.2.0
   nprogress:
     specifier: ^0.2.0
     version: 0.2.0
@@ -148,6 +151,9 @@ devDependencies:
   vite-plugin-pwa:
     specifier: ^0.19.7
     version: 0.19.7(vite@5.2.7)(workbox-build@7.0.0)(workbox-window@7.0.0)
+  vite-plugin-top-level-await:
+    specifier: ^1.4.1
+    version: 1.4.1(rollup@4.13.2)(vite@5.2.7)
   vite-plugin-vue-devtools:
     specifier: ^7.0.25
     version: 7.0.25(rollup@4.13.2)(vite@5.2.7)(vue@3.4.21)
@@ -2221,6 +2227,18 @@ packages:
       rollup: 2.79.1
     dev: true
 
+  /@rollup/plugin-virtual@3.0.2(rollup@4.13.2):
+    resolution: {integrity: sha512-10monEYsBp3scM4/ND4LNH5Rxvh3e/cVeL3jWTgZ2SrQ+BmUoQcopVQvnaMcOnykb1VkxUFuDAN+0FnpTFRy2A==, tarball: http://ued.zuoyebang.cc:80/@rollup%2fplugin-virtual/-/plugin-virtual-3.0.2.tgz}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+    dependencies:
+      rollup: 4.13.2
+    dev: true
+
   /@rollup/pluginutils@3.1.0(rollup@2.79.1):
     resolution: {integrity: sha512-GksZ6pr6TpIjHm8h9lSQ8pi8BE9VeubNT0OMJ3B5uZJ8pz73NPiqOtCog/x2/QzM1ENChPKxMDhiQuRHsqc+lg==, tarball: http://ued.zuoyebang.cc:80/@rollup%2fpluginutils/-/pluginutils-3.1.0.tgz}
     engines: {node: '>= 8.0.0'}
@@ -2524,6 +2542,135 @@ packages:
       json5: 2.2.3
       magic-string: 0.25.9
       string.prototype.matchall: 4.0.8
+    dev: true
+
+  /@swc/core-darwin-arm64@1.4.13:
+    resolution: {integrity: sha512-36P72FLpm5iq85IvoEjBvi22DiqkkEIanJ1M0E8bkxcFHUbjBrYfPY9T6cpPyK5oQqkaTBvNAc3j1BlVD6IH6w==, tarball: http://ued.zuoyebang.cc:80/@swc%2fcore-darwin-arm64/-/core-darwin-arm64-1.4.13.tgz}
+    engines: {node: '>=10'}
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-darwin-x64@1.4.13:
+    resolution: {integrity: sha512-ye7OgKpDdyA8AMIVVdmD1ICDaFXgoEXORnVO8bBHyul0WN71yUBZMX+YxEx2lpWtiftA2vY/1MAuOR80vHkBCw==, tarball: http://ued.zuoyebang.cc:80/@swc%2fcore-darwin-x64/-/core-darwin-x64-1.4.13.tgz}
+    engines: {node: '>=10'}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-linux-arm-gnueabihf@1.4.13:
+    resolution: {integrity: sha512-+x593Jlmu4c3lJtZUKRejWpV2MAij1Js5nmQLLdjo6ChR2D4B2rzj3iMiKn5gITew7fraF9t3fvXALdWh7HmUg==, tarball: http://ued.zuoyebang.cc:80/@swc%2fcore-linux-arm-gnueabihf/-/core-linux-arm-gnueabihf-1.4.13.tgz}
+    engines: {node: '>=10'}
+    cpu: [arm]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-linux-arm64-gnu@1.4.13:
+    resolution: {integrity: sha512-0x8OVw4dfyNerrs/9eZX9wNnmvwbwXSMCi+LbE6Xt1pXOIwvoLtFIXcV3NsrlkFboO3sr5UAQIwDxKqbIZA9pQ==, tarball: http://ued.zuoyebang.cc:80/@swc%2fcore-linux-arm64-gnu/-/core-linux-arm64-gnu-1.4.13.tgz}
+    engines: {node: '>=10'}
+    cpu: [arm64]
+    os: [linux]
+    libc: [glibc]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-linux-arm64-musl@1.4.13:
+    resolution: {integrity: sha512-Z9c4JiequtZvngPcxbCuAOkmWBxi2vInZbjjhD5I+Q9oiJdXUz1t2USGwsGPS41Xvk1BOA3ecK2Sn1ilY3titg==, tarball: http://ued.zuoyebang.cc:80/@swc%2fcore-linux-arm64-musl/-/core-linux-arm64-musl-1.4.13.tgz}
+    engines: {node: '>=10'}
+    cpu: [arm64]
+    os: [linux]
+    libc: [musl]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-linux-x64-gnu@1.4.13:
+    resolution: {integrity: sha512-ChatHtk+vX0Ke5QG+jO+rIapw/KwZsi9MedCBHFXHH6iWF4z8d51cJeN68ykcn+vAXzjNeFNdlNy5Vbkd1zAqg==, tarball: http://ued.zuoyebang.cc:80/@swc%2fcore-linux-x64-gnu/-/core-linux-x64-gnu-1.4.13.tgz}
+    engines: {node: '>=10'}
+    cpu: [x64]
+    os: [linux]
+    libc: [glibc]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-linux-x64-musl@1.4.13:
+    resolution: {integrity: sha512-0Pz39YR530mXpsztwQkmEKdkkZy4fY4Smdh4pkm6Ly8Nndyo0te/l4bcAGqN24Jp7aVwF/QSy14SAtw4HRjU9g==, tarball: http://ued.zuoyebang.cc:80/@swc%2fcore-linux-x64-musl/-/core-linux-x64-musl-1.4.13.tgz}
+    engines: {node: '>=10'}
+    cpu: [x64]
+    os: [linux]
+    libc: [musl]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-win32-arm64-msvc@1.4.13:
+    resolution: {integrity: sha512-LVZfhlD+jHcAbz5NN+gAJ1BEasB0WpcvUzcsJt0nQSRsojgzPzFjJ+fzEBnvT7SMtqKkrnVJ0OmDYeh88bDRpw==, tarball: http://ued.zuoyebang.cc:80/@swc%2fcore-win32-arm64-msvc/-/core-win32-arm64-msvc-1.4.13.tgz}
+    engines: {node: '>=10'}
+    cpu: [arm64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-win32-ia32-msvc@1.4.13:
+    resolution: {integrity: sha512-78hxHWUvUZtWsnhcf8DKwhBcNFJw+j4y4fN2B9ioXmBWX2tIyw+BqUHOrismOtjPihaZmwe/Ok2e4qmkawE2fw==, tarball: http://ued.zuoyebang.cc:80/@swc%2fcore-win32-ia32-msvc/-/core-win32-ia32-msvc-1.4.13.tgz}
+    engines: {node: '>=10'}
+    cpu: [ia32]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-win32-x64-msvc@1.4.13:
+    resolution: {integrity: sha512-WSfy1u2Xde6jU7UpHIInCUMW98Zw9iZglddKUAvmr1obkZji5U6EX0Oca3asEJdZPFb+2lMLjt0Mh5a1YisROg==, tarball: http://ued.zuoyebang.cc:80/@swc%2fcore-win32-x64-msvc/-/core-win32-x64-msvc-1.4.13.tgz}
+    engines: {node: '>=10'}
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core@1.4.13:
+    resolution: {integrity: sha512-rOtusBE+2gaeRkAJn5E4zp5yzZekZOypzSOz5ZG6P1hFbd+Cc26fWEdK6sUSnrkkvTd0Oj33KXLB/4UkbK/UHA==, tarball: http://ued.zuoyebang.cc:80/@swc%2fcore/-/core-1.4.13.tgz}
+    engines: {node: '>=10'}
+    requiresBuild: true
+    peerDependencies:
+      '@swc/helpers': ^0.5.0
+    peerDependenciesMeta:
+      '@swc/helpers':
+        optional: true
+    dependencies:
+      '@swc/counter': 0.1.3
+      '@swc/types': 0.1.6
+    optionalDependencies:
+      '@swc/core-darwin-arm64': 1.4.13
+      '@swc/core-darwin-x64': 1.4.13
+      '@swc/core-linux-arm-gnueabihf': 1.4.13
+      '@swc/core-linux-arm64-gnu': 1.4.13
+      '@swc/core-linux-arm64-musl': 1.4.13
+      '@swc/core-linux-x64-gnu': 1.4.13
+      '@swc/core-linux-x64-musl': 1.4.13
+      '@swc/core-win32-arm64-msvc': 1.4.13
+      '@swc/core-win32-ia32-msvc': 1.4.13
+      '@swc/core-win32-x64-msvc': 1.4.13
+    dev: true
+
+  /@swc/counter@0.1.3:
+    resolution: {integrity: sha512-e2BR4lsJkkRlKZ/qCHPw9ZaSxc0MVUd7gtbtaB7aMvHeJVYe8sOB8DBZkP2DtISHGSku9sCK6T6cnY0CtXrOCQ==, tarball: http://ued.zuoyebang.cc:80/@swc%2fcounter/-/counter-0.1.3.tgz}
+    dev: true
+
+  /@swc/types@0.1.6:
+    resolution: {integrity: sha512-/JLo/l2JsT/LRd80C3HfbmVpxOAJ11FO2RCEslFrgzLltoP9j8XIbsyDcfCt2WWyX+CM96rBoNM+IToAkFOugg==, tarball: http://ued.zuoyebang.cc:80/@swc%2ftypes/-/types-0.1.6.tgz}
+    dependencies:
+      '@swc/counter': 0.1.3
     dev: true
 
   /@tootallnate/once@2.0.0:
@@ -4680,7 +4827,7 @@ packages:
     dev: true
 
   /copy-anything@2.0.6:
-    resolution: {integrity: sha512-1j20GZTsvKNkc4BY3NpMOM8tt///wY3FpIzozTOFO2ffuZcV61nojHXVKIy3WM+7ADCy5FVhdZYHYDdgTU0yJw==, tarball: http://ued.zuoyebang.cc:80/copy-anything/-/copy-anything-2.0.6.tgz}
+    resolution: {integrity: sha512-1j20GZTsvKNkc4BY3NpMOM8tt///wY3FpIzozTOFO2ffuZcV61nojHXVKIy3WM+7ADCy5FVhdZYHYDdgTU0yJw==, tarball: http://ued.zuoyebang.cc/copy-anything/-/copy-anything-2.0.6.tgz}
     dependencies:
       is-what: 3.14.1
     dev: true
@@ -6601,7 +6748,7 @@ packages:
     dev: true
 
   /iconv-lite@0.6.3:
-    resolution: {integrity: sha1-pS+AvzjaGVLrXGgXkHGYcaGnJQE=, tarball: http://ued.zuoyebang.cc:80/iconv-lite/-/iconv-lite-0.6.3.tgz}
+    resolution: {integrity: sha1-pS+AvzjaGVLrXGgXkHGYcaGnJQE=, tarball: http://ued.zuoyebang.cc/iconv-lite/-/iconv-lite-0.6.3.tgz}
     engines: {node: '>=0.10.0'}
     dependencies:
       safer-buffer: 2.1.2
@@ -6965,7 +7112,7 @@ packages:
     dev: true
 
   /is-what@3.14.1:
-    resolution: {integrity: sha1-4SIvRt3ahd6tD9HJ3xMXYOd3VcE=, tarball: http://ued.zuoyebang.cc:80/is-what/-/is-what-3.14.1.tgz}
+    resolution: {integrity: sha1-4SIvRt3ahd6tD9HJ3xMXYOd3VcE=, tarball: http://ued.zuoyebang.cc/is-what/-/is-what-3.14.1.tgz}
     dev: true
 
   /is-wsl@2.2.0:
@@ -7230,7 +7377,7 @@ packages:
     dev: true
 
   /less@4.2.0:
-    resolution: {integrity: sha512-P3b3HJDBtSzsXUl0im2L7gTO5Ubg8mEN6G8qoTS77iXxXX4Hvu4Qj540PZDvQ8V6DmX6iXo98k7Md0Cm1PrLaA==, tarball: http://ued.zuoyebang.cc:80/less/-/less-4.2.0.tgz}
+    resolution: {integrity: sha512-P3b3HJDBtSzsXUl0im2L7gTO5Ubg8mEN6G8qoTS77iXxXX4Hvu4Qj540PZDvQ8V6DmX6iXo98k7Md0Cm1PrLaA==, tarball: http://ued.zuoyebang.cc/less/-/less-4.2.0.tgz}
     engines: {node: '>=6'}
     hasBin: true
     dependencies:
@@ -7794,6 +7941,10 @@ packages:
     resolution: {integrity: sha512-VNTrAak/KhO2i8dqqnqnAHOa3cYBwXEZe9h+D5h/1ZqFSTEFHdM65lR7RoIqq3tBBYavsOXV84NoHXZ0AkPyqQ==}
     dev: true
 
+  /mupdf@0.2.0:
+    resolution: {integrity: sha512-pbJaU+QVJIN15j+RirbgkTgHkEGcbX7uY9AEF65h7VHsFyFH13RcKKJw5npZhrzdlspOEdn+0KW+FuU54xGmcw==, tarball: http://ued.zuoyebang.cc/mupdf/-/mupdf-0.2.0.tgz}
+    dev: false
+
   /nanoid@3.3.7:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -8228,7 +8379,7 @@ packages:
     dev: true
 
   /parse-node-version@1.0.1:
-    resolution: {integrity: sha512-3YHlOa/JgH6Mnpr05jP9eDG254US9ek25LyIxZlDItp2iJtwyaXQb57lBYLdT3MowkUFYEV2XXNAYIPlESvJlA==, tarball: http://ued.zuoyebang.cc:80/parse-node-version/-/parse-node-version-1.0.1.tgz}
+    resolution: {integrity: sha512-3YHlOa/JgH6Mnpr05jP9eDG254US9ek25LyIxZlDItp2iJtwyaXQb57lBYLdT3MowkUFYEV2XXNAYIPlESvJlA==, tarball: http://ued.zuoyebang.cc/parse-node-version/-/parse-node-version-1.0.1.tgz}
     engines: {node: '>= 0.10'}
     dev: true
 
@@ -8338,7 +8489,7 @@ packages:
     dev: true
 
   /pify@4.0.1:
-    resolution: {integrity: sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==, tarball: http://ued.zuoyebang.cc:80/pify/-/pify-4.0.1.tgz}
+    resolution: {integrity: sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==, tarball: http://ued.zuoyebang.cc/pify/-/pify-4.0.1.tgz}
     engines: {node: '>=6'}
     requiresBuild: true
     dev: true
@@ -8498,7 +8649,7 @@ packages:
     dev: true
 
   /prr@1.0.1:
-    resolution: {integrity: sha1-0/wRS6BplaRexok/SEzrHXj19HY=, tarball: http://ued.zuoyebang.cc:80/prr/-/prr-1.0.1.tgz}
+    resolution: {integrity: sha1-0/wRS6BplaRexok/SEzrHXj19HY=, tarball: http://ued.zuoyebang.cc/prr/-/prr-1.0.1.tgz}
     requiresBuild: true
     dev: true
     optional: true
@@ -8892,11 +9043,11 @@ packages:
     dev: true
 
   /safer-buffer@2.1.2:
-    resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==, tarball: http://ued.zuoyebang.cc:80/safer-buffer/-/safer-buffer-2.1.2.tgz}
+    resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==, tarball: http://ued.zuoyebang.cc/safer-buffer/-/safer-buffer-2.1.2.tgz}
     dev: true
 
   /sax@1.3.0:
-    resolution: {integrity: sha512-0s+oAmw9zLl1V1cS9BtZN7JAd0cW5e0QH4W3LWEK6a4LaLEA2OTpGYWDY+6XasBLtz6wkm3u1xRw95mRuJ59WA==, tarball: http://ued.zuoyebang.cc:80/sax/-/sax-1.3.0.tgz}
+    resolution: {integrity: sha512-0s+oAmw9zLl1V1cS9BtZN7JAd0cW5e0QH4W3LWEK6a4LaLEA2OTpGYWDY+6XasBLtz6wkm3u1xRw95mRuJ59WA==, tarball: http://ued.zuoyebang.cc/sax/-/sax-1.3.0.tgz}
     requiresBuild: true
     dev: true
     optional: true
@@ -8925,7 +9076,7 @@ packages:
     dev: true
 
   /semver@5.7.1:
-    resolution: {integrity: sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==, tarball: http://ued.zuoyebang.cc:80/semver/-/semver-5.7.1.tgz}
+    resolution: {integrity: sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==, tarball: http://ued.zuoyebang.cc/semver/-/semver-5.7.1.tgz}
     hasBin: true
     dev: true
 
@@ -9642,11 +9793,11 @@ packages:
     dev: true
 
   /tslib@1.14.1:
-    resolution: {integrity: sha1-zy04vcNKE0vK8QkcQfZhni9nLQA=, tarball: http://ued.zuoyebang.cc:80/tslib/-/tslib-1.14.1.tgz}
+    resolution: {integrity: sha1-zy04vcNKE0vK8QkcQfZhni9nLQA=, tarball: http://ued.zuoyebang.cc/tslib/-/tslib-1.14.1.tgz}
     dev: true
 
   /tslib@2.6.2:
-    resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==, tarball: http://ued.zuoyebang.cc:80/tslib/-/tslib-2.6.2.tgz}
+    resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==, tarball: http://ued.zuoyebang.cc/tslib/-/tslib-2.6.2.tgz}
     dev: true
 
   /tsutils@3.21.0(typescript@5.4.3):
@@ -10196,6 +10347,11 @@ packages:
     hasBin: true
     dev: true
 
+  /uuid@9.0.1:
+    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==, tarball: http://ued.zuoyebang.cc:80/uuid/-/uuid-9.0.1.tgz}
+    hasBin: true
+    dev: true
+
   /validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
     dependencies:
@@ -10312,6 +10468,20 @@ packages:
       workbox-window: 7.0.0
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /vite-plugin-top-level-await@1.4.1(rollup@4.13.2)(vite@5.2.7):
+    resolution: {integrity: sha512-hogbZ6yT7+AqBaV6lK9JRNvJDn4/IJvHLu6ET06arNfo0t2IsyCaon7el9Xa8OumH+ESuq//SDf8xscZFE0rWw==, tarball: http://ued.zuoyebang.cc:80/vite-plugin-top-level-await/-/vite-plugin-top-level-await-1.4.1.tgz}
+    peerDependencies:
+      vite: '>=2.8'
+    dependencies:
+      '@rollup/plugin-virtual': 3.0.2(rollup@4.13.2)
+      '@swc/core': 1.4.13
+      uuid: 9.0.1
+      vite: 5.2.7(less@4.2.0)
+    transitivePeerDependencies:
+      - '@swc/helpers'
+      - rollup
     dev: true
 
   /vite-plugin-vue-devtools@7.0.25(rollup@4.13.2)(vite@5.2.7)(vue@3.4.21):
