@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<title>MuPDF.js</title>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+<link rel="shortcut icon" href="mupdf-icon.png">
+<link rel="stylesheet" href="style.css">
+
+<body>
+<!-- 
+	<header id="menubar-panel">
+		<details>
+			<summary>File</summary>
+			<menu>
+				<li onclick="document.getElementById('open-file-input').click()">Open File...
+			</menu>
+		</details>
+		<details>
+			<summary>Edit</summary>
+			<menu>
+				<li onclick="show_search_panel()">Search...
+			</menu>
+		</details>
+		<details>
+			<summary>View</summary>
+			<menu>
+				<li onclick="toggle_fullscreen()">Fullscreen
+				<li onclick="toggle_outline_panel()">Outline
+				<li onclick="zoom_to(48)">50%
+				<li onclick="zoom_to(72)">75% (72 dpi)
+				<li onclick="zoom_to(96)">100% (96 dpi)
+				<li onclick="zoom_to(120)">125%
+				<li onclick="zoom_to(144)">150%
+				<li onclick="zoom_to(192)">200%
+			</menu>
+		</details>
+	</header> -->
+
+	<aside id="outline-panel" style="display:none">
+		<ul id="outline">
+		</ul>
+	</aside>
+
+	<main id="page-panel">
+			<div id="message">
+				Loading MuPDF.js...
+			</div>
+			<div id="pages">
+				<!-- pages inserted here -->
+			</div>
+	</main>
+
+	<!-- <footer id="search-panel" style="display:none">
+		<input
+			id="search-input"
+			type="search"
+			size="40"
+			placeholder="Search..."
+		>
+		<button onclick="run_search(-1, 1)">Prev</button>
+		<button onclick="run_search(1, 1)">Next</button>
+		<div id="search-status" style="flex-grow:1"></div>
+		<button onclick="hide_search_panel()">X</button>
+	</footer>
+
+	<input
+		style="display: none"
+		id="open-file-input"
+		type="file"
+		accept=".pdf,application/pdf"
+		onchange="open_document_from_file(event.target.files[0])"
+	> -->
+
+</body>
+
+<script src="viewer.js"></script>
