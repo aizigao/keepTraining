@@ -1,0 +1,16 @@
+lockfileVersion: '6.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+dependencies:
+  mupdf-js:
+    specifier: ^1.1.1
+    version: 1.1.1
+
+packages:
+
+  /mupdf-js@1.1.1:
+    resolution: {integrity: sha512-9PZGqNH3qTLqGO4yjJgbsosXYt81YEUGR8/AgB9YpboN95DIk1dRPRKiHvgIVODD0gMomdWJt9gvC+HeQN6EmQ==, tarball: http://ued.zuoyebang.cc:80/mupdf-js/-/mupdf-js-1.1.1.tgz}
+    dev: false
