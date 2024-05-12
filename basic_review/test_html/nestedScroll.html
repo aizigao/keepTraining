@@ -6,121 +6,109 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
       #container {
+        height: 100vh;
+        overflow-y: auto;
+        padding-top: 300px;
+        background-color: red;
       }
 
-      #nested {
-        height: 50px;
-        overflow-y: scroll;
-        border: 1px solid blue;
-        overscroll-behavior: contain;
+      #inner {
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .context {
+        height: 400vh;
+        background: linear-gradient(
+          184deg,
+          rgba(2, 0, 36, 1) 0%,
+          rgba(112, 9, 121, 0.8491771708683473) 0%,
+          rgba(0, 212, 255, 1) 100%
+        );
       }
     </style>
   </head>
   <body>
     <div id="container">
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      <div id="nested">
-        test<br />
-        test b<br />
-        test<br />
-        test c<br />
-        test<br />
-        test<br />
-        test<br />
-        test b<br />
-        test<br />
-        test c<br />
-        test<br />
-        test<br />
-        test<br />
-        test b<br />
-        test<br />
-        test c<br />
-        test<br />
-        test<br />
+      <div id="inner">
+        <div class="context">
+          top
+          <br />
+          top1
+          <br />
+          top2 <br />
+          top3<br />
+          top4<br />
+          top5<br />
+          top6<br />
+          top7<br />
+          top8<br />
+          top9<br />
+          top10
+          <br />
+        </div>
       </div>
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
-      outside<br />
     </div>
 
-    <script>
-      const handleScroll = async (event) => {
-        await new Promise((resolve) => window.requestAnimationFrame(resolve));
-        const ele = event.target;
-        const { scrollTop, scrollLeft, scrollHeight, clientHeight } = ele;
-        const atTop = scrollTop === 0;
-        const beforeTop = 1;
-        const atBottom = scrollTop === scrollHeight - clientHeight;
-        const beforeBottom = scrollHeight - clientHeight - 1;
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+    <script src="
+  https://cdn.jsdelivr.net/npm/jquery-ui@1.13.3/dist/jquery-ui.min.js
+  "></script>
 
-        if (atTop) {
-          ele.scrollTo(scrollLeft, beforeTop);
-        } else if (atBottom) {
-          ele.scrollTo(scrollLeft, beforeBottom);
-        }
-      };
-      const innerScroll = document.getElementById("nested");
-      innerScroll.addEventListener("scroll", handleScroll);
+    <script src="https://cdn.jsdelivr.net/npm/eruda@3.0.1/eruda.min.js"></script>
+    <script>
+      eruda.init();
+      $(() => {
+        const $container = $("#container");
+        const $inner = $("#inner");
+        $container.on("scroll", (e) => {
+          const timeStamp = e.timeStamp;
+          console.log(timeStamp, e.deltaY, e);
+          const scrollTop = e.target.scrollTop;
+          if (scrollTop > 300 - 1) {
+            e.stopPropagation();
+            $inner.css("overflowY", "auto");
+            $inner.animate(
+              { scrollTop: $inner.scrollTop() + e.deltaY },
+              {
+                duration: 200
+              },
+              $.easing.easeOutCubic
+            );
+            $inner.focus();
+          } else {
+            $inner.css("overflowY", "hidden");
+          }
+          console.log("container", scrollTop);
+        });
+        $inner.on("scroll", (e) => {
+          const scrollTop = e.target.scrollTop;
+          if (scrollTop <= 0) {
+            e.stopPropagation();
+            $inner.css("overflowY", "hidden");
+            $container.animate(
+              { scrollTop: $container.scrollTop() - e.deltaY },
+              {
+                duration: 200
+                // easing: "easingOutCubic"
+              },
+              $.easing.easeOutCubic
+            );
+            $container.focus();
+          }
+          console.log("inner", scrollTop);
+        });
+      });
     </script>
   </body>
 </html>
