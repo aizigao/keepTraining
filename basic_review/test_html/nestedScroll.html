@@ -18,6 +18,7 @@
       #container {
         height: 100vh;
         overflow-y: auto;
+        position: relative;
         padding-top: 300px;
         background-color: red;
       }
@@ -25,6 +26,7 @@
       #inner {
         height: 100vh;
         overflow: hidden;
+        /* overflow-y: auto; */
       }
 
       .context {
@@ -39,8 +41,8 @@
     </style>
   </head>
   <body>
-    <div id="container">
-      <div id="inner">
+    <div id="container" class="scroll-ele">
+      <div id="inner" class="scroll-ele">
         <div class="context">
           top
           <br />
@@ -68,46 +70,177 @@
     <script src="https://cdn.jsdelivr.net/npm/eruda@3.0.1/eruda.min.js"></script>
     <script>
       eruda.init();
+
+      function easeOutQuint(x) {
+        return 1 - Math.pow(1 - x, 5);
+      }
+
+      function easeOutBounce(x) {
+        const n1 = 7.5625;
+        const d1 = 2.75;
+
+        if (x < 1 / d1) {
+          return n1 * x * x;
+        } else if (x < 2 / d1) {
+          return n1 * (x -= 1.5 / d1) * x + 0.75;
+        } else if (x < 2.5 / d1) {
+          return n1 * (x -= 2.25 / d1) * x + 0.9375;
+        } else {
+          return n1 * (x -= 2.625 / d1) * x + 0.984375;
+        }
+      }
+
+      const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
+      const defaultArgs = {
+        from: 0,
+        to: 200,
+        onProgress: () => {},
+        onFinish: () => {},
+        duration: 200,
+        easing: easeOutQuint
+      };
+
+      function rafEasing(args) {
+        let lastRunArgs = {};
+        let lastElapsed = 0;
+        let requestId;
+        return {
+          run(runArgs, isResume = false) {
+            const { from, to, onProgress, duration, easing, onFinish } = {
+              ...defaultArgs,
+              ...args,
+              // ...lastRunArgs,
+              ...runArgs
+            };
+            lastRunArgs = { ...runArgs };
+            if (from === to) {
+              return;
+            }
+            if (!isResume) {
+              lastElapsed = 0;
+            }
+            let start;
+            const changeDelta = to - from;
+            window.cancelAnimationFrame(requestId);
+            const step = (timestamp) => {
+              if (start === undefined) {
+                if (isResume && lastElapsed) {
+                  start = timestamp - duration * lastElapsed;
+                } else {
+                  start = timestamp;
+                }
+              }
+              const elapsed = Math.min(timestamp - start, duration) / duration;
+              lastElapsed = elapsed;
+              const targetPercent = easing(elapsed);
+
+              const processV = from + changeDelta * targetPercent;
+              onProgress(processV, elapsed, timestamp);
+              if (elapsed < 1) {
+                requestId = window.requestAnimationFrame(step);
+              } else {
+                onFinish(timestamp);
+              }
+            };
+            requestId = window.requestAnimationFrame(step);
+            return this;
+          },
+          stop() {
+            window.cancelAnimationFrame(requestId);
+            return this;
+          },
+          resume(args = {}) {
+            this.run({ ...lastRunArgs, ...args }, true);
+            return this;
+          }
+        };
+      }
+
       $(() => {
         const $container = $("#container");
+        const container = $("#container")[0];
         const $inner = $("#inner");
+        const inner = $("#inner")[0];
+        const offsetTop = $inner[0].offsetTop;
+        const rafE = rafEasing({
+          duration: 200
+        });
+        $container[0].addEventListener(
+          "scroll",
+          (e) => {
+            const scrollEle = e.target;
+            if (scrollEle === inner) {
+              // if($container.sc)
+              // console.log(offsetTop);
+              console.log("内部滚动");
+              // 顶部时， 阻止内部滚动, 切换到 外部滚动
+              if (inner.scrollTop <= 0) {
+                console.log("顶部时， 阻止内部滚动, 切换到 外部滚动");
+                inner.style.overflow = "hidden";
+                container.style.overflow = "auto";
+                container.scrollTop = offsetTop;
+                container.focus(); //
+                return;
+              }
+              // if (container.scrollTop >= offsetTop) {
+              //   scrollEle.style.overflow = "auto";
+              // } else {
+              //   scrollEle.style.overflow = "hidden";
+              //   scrollEle.scrollTop = 0;
+              // }
+            } else {
+              console.log("外部滚动");
+              // 阻止外部滚动, 切换到 内部滚动
+              if (container.scrollTop >= offsetTop) {
+                console.log("阻止外部滚动, 切换到 内部滚动");
+                container.style.overflow = "hidden";
+                container.scrollTop = offsetTop;
+                inner.style.overflow = "auto";
+                inner.focus();
+              }
+            }
+          },
+          true
+        );
         $container.on("scroll", (e) => {
-          const timeStamp = e.timeStamp;
-          console.log(timeStamp, e.deltaY, e);
-          const scrollTop = e.target.scrollTop;
-          if (scrollTop > 300 - 1) {
-            e.stopPropagation();
-            $inner.css("overflowY", "auto");
-            $inner.animate(
-              { scrollTop: $inner.scrollTop() + e.deltaY },
-              {
-                duration: 200
-              },
-              $.easing.easeOutCubic
-            );
-            $inner.focus();
-          } else {
-            $inner.css("overflowY", "hidden");
-          }
-          console.log("container", scrollTop);
+          // console.log(e.target);
+          // const timeStamp = e.timeStamp;
+          // console.log(timeStamp, e.deltaY, e);
+          // const scrollTop = e.target.scrollTop;
+          // if (scrollTop > 300 - 1) {
+          //   e.stopPropagation();
+          //   $inner.css("overflowY", "auto");
+          //   $inner.animate(
+          //     { scrollTop: $inner.scrollTop() + e.deltaY },
+          //     {
+          //       duration: 200
+          //     },
+          //     $.easing.easeOutCubic
+          //   );
+          //   $inner.focus();
+          // } else {
+          //   $inner.css("overflowY", "hidden");
+          // }
+          // console.log("container", scrollTop);
         });
-        $inner.on("scroll", (e) => {
-          const scrollTop = e.target.scrollTop;
-          if (scrollTop <= 0) {
-            e.stopPropagation();
-            $inner.css("overflowY", "hidden");
-            $container.animate(
-              { scrollTop: $container.scrollTop() - e.deltaY },
-              {
-                duration: 200
-                // easing: "easingOutCubic"
-              },
-              $.easing.easeOutCubic
-            );
-            $container.focus();
-          }
-          console.log("inner", scrollTop);
-        });
+        // $inner.on("scroll", (e) => {
+        //   const scrollTop = e.target.scrollTop;
+        //   if (scrollTop <= 0) {
+        //     e.stopPropagation();
+        //     $inner.css("overflowY", "hidden");
+        //     $container.animate(
+        //       { scrollTop: $container.scrollTop() - e.deltaY },
+        //       {
+        //         duration: 200
+        //         // easing: "easingOutCubic"
+        //       },
+        //       $.easing.easeOutCubic
+        //     );
+        //     $container.focus();
+        //   }
+        //   console.log("inner", scrollTop);
+        // });
       });
     </script>
   </body>

@@ -110,6 +110,9 @@
         }
 
         function swipeStart(e) {
+          if (document.body.scrollTop > 0) {
+            return;
+          }
           if (typeof e["targetTouches"] !== "undefined") {
             let touch = e.targetTouches[0];
             pStart.x = touch.screenX;
