@@ -1,13 +1,16 @@
-lockfileVersion: 5.3
+lockfileVersion: '6.0'
 
-specifiers:
-  number-precision: ^1.5.2
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
 
 dependencies:
-  number-precision: 1.5.2
+  number-precision:
+    specifier: ^1.5.2
+    version: 1.5.2
 
 packages:
 
-  /number-precision/1.5.2:
+  /number-precision@1.5.2:
     resolution: {integrity: sha512-q7C1ZW3FyjsJ+IpGB6ykX8OWWa5+6M+hEY0zXBlzq1Sq1IPY9GeI3CQ9b2i6CMIYoeSuFhop2Av/OhCxClXqag==}
     dev: false
